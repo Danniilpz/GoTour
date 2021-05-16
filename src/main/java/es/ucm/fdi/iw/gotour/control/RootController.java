@@ -109,11 +109,6 @@ public class RootController {
         model.addAttribute("classActiveHome","active");		
         return "index";
     }
-
-	@GetMapping("/chat")
-	public String chat(Model model, HttpServletRequest request) {
-		return "chat";
-	}
 	
 	@GetMapping("/error")
 	public String error(Model model) {

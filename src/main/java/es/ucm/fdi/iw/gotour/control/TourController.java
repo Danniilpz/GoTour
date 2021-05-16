@@ -13,7 +13,8 @@ import java.time.LocalDateTime;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-
+import java.util.Random;
+import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,6 @@ import es.ucm.fdi.iw.gotour.model.TourOfertado;
 import es.ucm.fdi.iw.gotour.model.User;
 import es.ucm.fdi.iw.gotour.model.Review;
 import es.ucm.fdi.iw.gotour.model.Mensaje;
-
 /**
  * Admin-only controller
  * @author mfreire
@@ -77,7 +77,7 @@ public class TourController {
 	private SimpMessagingTemplate messagingTemplate;
 
     RootController root;
-	
+
     @GetMapping(value="/{id}")
     @Transactional
 	public String tourOfertado(@PathVariable long id, Model model, HttpSession session) {
@@ -245,6 +245,8 @@ public class TourController {
                 }
             }
         }
+        String topic_id = t.getTopicId();
+        model.addAttribute("topic_id",topic_id);
         model.addAttribute("tour_id",id);
         model.addAttribute("user_id",user_id);
 		return encontrado ? "chat" : "/index";
@@ -288,7 +290,7 @@ public class TourController {
 		
 		log.info("Sending a Mensaje to {} with contents '{}'", id, json);
 
-		messagingTemplate.convertAndSend("/topic/"+id+"/tour", json);
+		messagingTemplate.convertAndSend("/topic/"+tour.getTopicId()+"/tour", json);
 		return "{\"result\": \"mensaje sent.\"}";
 	}
 
@@ -336,7 +338,6 @@ public class TourController {
         tourO.setMaxTuristas(maxTuristas);
         tourO.setPrecio(precio);
         tourO.setDisponible(true);
-
         User guia = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
         tourO.setGuia(guia);
 
@@ -434,7 +435,6 @@ public class TourController {
 		};
 	}
 
-
     @PostMapping("{id}/instancia")
 	@Transactional
     public String nuevoTour(@PathVariable("id") long idTourO,
@@ -450,7 +450,12 @@ public class TourController {
         tour.setFechaFin(fechaFin);
         tour.setActTuristas(0);
         tour.setDatos(tourO);
-        
+        //Random r= new Random();
+        //int topicId = r.nextInt();
+        String topicId = UUID.randomUUID().toString();
+        topicId = topicId.replace("-", "");
+        topicId = topicId.substring(0, 10);
+        tour.setTopicId(topicId);
         guia.getTourOfertados().add(tour);
         tourO.getInstancias().add(tour);
 

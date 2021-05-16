@@ -37,9 +37,9 @@
      
     </div>
 
-    <div class="container user_id" th:id="${user_id}">
-        <h3 class="text-center tour_id" th:id="${tour_id}">Chat del tour </h3>
-        <div class="messaging">
+    <div class="container user_id" th:id="'user'+${user_id}">
+        <h3 class="text-center tour_id" th:id="'tour'+${tour_id}">Chat del tour </h3>
+        <div class="messaging topic_id" th:id="${topic_id}">
             <div class="inbox_msg">
                 <!--<div class="inbox_people">
                     <div class="headind_srch">
@@ -161,8 +161,8 @@
       </nav>
 
     <script>
-        var tour_id = document.getElementsByClassName("tour_id")[0].id;
-
+        const tour_id = (document.getElementsByClassName("tour_id")[0].id).slice(4);
+        const user_id = (document.getElementsByClassName("user_id")[0].id).slice(4);
         function formatDate(d) {
             // 2020-03-23T10:48:11.074 => 23/3/2020@10:48:18
             return new Date(d).toLocaleString("es-ES").split(" ").join(" ")
@@ -198,11 +198,11 @@
         ws.receive = (m) => {
             procesarMensaje(m);
         }
-
+        
         function procesarMensaje(m){
-            var my_id = document.getElementsByClassName("user_id")[0].id;
-            var element = document.getElementById("tablon");
-
+            const my_id = user_id;
+            const element = document.getElementById("tablon");
+            console.log("My id", my_id);
             if(my_id == m.id_sender){
                 /*
                 <div class="outgoing_msg">
@@ -213,19 +213,19 @@
                 </div>
                 */
 
-                var node1 = document.createElement('div');
+                let node1 = document.createElement('div');
                 node1.className = "outgoing_msg";
 
-                var node2 = document.createElement('div');
+                let node2 = document.createElement('div');
                 node2.className = "sent_msg";
 
-                var node3 = document.createElement('p');
-                var mensaje = document.createTextNode(m.text);
+                let node3 = document.createElement('p');
+                let mensaje = document.createTextNode(m.text);
                 node3.appendChild(mensaje);
 
-                var node4 = document.createElement('span');
+                let node4 = document.createElement('span');
                 node4.className = "time_date";
-                var fecha = document.createTextNode(formatDate(new Date().toISOString()));
+                let fecha = document.createTextNode(formatDate(new Date().toISOString()));
                 node4.appendChild(fecha);
 
                 element.appendChild(node1);
@@ -246,34 +246,35 @@
                 </div>
                 */
 
-                var node1 = document.createElement('div');
+                let node1 = document.createElement('div');
                 node1.className = "incoming_msg";
 
-                var node11 = document.createElement('div');
+                let node11 = document.createElement('div');
                 node11.className = "incoming_msg_img";
-                var foto = document.createElement('img');
+                let foto = document.createElement('img');
                 foto.className = "avatar";
-                foto.src = (m.img_sender != null) ? m.img_sender : "https://ptetutorials.com/images/user-profile.png";
+                const url_foto = "/user/"+m.id_sender+"/foto";
+                foto.src =  url_foto;
                 node11.appendChild(foto);
 
-                var nodo12 = document.createElement('h3');
+                let nodo12 = document.createElement('h3');
                 nodo12.className = "nombre";
-                var  nombre = document.createTextNode(m.from);
+                let  nombre = document.createTextNode(m.from);
                 nodo12.appendChild(nombre);
 
-                var node2 = document.createElement('div');
+                let node2 = document.createElement('div');
                 node2.className = "received_msg";
 
-                var node21 = document.createElement('div');
+                let node21 = document.createElement('div');
                 node21.className = "received_withd_msg";
 
-                var node211 = document.createElement('p');
-                var mensaje = document.createTextNode(m.text);
+                let node211 = document.createElement('p');
+                let mensaje = document.createTextNode(m.text);
                 node211.appendChild(mensaje);
 
-                var node212 = document.createElement('span');
+                let node212 = document.createElement('span');
                 node212.className = "time_date";
-                var fecha = document.createTextNode(formatDate(new Date().toISOString()));
+                let fecha = document.createTextNode(formatDate(new Date().toISOString()));
                 node212.appendChild(fecha);
 
                 element.appendChild(node1);
