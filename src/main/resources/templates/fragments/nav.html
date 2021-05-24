@@ -30,7 +30,7 @@
                     <ul class="dropdown arrow-top">
                       <li><a th:href="@{'/user/'+ ${session.u.id}+'/perfil'}" id="miperfil">Mi perfil</a></li>
                       <li><a th:href="@{/admin}" id="admin" th:if="${session.u.isAdmin()}">Panel admin</a></li>
-                      <li><a th:href="@{/crearTour}" id="crear">Crear tour</a></li>
+                      <li><a th:href="@{/tour/crearTour}" id="crear">Crear tour</a></li>
                       <li><a th:href="@{/user/logout}" id="salir">Log out</a></li>
                       
                     </ul>

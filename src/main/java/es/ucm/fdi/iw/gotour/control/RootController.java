@@ -150,12 +150,6 @@ public class RootController {
 		return "registro";
 	}
 
-	@GetMapping("/crearTour")
-    public String crearTour(Model model, HttpSession session)
-    {
-        return "crearTour";
-    }
-
     // Un getMapping por vista que queramos en el proyecto. Y un template por vista
 
     @GetMapping("/guia")
