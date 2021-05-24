@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+
+
+.tabs-a{
+    margin-left: 30%;
+    margin-bottom: 3%;
+  font-size:15px;
+  padding:0px;
+  list-style:none;
+  background:#fff;
+  box-shadow:0px 5px 20px rgba(0,0,0,0.1);
+  display:inline-block;
+  border-radius:50px;
+  position:relative;
+}
+
+.tabs-a a{
+  text-decoration:none;
+  color: #777;
+  text-transform:uppercase;
+  padding:10px 20px;
+  display:inline-block;
+  position:relative;
+  z-index:1;
+  transition-duration:0.6s;
+}
+
+.tabs-a a.active{
+  color:#fff;
+}
+
+.tabs-a a i{
+  margin-right:5px;
+}
+
+.tabs-a .selector{
+  height:100%;
+  display:inline-block;
+  position:absolute;
+  left:0px;
+  top:0px;
+  z-index:1;
+  border-radius:50px;
+  transition-duration:0.6s;
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  background: #667eea;
+  background: -moz-linear-gradient(45deg, #667eea 0%, #c5f4ff 100%);
+  background: -webkit-linear-gradient(45deg, #667eea 0%,#c5f4ff 100%);
+  background: linear-gradient(45deg, #667eea 0%,#c5f4ff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#667eea', endColorstr='#c5f4ff',GradientType=1 );
+}

@@ -645,7 +645,10 @@ a {
   box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.1);
   background: #fff; }
   .property-entry .property-body {
-    position: relative; }
+    position: relative; 
+  
+  }
+
   .property-entry .property-favorite {
     position: absolute;
     border-radius: 50%;
@@ -700,7 +703,7 @@ a {
     .property-entry .property-location .property-icon {
       color: rgba(0, 0, 0, 0.3); }
   .property-entry .property-specs-number {
-    font-size: 1.2rem;
+    font-size: 15px;
     color: #000; }
   .property-entry .property-specs-wrap {
     list-style: none;
@@ -717,6 +720,10 @@ a {
     letter-spacing: .1em; }
   .property-entry .property-price {
     font-size: 1.3rem; }
+    .chat{
+      width: 50px;
+      height: 50px;
+    }
   .property-entry.horizontal .property-thumbnail {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 50%;
@@ -995,7 +1002,8 @@ a {
   height: 37px; }
 
 .property-body {
-  padding: 40px; }
+  padding: 40px; 
+}
 
 .gal-item img {
   -webkit-transition: .3s all ease;

@@ -306,7 +306,7 @@ public class UserController {
 		.setParameter("user_id", user.getId())
 		.getResultList();
 		model.addAttribute("idiomas", idiomas);
-        return "EditarDatos";
+        return "editarDatos";
 
     }
 	@PostMapping("/actualizarFoto")
@@ -445,7 +445,7 @@ public class UserController {
                 .getResultList();
 		model.addAttribute("idiomas",idiomas);
         model.addAttribute("u", user);
-		return "EditarDatos";
+		return "editarDatos";
 	}
 
 
