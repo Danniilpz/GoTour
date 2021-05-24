@@ -63,7 +63,7 @@
           
             
           
-            <form  method="post" th:action="@{/user/{id}/actualizar(id=${u.Id})}" class="p-5 bg-white border">
+            <form  method="post" th:action="@{/user/{id}/actualizar(id=${u.id})}" class="p-5 bg-white border">
               <h3 class="h6 text-black mb-3 text-uppercase">Datos personales</h3>
 
               <div class="row form-group">
@@ -126,7 +126,7 @@
               <div class="card_guia">
                 <div class="card-avatar">
                   <div class="foto col-lg-10">
-                    <img class="img guia_tour_foto" th:src="@{/user/{id}/foto(id=${u.Id})}" alt="La imagen del guia" >
+                    <img class="img guia_tour_foto" th:src="@{/user/{id}/foto(id=${u.id})}" alt="La imagen del guia" >
                   </div>
                 </div>
                 <div class="box_form pt-3">

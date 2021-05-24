@@ -19,7 +19,7 @@ import lombok.AllArgsConstructor;
 @NamedQueries({
 	@NamedQuery(name="TourOfertado.getTour",
 			query="SELECT u FROM TourOfertado u "
-					+ "WHERE u.Id = :id "),
+					+ "WHERE u.id = :id "),
 	@NamedQuery(name="AllToursOfer", query="Select t from TourOfertado t")
 
 })
@@ -31,7 +31,7 @@ public class TourOfertado {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long Id;
+	private long id;
 
 	@NotNull
 	private String descripcion;

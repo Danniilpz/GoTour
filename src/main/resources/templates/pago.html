@@ -60,7 +60,7 @@
               <div class="bg-white property-body border-bottom border-left border-right">
                 <div class="row mb-5">
                   <div class="col-md-6">
-                    <strong class="text-success h1 mb-3" th:text="${tour.Datos.Titulo}"></strong>
+                    <strong class="text-success h1 mb-3" th:text="${tour.datos.titulo}"></strong>
                   </div>
                   <div class="col-md-6">
                     <ul class="property-specs-wrap mb-3 mb-lg-0  float-lg-right">
@@ -97,7 +97,7 @@
                 <form method="post" class="form-contact-agent" th:action="@{/tour/{id}/pagar/{asistentes}(id=${tour.id}, asistentes=${asistentes})}">
                     
                     <div class="form-group">
-                        <label for="numTarjeta" th:if="${session.u.NumTarjeta == 0}">Numero de tarjeta</label>
+                        <label for="numTarjeta" th:if="${session.u.numTarjeta == 0}">Numero de tarjeta</label>
                         <input th:if="${session.u.numTarjeta == 0}" name="numTarjeta" id="numTarjeta" type="number" class="form-control" th:value="0">
                         <input th:unless="${session.u.numTarjeta == 0}" name="numTarjeta" id="numTarjeta" type="hidden" class="form-control" th:value="${session.u.numTarjeta}">
                         <label for="caducidadTarjeta" th:if="${session.u.numTarjeta == 0}">Fecha de caducidad de la tarjeta</label>
@@ -117,11 +117,11 @@
                 <div class="card_guia">
                     <div class="card-avatar">
                       <a href="javascript:;">
-                        <img class="img guia_tour_foto" th:src="@{/user/{id}/foto(id=${tour.Datos.Guia.Id})}" alt="La imagen del guia" >
+                        <img class="img guia_tour_foto" th:src="@{/user/{id}/foto(id=${tour.datos.guia.id})}" alt="La imagen del guia" >
                       </a>
                     </div>
                       <div class="row justify-content-center mt-2 mb-2">
-                        <div th:each="i: ${#numbers.sequence(1, tour.datos.guia.Puntuacion)}"><img class="card-category img-fluid ml-2" th:src="@{/img/estrellas.png}" width="30"/></div>
+                        <div th:each="i: ${#numbers.sequence(1, tour.datos.guia.puntuacion)}"><img class="card-category img-fluid ml-2" th:src="@{/img/estrellas.png}" width="30"/></div>
                       </div>
                       <h4 class="card-title" th:text="${tour.datos.guia.nombre}">Alec Thompson</h4>
                       <div class="box_">
@@ -130,7 +130,6 @@
                             <p class="idiomas" th:text="${idioma}">Ingles</p>
                           </div>
                       </div>
-                      <!--th:href="@{'perfil/'+${tour.getDatos().getGuia().getId()}}"-->
                       <a th:href="@{'/user/'+${tour.datos.guia.id}+'/perfil/'}" class="btn btn-primary btn-round" id="ver_perfil">Ver perfil</a>
                     </div>
                 </div>

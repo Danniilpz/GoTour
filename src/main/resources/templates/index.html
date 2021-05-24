@@ -179,9 +179,9 @@
       <div class="container">
       
         <div class="row mb-5 lista-tours">
-          <div class="col-md-6 col-lg-4 mb-4" th:each="tour: ${tours}" th:if="${tour.Datos.Disponible}">
+          <div class="col-md-6 col-lg-4 mb-4" th:each="tour: ${tours}" th:if="${tour.datos.disponible}">
             <div class="property-entry h-100">
-              <a th:href="@{'/tour/'+${tour.datos.Id}}" class="property-thumbnail">
+              <a th:href="@{'/tour/'+${tour.datos.id}}" class="property-thumbnail">
                 <div class="offer-type-wrap">
                   <span class="offer-type bg-success">ABIERTO</span>
                 </div>
@@ -194,7 +194,7 @@
                 <span class="property-location d-block mb-3"  th:text="${tour.datos.titulo}"><span class="property-icon icon-room"></span> Sidney, Australia</span>
                 <strong class="property-price text-primary mb-3 d-block text-success" th:text="${tour.datos.precio}+'€'"></strong>
                 <h2 class="property-title"><a th:href="@{'/tour/'+${tour.id}}" th:text="${tour.datos.titulo}" id="tour_ref"></a></h2>
-                <span class="property-location d-block mb-3" ><span class="property-icon icon-room"></span><span th:text="${tour.datos.ciudad}+', '+${tour.Datos.Pais}"></span></span>
+                <span class="property-location d-block mb-3" ><span class="property-icon icon-room"></span><span th:text="${tour.datos.ciudad}+', '+${tour.datos.pais}"></span></span>
                 <strong class="property-price text-primary mb-3 d-block text-success" th:text="${tour.datos.precio}+'€/persona'"></strong>
                 <ul class="property-specs-wrap mb-3 mb-lg-0">
 
@@ -245,14 +245,14 @@
         <div class="row mb-5 lista-tours">
           <div class="col-md-6 col-lg-4 mb-4" th:each="user: ${users}">
             <div class="property-entry h-100">
-              <a th:href="@{'/user/'+${user.Id}+'/perfil'}" class="property-thumbnail">
+              <a th:href="@{'/user/'+${user.id}+'/perfil'}" class="property-thumbnail">
 
-                <img th:href="@{'/user/'+${user.Id}+'/perfil'}" th:src="@{'/user/'+${user.Id}+'/foto'}" alt="Image" class="img-fluid">
+                <img th:href="@{'/user/'+${user.id}+'/perfil'}" th:src="@{'/user/'+${user.id}+'/foto'}" alt="Image" class="img-fluid">
               </a>
               <div class="p-4 property-body">
-                <h2 class="property-title"  th:text="${user.Nombre}+' '+${user.Apellidos}"><a th:href="@{'/user/'+${user.Id}+'/perfil'}"></a></h2>
+                <h2 class="property-title"  th:text="${user.nombre}+' '+${user.apellidos}"><a th:href="@{'/user/'+${user.id}+'/perfil'}"></a></h2>
                 <div class="row">
-                  <div th:each="i: ${#numbers.sequence(1, user.Puntuacion)}"><img class="card-category img-fluid ml-3" th:src="@{/img/estrellas.png}" width="30"/></div>
+                  <div th:each="i: ${#numbers.sequence(1, user.puntuacion)}"><img class="card-category img-fluid ml-3" th:src="@{/img/estrellas.png}" width="30"/></div>
                </div>
 
               </div>
