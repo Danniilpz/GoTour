@@ -173,9 +173,10 @@ public class User implements Transferable<User.Transfer> {
 	@JoinColumn(name = "Recipient_id")	
 	private List<Mensaje> received = new ArrayList<>();
     
-	@OneToMany(targetEntity=Reporte.class)
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Reporte> reporteCreados = new ArrayList<>();
-	@OneToMany(targetEntity=Reporte.class)
+	
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Reporte> reporteRecibidos = new ArrayList<>();	
 	
 	// utility methods
@@ -222,7 +223,7 @@ public class User implements Transferable<User.Transfer> {
 		private List<Mensaje> Received;
 		private List<Review> ReviewsRecibidas;
 		private List<String> IdiomasHablados;
-		private List<Reporte> ReporteRespuestas;
+		private List<Reporte> ReporteRecibidos;
 		private List<Reporte> ReporteCreados;
 
     }
