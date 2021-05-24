@@ -61,6 +61,8 @@ import lombok.AllArgsConstructor;
 		@NamedQuery(name="userByLogin",
 				query="select u from User u where u.email = :loginParam"),
 		@NamedQuery(name="AllUsers", query="Select u from User u"),
+		@NamedQuery(name="AdminUsers", query="SELECT u FROM User u "
+		+ "WHERE role='ADMIN'"),
 		@NamedQuery(name="AllUsersByPuntuacion",
 				query="select u from User u order by puntuacion desc"),
 		@NamedQuery(name="UsersByAdminSearch", query="SELECT u FROM User u "
@@ -177,7 +179,10 @@ public class User implements Transferable<User.Transfer> {
 	private List<Reporte> reporteCreados = new ArrayList<>();
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	private List<Reporte> reporteRecibidos = new ArrayList<>();	
+	private List<Reporte> reporteRecibidos = new ArrayList<>();
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Reporte> reportesAdmin = new ArrayList<>();	
 	
 	// utility methods
 	
@@ -207,6 +212,10 @@ public class User implements Transferable<User.Transfer> {
 		reporteCreados.add(e);
 	}
 
+	public void addReportesAdmin(Reporte e){
+		reportesAdmin.add(e);
+	}
+
     @Getter
     @AllArgsConstructor
     public static class Transfer {
@@ -225,12 +234,13 @@ public class User implements Transferable<User.Transfer> {
 		private List<String> IdiomasHablados;
 		private List<Reporte> ReporteRecibidos;
 		private List<Reporte> ReporteCreados;
+		private List<Reporte> ReportesAdmin;
 
     }
 
 	@Override
     public Transfer toTransfer() {
-		return new Transfer(id, apellidos, nombre,	username, numTelefono, puntuacion, tourOfertados, toursAsistidos, reviewsHechas, sent,  received, reviewsRecibidas, idiomasHablados, reporteRecibidos, reporteCreados);
+		return new Transfer(id, apellidos, nombre,	username, numTelefono, puntuacion, tourOfertados, toursAsistidos, reviewsHechas, sent,  received, reviewsRecibidas, idiomasHablados, reporteRecibidos, reporteCreados, reportesAdmin);
     }
 
 	@Override
