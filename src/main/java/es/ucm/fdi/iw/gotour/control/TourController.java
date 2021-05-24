@@ -85,6 +85,7 @@ public class TourController {
     @GetMapping(value="/{id}")
     @Transactional
 	public String tourOfertado(@PathVariable long id, Model model, HttpSession session) {
+        actualizarTours();
         TourOfertado tour = entityManager.find(TourOfertado.class, id);
         User u = entityManager.find(User.class,      // IMPORTANTE: tiene que ser el de la BD, no vale el de la sesión
         ((User)session.getAttribute("u")).getId());
@@ -115,6 +116,17 @@ public class TourController {
         session.setAttribute("u", u);
 		return "tour";
 	}
+    public void actualizarTours(){
+        List<Tour> tours = entityManager.createNamedQuery("AllTours").getResultList(); 
+        for(Tour t:tours){
+            if(t.cerrado()){
+                t.getDatos().setDisponible(false);
+            }
+            else{
+                t.getDatos().setDisponible(true);
+            }
+        }
+    }		
     @GetMapping(value="/{id}/review")
 	public String review(@PathVariable long id, Model model, HttpSession session) {
         Tour t = entityManager.find(Tour.class, id);
@@ -154,17 +166,20 @@ public class TourController {
         Tour t = entityManager.find(Tour.class, id); // mejor que PreparedQueries que sólo buscan por ID
         User u = entityManager.find(User.class,      // IMPORTANTE: tiene que ser el de la BD, no vale el de la sesión
             ((User)session.getAttribute("u")).getId());
-        Review r = new Review();
-        log.info("SE PROCEDE A CREAR LA REVIEW");
-        r.setCreador(u);
-        r.setDestinatario(t.getDatos().getGuia());
-        r.setPuntuacion(valoracion);
-        r.setTexto(textoReview);
-        r.setTourValorado(t);
-        log.info("La review actual es {}", r);
-        entityManager.persist(r);
-        entityManager.flush();
+        if(!t.existeReview(u)&&t.getFechaFin().isBefore(LocalDateTime.now())){
+            Review r = new Review();
+            log.info("SE PROCEDE A CREAR LA REVIEW");
+            r.setCreador(u);
+            r.setDestinatario(t.getDatos().getGuia());
+            r.setPuntuacion(valoracion);
+            r.setTexto(textoReview);
+            r.setTourValorado(t);
+            log.info("La review actual es {}", r);
+            entityManager.persist(r);
+            entityManager.flush();
+        }
         return "redirect:/tour/"+t.getDatos().getId();
+        
     }
 
     @GetMapping("/{id}/reviewUser")
@@ -227,7 +242,12 @@ public class TourController {
         }        
         // adds them to model
         log.info("LOS TURISTAS SON {}", asistentes);
-        t.addTurista(u, asistentes);
+        if(!u.getToursAsistidos().contains(t)){
+            t.addTurista(u, asistentes);
+        }
+        else{
+            t.addTurista(asistentes);
+        }
         model.addAttribute("tours", tours);
         session.setAttribute("u", u);	
 		return "index";
@@ -352,10 +372,12 @@ public class TourController {
     @Transactional
     public String portada(@PathVariable("id") long id, Model model, HttpSession session)
     {
+        User u = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
         TourOfertado tour = entityManager.find(TourOfertado.class, id);
-        model.addAttribute("tour", tour);
-        model.addAttribute("inicial", true);
-
+        if(tour.getGuia()==u){
+            model.addAttribute("tour", tour);
+            model.addAttribute("inicial", true);
+        }
         return "portada";
     }
 

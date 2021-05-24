@@ -302,7 +302,7 @@ public class UserController {
 		user.setRespuestaSeguridad(respuesta);
 		session.setAttribute("u", user);
 		model.addAttribute("u", user);
-        return "EditarDatos";
+		return perfil(model,session,user.getId());
 
     }
 	@PostMapping("/actualizarFoto")
@@ -335,7 +335,7 @@ public class UserController {
             ((User)session.getAttribute("u")).getId());
 		u.addLanguaje(idioma);
 		session.setAttribute("u", u);
-		return "EditarDatos";
+		return perfil(model,session,u.getId());
 	}
 
 

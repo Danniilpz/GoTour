@@ -191,6 +191,10 @@ public class User implements Transferable<User.Transfer> {
 				.anyMatch(r -> r.equals(roleName));
 	}
 	
+	public boolean isAdmin(){
+		return this.hasRole(Role.ADMIN);
+	}
+
 	public void addTour(Tour t){
 		this.toursAsistidos.add(t);
 	}
