@@ -81,19 +81,6 @@ public class TourController {
 	private SimpMessagingTemplate messagingTemplate;
 
     RootController root;
-
-    public void actualizarTours(){
-        List<Tour> tours = entityManager.createNamedQuery("AllTours").getResultList(); 
-        for(Tour t:tours){
-            if(t.cerrado()){
-                t.getDatos().setDisponible(false);
-            }
-            else{
-                t.getDatos().setDisponible(true);
-            }
-        }
-    }	
-
     @GetMapping(value="/{id}")
     @Transactional
 	public String tourOfertado(@PathVariable long id, Model model, HttpSession session) {
@@ -208,14 +195,20 @@ public class TourController {
         User guia = entityManager.find(User.class,      // IMPORTANTE: tiene que ser el de la BD, no vale el de la sesión
             ((User)session.getAttribute("u")).getId());
         Map<Long, Boolean> valoradosu = new HashMap<Long, Boolean>();
-        for(User u: t.getTuristas()){
-            for(Review r: guia.getReviewsHechas()){
-                if(r.getDestinatario() == u && r.getTourValorado() == t){  
-                    valoradosu.put(u.getId(), true);
-                }
-            }
-        }
-        model.addAttribute("valoradosu", valoradosu);
+        List <Long> turistas = entityManager.createNamedQuery("UserByReview")
+        .setParameter("guiaParam", guia.getId())
+        .setParameter("tourParam", id)
+        .getResultList();
+        // for(User u: t.getTuristas()){
+        //     for(Review r: guia.getReviewsHechas()){
+        //         if(r.getDestinatario() == u && r.getTourValorado() == t){  
+        //             valoradosu.put(u.getId(), true);
+        //         }
+        //     }
+        // }
+
+        // model.addAttribute("valoradosu", valoradosu);
+        model.addAttribute("turistas", turistas);
         return "reviewUsuarios";
     }
     @PostMapping("/{id}/valorarUser/{iduser}")

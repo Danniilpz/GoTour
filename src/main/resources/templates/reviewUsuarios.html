@@ -72,14 +72,14 @@
                       <h2 class="h4 text-black" th:if="${valoradosu.get(u.id)!= true}">Indique a continuacion su valoracion respecto al usuario y los motivos de dicha valoracion</h2>
                 <!-- <form method="post" class="form-contact-agent" th:action="@{/tour/{id}/valorarUser/{iduser}(id=${tour.id}, iduser=${u.id})}" th:if="${valoradosu.get(u.id)!= true}"> -->
                     
-                    <div class="form-group" th:if="${valoradosu.get(u.id)!= true}">
+                    <div class="form-group" th:unless="${turistas.contains(u.id)}">
                         <input th:class="usuario" type="hidden" th:value="${u.id}">
                         <input th:id="tour" type="hidden" th:value="${tour.id}">
-                        <label for="valoracion" th:if="${valoradosu.get(u.id)!= true}">Valoracion</label>
-                        <input name="valoracion" th:id="'valoracion' + ${u.id}" type="number" class="form-control" th:value="0" th:min=0 th:max=5 th:if="${valoradosu.get(u.Id)!= true}">
-                        <label for="textoReview" th:if="${valoradosu.get(u.id)!= true}">Explique aqui los motivos de su valoracion</label>
-                        <input name="textoReview" th:id="'textoReview' + ${u.id} " type="text" class="form-control" th:if="${valoradosu.get(u.id)!= true}">
-                        <button name="review-user" th:id="review-user" class="btn btn-primary py-2 px-4 rounded-0 col-lg-3" th:if="${valoradosu.get(u.id)!= true}">Enviar</button>
+                        <label for="valoracion">Valoracion</label>
+                        <input name="valoracion" th:id="'valoracion' + ${u.id}" type="number" class="form-control" th:value="0" th:min=0 th:max=5>
+                        <label for="textoReview">Explique aqui los motivos de su valoracion</label>
+                        <input name="textoReview" th:id="'textoReview' + ${u.id} " type="text" class="form-control">
+                        <button name="review-user" th:id="review-user" class="btn btn-primary py-2 px-4 rounded-0 col-lg-3">Enviar</button>
                       <!-- </form> -->
                     </div>
               </div>
