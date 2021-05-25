@@ -76,7 +76,7 @@ import lombok.AllArgsConstructor;
 @NamedNativeQueries({
 	@NamedNativeQuery(name="User.getToursOfrecidos",
 		query="SELECT * from tour_ofertado WHERE Guia_id = :guia_id"),
-		@NamedNativeQuery(name="User.getIdToursOfrecidos",
+	@NamedNativeQuery(name="User.getIdToursOfrecidos",
 		query="SELECT id from tour_ofertado WHERE Guia_id = :guia_id"),
 	@NamedNativeQuery(name="User.getToursConcretos",
 		query="SELECT * from tour WHERE Datos_id = :datos_id"),
@@ -85,7 +85,9 @@ import lombok.AllArgsConstructor;
 	@NamedNativeQuery(name="User.getcountReview",
 		query="SELECT COUNT(Id) FROM Review WHERE Creador_id = :creador"),
 	@NamedNativeQuery(name="User.haslanguajes",
-	query="SELECT idiomas_hablados from user_idiomas_hablados WHERE user_idiomas_hablados.User_id = :user_id")
+	query="SELECT idiomas_hablados from user_idiomas_hablados WHERE user_idiomas_hablados.User_id = :user_id"),
+	@NamedNativeQuery(name="ChatUser",
+				query = "select COUNT(turistas_id) FROM USER_TOURS_ASISTIDOS t WHERE t.turistas_id =:idParam AND t.tours_asistidos_id =:tourParam")
 })
 public class User implements Transferable<User.Transfer> {
 

@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 import javax.persistence.EntityManager;
@@ -194,20 +195,10 @@ public class TourController {
         model.addAttribute("tour", t);
         User guia = entityManager.find(User.class,      // IMPORTANTE: tiene que ser el de la BD, no vale el de la sesión
             ((User)session.getAttribute("u")).getId());
-        Map<Long, Boolean> valoradosu = new HashMap<Long, Boolean>();
         List <Long> turistas = entityManager.createNamedQuery("UserByReview")
         .setParameter("guiaParam", guia.getId())
         .setParameter("tourParam", t.getId())
         .getResultList();
-        // for(User u: t.getTuristas()){
-        //     for(Review r: guia.getReviewsHechas()){
-        //         if(r.getDestinatario() == u && r.getTourValorado() == t){  
-        //             valoradosu.put(u.getId(), true);
-        //         }
-        //     }
-        // }
-
-        // model.addAttribute("valoradosu", valoradosu);
         model.addAttribute("turistas", turistas);
         return "reviewUsuarios";
     }
@@ -274,14 +265,30 @@ public class TourController {
         if(t.getDatos().getGuia().getId() == user_id){
             encontrado = true;
         }else{
-            for (User u : turistas) {
-                if(u.getId() == user_id){
-                    encontrado = true;
-                    break;
-                }
+            log.info("El usuario que intenta entrar es {}", user_id);
+            log.info("El tour al que intenta entrar es {}", t.getId());
+            BigInteger cont = (BigInteger)entityManager.createNamedQuery("ChatUser")
+            .setParameter("idParam", user_id)
+            .setParameter("tourParam", t.getId())
+            .getSingleResult();
+
+            BigInteger uno = new BigInteger("1");
+            log.info("El usuario que intenta acceder al chat es  valid si {} vale {}", cont, uno);
+
+            if(cont.intValue() == 1){
+                log.info("Este usuario puede entrar al chat");
+                encontrado = true;
             }
+
+            // for (User u : turistas) {
+            //     if(u.getId() == user_id){
+            //         encontrado = true;
+            //         break;
+            //     }
+            // }
         }
         String topic_id = t.getTopicId();
+        log.info("El valor de encontrado es {}", encontrado);
         model.addAttribute("topic_id",topic_id);
         model.addAttribute("tour_id",id);
         model.addAttribute("user_id",user_id);
