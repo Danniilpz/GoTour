@@ -1,5 +1,5 @@
 
-var tabs = $('.tab-a');
+var tabs = $('.tabs-a');
 var selector = $('.tabs-a').find('a').length;
 //var selector = $(".tabs").find(".selector");
 var activeItem = tabs.find('.active');
@@ -20,14 +20,12 @@ $(".tabs-a").on("click","a",function(e){
     "width": activeWidth + "px"
   });
   if($(this)[0].id == "guia-b"){
+    $(".guia-first").click();
     $(".turista-disp").css("display", "none");
     $(".guia-disp").css("display", "inherit");
-    $(".turista-disp").removeClass("active");
-    $(".guia-first").addClass('active');
   }else{
+    $(".turista-first").click();
     $(".turista-disp").css("display", "inherit");
     $(".guia-disp").css("display", "none");
-    $(".turista-first").addClass("active");
-    $(".guia-disp").removeClass('active');
   }
 });

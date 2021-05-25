@@ -183,8 +183,8 @@
 
                   <nav class="tabs-a">
                      <div class="selector"></div>
-                     <a href="#" id="turista-b"><i class="fab fa-superpowers"></i>Turista</a>
-                     <a href="#" id="guia-b"><i class="fas fa-hand-rock"></i>Guia</a>
+                     <a href="#" id="turista-b" class="active"><i class="fab fa-superpowers"></i>Rol Turista</a>
+                     <a href="#" id="guia-b"><i class="fas fa-hand-rock"></i>Rol Guia</a>
                    </nav>
 
 
@@ -208,7 +208,7 @@
                         <!-- Tab content -->
                         <div class="wrapper_tabcontent">
 
-                           <div id="Abiertos-guia" class="tabcontent guia-disp guia-first" >
+                           <div id="Abiertos-guia" class="tabcontent" >
                               <div class="row lista-tours">
                                  <div class="col-md-6 col-lg-6 mb-4" th:each="tour: ${user.tourOfertados}"
                                     th:if="${tour.datos.disponible}">
@@ -260,13 +260,13 @@
                            </div>
 
 
-                           <div id="Cerrados-guia" class="tabcontent guia-disp">
+                           <div id="Cerrados-guia" class="tabcontent">
                               <div class="row lista-tours">
                                  <div class="col-md-6 col-lg-6 mb-4" th:each="tour: ${user.tourOfertados}">
                                     <div class="property-entry h-100" th:if="${tour.cerrado()}">
                                        <a th:href="@{'/tour/'+${tour.id}}" class="property-thumbnail">
                                           <div class="offer-type-wrap">
-                                             <span class="offer-type bg-success">Cerrado</span>
+                                             <span class="offer-type bg-danger">Cerrado</span>
                                           </div>
                                           <img th:href="@{'/tour/'+${tour.id}}"
                                              th:src="@{/tour/{id}/portada(id=${tour.id})}" alt="Image"
@@ -312,7 +312,7 @@
 
 
 
-                           <div id="Abiertos-turista" class="tabcontent turista-disp turista-first active">
+                           <div id="Abiertos-turista" class="tabcontent active">
                               <div class="row lista-tours">
                                  <div class="col-md-6 col-lg-6 mb-4" th:each="tour: ${user.toursAsistidos}"
                                     th:if="${tour.datos.disponible}">
@@ -364,13 +364,13 @@
                            </div>
 
 
-                           <div id="Cerrados-turista" class="tabcontent turista-disp">
+                           <div id="Cerrados-turista" class="tabcontent">
                               <div class="row lista-tours">
                                  <div class="col-md-6 col-lg-6 mb-4" th:each="tour: ${user.toursAsistidos}">
                                     <div class="property-entry h-100" th:if="${tour.cerrado()}">
                                        <a th:href="@{'/tour/'+${tour.id}}" class="property-thumbnail">
                                           <div class="offer-type-wrap">
-                                             <span class="offer-type bg-success">Cerrado</span>
+                                             <span class="offer-type bg-danger">Cerrado</span>
                                           </div>
                                           <img th:href="@{'/tour/'+${tour.id}}"
                                              th:src="@{/tour/{id}/portada(id=${tour.id})}" alt="Image"
