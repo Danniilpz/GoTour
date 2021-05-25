@@ -68,7 +68,7 @@ import lombok.AllArgsConstructor;
 		@NamedQuery(name="UsersByAdminSearch", query="SELECT u FROM User u "
 		+ "WHERE u.username = :usernameParam or u.email = :emailParam"),
 		@NamedQuery(name="UserByReview", 
-				query ="select r.Destinatario_id FROM Review r WHERE r.Creador_id =:guiaParam AND r.Tour_valorado_id =:tourParam")
+				query ="select r.destinatario FROM Review r WHERE r.creador.id =:guiaParam AND r.tourValorado.id =:tourParam")
 		// @NamedQuery(name="User.byTour",
 		// 		query="select u FROM User u JOIN User_Tours_Asistidos t WHERE t.Tours_Asistidos_Id= :tourParam")
 })

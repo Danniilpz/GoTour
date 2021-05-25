@@ -197,7 +197,7 @@ public class TourController {
         Map<Long, Boolean> valoradosu = new HashMap<Long, Boolean>();
         List <Long> turistas = entityManager.createNamedQuery("UserByReview")
         .setParameter("guiaParam", guia.getId())
-        .setParameter("tourParam", id)
+        .setParameter("tourParam", t.getId())
         .getResultList();
         // for(User u: t.getTuristas()){
         //     for(Review r: guia.getReviewsHechas()){

@@ -62,14 +62,14 @@
                 </div>
                 <h2 class="h4 text-black"></h2>
                 <div th:each="u: ${tour.turistas}">
-                  <div class="card_guia" th:if="${valoradosu.get(u.id)!= true}" th:id="'esconderTurista' +${u.id}">
-                    <div class="card-avatar" th:if="${valoradosu.get(u.id)!= true}">
-                      <a href="javascript:;" th:if="${valoradosu.get(u.id)!= true}">
-                        <img class="img guia_tour_foto" th:src="@{/user/{id}/foto(id=${u.id})}" alt="La imagen del usuario" th:if="${valoradosu.get(u.id)!= true}">
+                  <div class="card_guia" th:unless="${turistas.contains(u.id)}" th:id="'esconderTurista' +${u.id}">
+                    <div class="card-avatar" th:unless="${turistas.contains(u.id)}">
+                      <a href="javascript:;" th:unless="${turistas.contains(u.id)}">
+                        <img class="img guia_tour_foto" th:src="@{/user/{id}/foto(id=${u.id})}" alt="La imagen del usuario" th:unless="${turistas.contains(u.id)}">
                       </a>
                     </div>
-                      <h4 class="card-title" th:text="${u.nombre}" th:if="${valoradosu.get(u.id)!= true}">Alec Thompson</h4>
-                      <h2 class="h4 text-black" th:if="${valoradosu.get(u.id)!= true}">Indique a continuacion su valoracion respecto al usuario y los motivos de dicha valoracion</h2>
+                      <h4 class="card-title" th:text="${u.nombre}" th:unless="${turistas.contains(u.id)}">Alec Thompson</h4>
+                      <h2 class="h4 text-black" th:unless="${turistas.contains(u.id)}">Indique a continuacion su valoracion respecto al usuario y los motivos de dicha valoracion</h2>
                 <!-- <form method="post" class="form-contact-agent" th:action="@{/tour/{id}/valorarUser/{iduser}(id=${tour.id}, iduser=${u.id})}" th:if="${valoradosu.get(u.id)!= true}"> -->
                     
                     <div class="form-group" th:unless="${turistas.contains(u.id)}">
