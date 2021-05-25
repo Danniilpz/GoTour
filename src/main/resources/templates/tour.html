@@ -214,8 +214,8 @@
                       </div>
                     </div>
                     <div >
-                      <h3 class="h4 text-black widget-title mb-3" th:unless="${session.u.id == tour.guia.id}">Contratar tour</h3>
-                    <form method="post" class="form-contact-agent" th:action="@{/tour/{id}/inscribirse(id=${t.id})}" th:unless="${session.u.id == tour.guia.id}">
+                      <h3 class="h4 text-black widget-title mb-3" th:unless="${session.u.id == tour.guia.id || t.cerrado()}">Contratar tour</h3>
+                    <form method="post" class="form-contact-agent" th:action="@{/tour/{id}/inscribirse(id=${t.id})}" th:unless="${session.u.id == tour.guia.id || t.cerrado()}">
                       <div class="form-group">
                         <label for="phone">Numero de personas que van a asistir</label>
                         <input name="turistas" id="turistas" type="number" class="form-control" value="1"  min="1" th:max="${tour.maxTuristas - t.actTuristas}">

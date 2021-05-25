@@ -157,18 +157,25 @@ public class TourController {
     @Transactional
 	public String inscribirse(@PathVariable("id") long id,Model model,@RequestParam int turistas,HttpSession session) {
         Tour t = entityManager.find(Tour.class, id); // mejor que PreparedQueries que sólo buscan por ID
-        List<String> etiquetas = entityManager.createNamedQuery("TourOfertado.getEtiquetas")
+        boolean pasado = false;
+        if(t.cerrado()){
+            pasado = true;
+        }
+        else{
+            List<String> etiquetas = entityManager.createNamedQuery("TourOfertado.getEtiquetas")
                 .setParameter("id", id)
                 .getResultList();
-        long id_guia = t.getDatos().getGuia().getId();
-        List<String> idiomas = entityManager.createNamedQuery("User.haslanguajes")
+            long id_guia = t.getDatos().getGuia().getId();
+            List<String> idiomas = entityManager.createNamedQuery("User.haslanguajes")
                 .setParameter("user_id", id_guia)
                 .getResultList();
-        model.addAttribute("asistentes", turistas);
-        model.addAttribute("tour",t);
-        model.addAttribute("etiquetas",etiquetas);
-        model.addAttribute("idiomas",idiomas);
-		return "pago";
+            model.addAttribute("asistentes", turistas);
+            model.addAttribute("tour",t);
+            model.addAttribute("etiquetas",etiquetas);
+            model.addAttribute("idiomas",idiomas);
+
+        }
+		return pasado ? "index" : "pago";
 	}
 
     @PostMapping("/{id}/valorar")
