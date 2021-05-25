@@ -3,13 +3,18 @@ package es.ucm.fdi.iw.gotour.control;
 import java.io.File;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+
 
 
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -19,8 +24,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -29,6 +35,7 @@ import es.ucm.fdi.iw.gotour.model.User;
 import es.ucm.fdi.iw.gotour.model.Tour;
 import es.ucm.fdi.iw.gotour.model.TourOfertado;
 import es.ucm.fdi.iw.gotour.model.Reporte;
+import es.ucm.fdi.iw.gotour.model.User.Role;
 
 
 
@@ -235,48 +242,43 @@ public class AdminController {
 
 	}
 
-	@GetMapping("reporte/{id}/contesta-reporte")
+	@GetMapping("reporte/{id}/gestion-reporte")
 	public String contestaReporte(Model model, @PathVariable("id") long id) {
 	Reporte r = entityManager.find(Reporte.class, id);
+	model.addAttribute("user",r.getCreador());
 	model.addAttribute("reporte",r);
 	model.addAttribute("classActiveSettings","active");
-	return "admin/contesta-reporte";
+	return "admin/gestion-reporte";
 
 
 	}
 
-	@PostMapping("/{id}/contesta-reporte-admin")
-	public String contestarAlReporte(Model model, HttpSession session,@RequestParam String motivo, @RequestParam String reporte, @PathVariable("id") long id) {
+	@PostMapping("reporte/{id}/gestion-reporte-admin")
+	public String contestarAlReporte(Model model, HttpSession session,@RequestParam String motivo, @RequestParam String respuesta,  @PathVariable("id") long id) {
 	Reporte r = entityManager.find(Reporte.class, id);
 	r.setContestada(true);
 	Reporte respuestaAdmin= new Reporte();
-	User userContestado = entityManager.find(User.class, r.getCreador());
+	User userContestado = r.getCreador();
+	System.out.println("Hola"+userContestado.getId());
 	User userCreador = entityManager.find(User.class,((User)session.getAttribute("u")).getId());
-	respuestaAdmin.setTipo("a");
+	respuestaAdmin.setTipo("ADMIN");
 	respuestaAdmin.setCreador(userCreador);
 	respuestaAdmin.setMotivo(motivo);
-	respuestaAdmin.setTexto(reporte);
+	respuestaAdmin.setTexto(respuesta);
 	respuestaAdmin.setTourReportado(null);
 	respuestaAdmin.setUserReportado(null);
 	respuestaAdmin.setUserContestado(userContestado);
-	userCreador.getReporteCreados().add(r);
-	entityManager.persist(r);
-	entityManager.flush();
+	userCreador.getReporteCreados().add(respuestaAdmin);
+	userContestado.getReporteRecibidos().add(respuestaAdmin);
 
-	model.addAttribute("classActiveSettings","active");
-	return "admin/";
+    
+	
+	return "admin/reporte-usuario";
 
 
 	}
 	
-	@PostMapping("/{id}/no-contesta-reporte")
-	public String noContestarAlReporte(Model model, HttpSession session,@RequestParam String motivo, @RequestParam String reporte, @PathVariable("id") long id) {
-		
-	model.addAttribute("classActiveSettings","active");
-	return "admin/";
-
-
-	}
+	
 
 
 	@PostMapping("/userSearch")

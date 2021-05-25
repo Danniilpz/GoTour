@@ -36,26 +36,68 @@
     </div>
     <div class="main-panel">
       <!-- Navbar -->
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <th>
+                ID
+              </th>
+              <th>
+                Username
+              </th>
+              <th>
+                Email
+              </th>
+              <th>
+                Deshabilitar Usuario
+              </th>
 
+            </thead>
+            <tbody>
+              <tr>
+                <td  th:text="${user.Id}" th:if="${user.Enabled == 1}">
+                  
+                </td>
+                <td th:text="${user.Username}" th:if="${user.Enabled == 1}">
+                  
+                </td>
+                <td th:text="${user.email}" th:if="${user.Enabled == 1}">
+               
+                </td> 
+                <td>
+                  <form method="post" th:action="@{/admin/toggleuser(id=${user.Id})}">
+                    <button type="submit" class="btn btn-primary" th:if="${user.Enabled == 1}">Deshabilitar</button>
+                    
+                  </form>
+                  
+                </td>
+                
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div class="card">
         <div class="card-header card-header-primary">
           <h4 class="card-title">Responder reporte</h4>
 
         </div>
         <div class="card-body">
-          <form  method="post">
+    
             <div class="row">
               
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="bmd-label-floating">Motivo</label>
-                  <label class="bmd-label-floating" th:text="${reporte.motivo}"></label>
+                  <h2>Motivo</h2>
+                  <h3 th:text="${reporte.motivo}"></h3>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="bmd-label-floating">Texto</label>
-                  <label class="bmd-label-floating" th:text="${reporte.texto}"></label>
+                  <h2>Contenido</h2>
+                  <h3 th:text="${reporte.texto}"></h3>
                   
                 </div>
               </div>
@@ -63,10 +105,10 @@
             
     
             <div class="clearfix"></div>
-          </form>
+          
         </div>
       </div>
-
+     
       <div class="content">
         <div class="container-fluid">
          <div class="card">
@@ -74,8 +116,8 @@
                   <h4 class="card-title">Responder reporte</h4>
                   <p class="card-category">Responder Reporte</p>
                 </div>
-                <div class="card-body">
-                  <form  method="post" th:action="@{/admin/respondeReporte}">
+                <div class="card-body">  
+                  <form  method="post" th:action="@{'/admin/reporte/'+${reporte.id}+'/gestion-reporte-admin/'}">
                     <div class="row">
                       
                       <div class="col-md-6">

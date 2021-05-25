@@ -61,6 +61,8 @@ import lombok.AllArgsConstructor;
 		@NamedQuery(name="userByLogin",
 				query="select u from User u where u.email = :loginParam"),
 		@NamedQuery(name="AllUsers", query="Select u from User u"),
+		@NamedQuery(name="AdminUsers", query="SELECT u FROM User u "
+		+ "WHERE role='ADMIN'"),
 		@NamedQuery(name="AllUsersByPuntuacion",
 				query="select u from User u order by puntuacion desc"),
 		@NamedQuery(name="UsersByAdminSearch", query="SELECT u FROM User u "
@@ -173,10 +175,14 @@ public class User implements Transferable<User.Transfer> {
 	@JoinColumn(name = "Recipient_id")	
 	private List<Mensaje> received = new ArrayList<>();
     
-	@OneToMany(targetEntity=Reporte.class)
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Reporte> reporteCreados = new ArrayList<>();
-	@OneToMany(targetEntity=Reporte.class)
-	private List<Reporte> reporteRecibidos = new ArrayList<>();	
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Reporte> reporteRecibidos = new ArrayList<>();
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Reporte> reportesAdmin = new ArrayList<>();	
 	
 	// utility methods
 	
@@ -210,30 +216,35 @@ public class User implements Transferable<User.Transfer> {
 		reporteCreados.add(e);
 	}
 
+	public void addReportesAdmin(Reporte e){
+		reportesAdmin.add(e);
+	}
+
     @Getter
     @AllArgsConstructor
     public static class Transfer {
-		private long id;
-		private String apellidos;
-		private String nombre;
-        private String username;
-		private long numtelefono;
-		private int puntuacion;
-		private List<Tour> tourOfertados;
-		private List<Tour> toursAsistidos;
-		private List<Review> reviewsHechas;
-		private List<Mensaje> sent;
-		private List<Mensaje> received;
-		private List<Review> reviewsRecibidas;
-		private List<String> idiomasHablados;
-		private List<Reporte> reporteRespuestas;
-		private List<Reporte> reporteCreados;
+		private long Id;
+		private String Apellidos;
+		private String Nombre;
+        private String Username;
+		private long Numtelefono;
+		private int Puntuacion;
+		private List<Tour> TourOfertados;
+		private List<Tour> ToursAsistidos;
+		private List<Review> ReviewsHechas;
+		private List<Mensaje> Sent;
+		private List<Mensaje> Received;
+		private List<Review> ReviewsRecibidas;
+		private List<String> IdiomasHablados;
+		private List<Reporte> ReporteRecibidos;
+		private List<Reporte> ReporteCreados;
+		private List<Reporte> ReportesAdmin;
 
     }
 
 	@Override
     public Transfer toTransfer() {
-		return new Transfer(id, apellidos, nombre,	username, numTelefono, puntuacion, tourOfertados, toursAsistidos, reviewsHechas, sent,  received, reviewsRecibidas, idiomasHablados, reporteRecibidos, reporteCreados);
+		return new Transfer(id, apellidos, nombre,	username, numTelefono, puntuacion, tourOfertados, toursAsistidos, reviewsHechas, sent,  received, reviewsRecibidas, idiomasHablados, reporteRecibidos, reporteCreados, reportesAdmin);
     }
 
 	@Override

@@ -23,6 +23,8 @@
                   <li th:class="${classActiveHome}">
                     <a th:href="@{/}">Home</a>
                   </li>
+                  
+                  <li th:class="${classActiveRegistro}"><a th:if="${(session.u != null) and (session.u.hasRole('ADMIN'))} " th:href="@{/admin/}">Administracion</a></li>
                   <li th:class="${classActiveRegistro}"><a th:if ="${session.u == null}" th:href="@{/registro}">Registrate</a></li>
                   <li th:class="${classActiveLogin}"><a th:if ="${session.u == null}" th:href="@{/login}" id="login">Login</a></li>
                   <li class="has-children" th:if="${session.u}">
