@@ -223,22 +223,22 @@ public class User implements Transferable<User.Transfer> {
     @Getter
     @AllArgsConstructor
     public static class Transfer {
-		private long Id;
-		private String Apellidos;
-		private String Nombre;
-        private String Username;
-		private long Numtelefono;
-		private int Puntuacion;
-		private List<Tour> TourOfertados;
-		private List<Tour> ToursAsistidos;
-		private List<Review> ReviewsHechas;
-		private List<Mensaje> Sent;
-		private List<Mensaje> Received;
-		private List<Review> ReviewsRecibidas;
-		private List<String> IdiomasHablados;
-		private List<Reporte> ReporteRecibidos;
-		private List<Reporte> ReporteCreados;
-		private List<Reporte> ReportesAdmin;
+		private long id;
+		private String apellidos;
+		private String nombre;
+        private String username;
+		private long numTelefono;
+		private int puntuacion;
+		private List<Tour> tourOfertados;
+		private List<Tour> toursAsistidos;
+		private List<Review> reviewsHechas;
+		private List<Mensaje> sent;
+		private List<Mensaje> received;
+		private List<Review> reviewsRecibidas;
+		private List<String> idiomasHablados;
+		private List<Reporte> reporteRecibidos;
+		private List<Reporte> reporteCreados;
+		private List<Reporte> reportesAdmin;
 
     }
 
