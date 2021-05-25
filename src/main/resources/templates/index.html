@@ -7,7 +7,6 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900|Roboto+Mono:300,400,500"> 
     <link rel="stylesheet" th:href="@{~/fonts/icomoon/style.css}">
-
     <link rel="stylesheet" th:href="@{~/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{~/css/magnific-popup.css}">
     <link rel="stylesheet" th:href="@{~/css/jquery-ui.css}">
@@ -17,11 +16,8 @@
     <link rel="stylesheet" th:href="@{~/css/mediaelementplayer.css}">
     <link rel="stylesheet" th:href="@{~/css/animate.css}">
     <link rel="stylesheet" th:href="@{~/fonts/flaticon/font/flaticon.css}">
-    <link rel="stylesheet" th:href="@{~/css/fl-bigmug-line.css}">
-    
-  
+    <link rel="stylesheet" th:href="@{~/css/fl-bigmug-line.css}">  
     <link rel="stylesheet" th:href="@{~/css/aos.css}">
-
     <link rel="stylesheet" th:href="@{~/css/style.css}">
     
   </head>
@@ -38,11 +34,9 @@
         </div>
       </div>
       <div class="site-mobile-menu-body"></div>
-    </div> <!-- .site-mobile-menu -->
+    </div>
 
-    <nav th:replace="fragments/nav.html :: nav">
-      Nav goes here
-    </nav>
+    <nav th:replace="fragments/nav.html :: nav"></nav>
 
 
     <div th:replace="fragments/imagenes-principales.html :: images-principales">
@@ -106,8 +100,9 @@
                     <div class="offer-type-wrap">
                       <span class="offer-type bg-success">ABIERTO</span>
                     </div>
-                    
-                    <img th:src="@{/tour/{id}/portada(id=${tour.datos.id})}" alt="Image" class="img-fluid">
+                    <div class="img-tourList">
+                      <img th:src="@{/tour/{id}/portada(id=${tour.datos.id})}" alt="Image" class="img-tourList-maxSize">
+                    </div>
                   </a>
                   <div class="p-4 property-body">
                     <h2 class="property-title"  th:text="${tour.datos.guia.nombre}"><a th:href="@{'/user/'+${tour.datos.guia.id}+'/perfil/'}"></a></h2>
@@ -169,8 +164,9 @@
                 <div class="offer-type-wrap">
                    <span class="offer-type bg-success">ABIERTO</span>
                 </div>
-                <img th:href="@{'/tour/'+${tour.id}}" th:src="@{/tour/{id}/portada(id=${tour.datos.id})}" alt="Image" class="img-fluid">
-             </a>
+                <div class="img-tourList">
+                  <img th:src="@{/tour/{id}/portada(id=${tour.datos.id})}" alt="Image" class="img-tourList-maxSize">
+                </div>             </a>
               <div class="p-4 property-body">
                 <h2 class="property-title"  th:text="${tour.datos.guia.nombre}"><a th:href="@{'/user/' +tour.datos.guia.id+ '/perfil'}"></a></h2>
                 <span class="property-location d-block mb-3"  th:text="${tour.datos.titulo}"><span class="property-icon icon-room"></span> Sidney, Australia</span>
@@ -202,18 +198,6 @@
             </div>
           </div>
         </div>
-        <!--<div class="row">
-          <div class="col-md-12 text-center">
-            <div class="site-pagination">
-              <a href="#" class="active">1</a>
-              <a href="#">2</a>
-              <a href="#">3</a>
-              <a href="#">4</a>
-              <a href="#">5</a>
-              <span>...</span>
-              <a href="#">10</a>
-            </div>
-          </div>  -->
         </div>
         
       </div>
@@ -241,18 +225,6 @@
             </div>
           </div>
         </div>
-        <!--<div class="row">
-          <div class="col-md-12 text-center">
-            <div class="site-pagination">
-              <a href="#" class="active">1</a>
-              <a href="#">2</a>
-              <a href="#">3</a>
-              <a href="#">4</a>
-              <a href="#">5</a>
-              <span>...</span>
-              <a href="#">10</a>
-            </div>
-          </div>  -->
         </div>
         
       </div>
