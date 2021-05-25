@@ -353,6 +353,8 @@ public class TourController {
 
         TourOfertado tourO = new TourOfertado();
 
+        if(fechaIni.isBefore(LocalDateTime.now()) || fechaFin.isBefore(fechaIni)) return "crearTour";
+
         tourO.setPais(pais);
         tourO.setCiudad(ciudad);
         tourO.setLugar(lugar);
@@ -392,7 +394,6 @@ public class TourController {
         else{
             return "redirect:/tour/" + tour.getId();
 
-
         }
     }
 
@@ -430,20 +431,6 @@ public class TourController {
         return "redirect:/tour/" + datos.getId();
     }
 
-    /*@GetMapping("/{id}/actualizarPortada")
-    @Transactional
-    public String portada(@PathVariable("id") long id, Model model, HttpSession session)
-    {
-        User u = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
-        TourOfertado tour = entityManager.find(TourOfertado.class, id);
-        model.addAttribute("tour", tour);
-        model.addAttribute("inicial", true);
-
-        return "portada";
-    }*/
-
-
-    //@PostMapping("/{id}/portada")
     @Transactional
     public void portada(@PathVariable("id") long id, 
                           @RequestParam("portada") MultipartFile portada,
@@ -480,20 +467,8 @@ public class TourController {
 			}
 			log.info("Successfully uploaded mapa for {} into {}!", id, map.getAbsolutePath());
 		}
-
-        //return crearInstancia(id, model, session);
     }
 
-    /*@GetMapping("/{id}/crearInstancia")
-    @Transactional
-    public String crearInstancia(@PathVariable("id") long id, Model model, HttpSession session)
-    {
-        User guia = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
-        TourOfertado tour = entityManager.find(TourOfertado.class, id);
-        model.addAttribute("tour", tour);
-
-        return "crearInstancia";
-    }*/
 
     @GetMapping("/{id}/portada")
 	public StreamingResponseBody getPortada(@PathVariable long id, Model model) throws IOException {		
@@ -533,7 +508,7 @@ public class TourController {
 
     @PostMapping("{id}/instancia")
 	@Transactional
-    public String nuevoTour(@PathVariable("id") long idTourO,
+    public void nuevoTour(@PathVariable("id") long idTourO,
                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaIni,
                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaFin,
                             Model model, HttpSession session){
@@ -553,7 +528,6 @@ public class TourController {
             guia.getTourOfertados().add(tour);
             tourO.getInstancias().add(tour);
         }       
-        return "redirect:/tour/" + tourO.getId();        
     }
 
     /*@GetMapping(value="{id}/apuntarse")

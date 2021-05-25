@@ -134,12 +134,11 @@
                   <h3 class="h4 text-black widget-title mb-3">Crea una convocatoria</h3>
 
                   <h5>Fecha y hora de inicio</h5>
-                  <input type="datetime-local" id="fechaInicial" name="fechaIni" placeholder="Fecha de inicio" required onchange="siguientePaso()"/>
+                  <input type="datetime-local" id="fechaInicial" name="fechaIni" placeholder="Fecha de inicio" required onchange="validarFechas()"/>
 
-                  <div id="divFinal">
-                    <h5>Fecha y hora de fin</h5>
-                    <input type="datetime-local" id="fechaFinal" name="fechaFin" placeholder="Fecha de fin" required onchange="validarFechas()" />
-                  </div>
+                  <h5>Fecha y hora de fin</h5>
+                  <input type="datetime-local" id="fechaFinal" name="fechaFin" placeholder="Fecha de fin" required onchange="validarFechas()" />
+                  <div id="divFinal"></div>
                 </div>
 
                 <div class="bg-white widget rounded">

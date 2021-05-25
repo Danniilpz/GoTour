@@ -2,6 +2,7 @@
     margin-top: 10px;
     display: flex;
 }
+
 .guia_tour_foto{
     width: 100%;
 }
@@ -63,8 +64,9 @@
   }
 
 #divFinal {
-  display: none;
   margin: 20px;
+  color: crimson;
+  font-size: small;
 }
 
 #instanciaNueva {
