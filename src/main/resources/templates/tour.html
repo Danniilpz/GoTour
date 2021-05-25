@@ -86,22 +86,22 @@
                 <div class="row mb-5">  
                   <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
                     <span class="d-inline-block text-black mb-0 caption-text" >País</span>
-                    <strong class="d-block" th:text="${tour.pais}">$520</strong>
+                    <strong class="d-block" th:text="${tour.pais}"></strong>
                   </div>
                   
                   <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
                     <span class="d-inline-block text-black mb-0 caption-text" >Ciudad</span>
-                    <strong class="d-block" th:text="${tour.ciudad}">$520</strong>
+                    <strong class="d-block" th:text="${tour.ciudad}"></strong>
                   </div>
 
                   <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
-                    <span class="d-inline-block text-black mb-0 caption-text">Lugar</span>
-                    <strong class="d-block" th:text="${tour.lugar}">$520</strong>
+                    <span class="d-inline-block text-black mb-0 caption-text"></span>
+                    <strong class="d-block" th:text="${tour.lugar}"></strong>
                   </div>
                 </div>
 
                 <h2 class="h4 text-black">Descripcion</h2>
-                <p th:text="${tour.descripcion}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda aperiam perferendis deleniti vitae asperiores accusamus tempora facilis sapiente, quas! Quos asperiores alias fugiat sunt tempora molestias quo deserunt similique sequi.</p>
+                <p th:text="${tour.descripcion}"></p>
                 
                 <div class="row no-gutters mt-5">
                   <div class="col-12">
@@ -109,7 +109,7 @@
                   </div>
                   <div class="etiquetas_tour">
                     <div th:each="e: ${etiquetas}">
-                        <button th:text="${e}">museo</button>
+                        <button th:text="${e}"></button>
                     </div>
                   </div>
                 </div>
@@ -138,7 +138,12 @@
                       <a th:href="@{'/user/'+${tour.guia.id}+'/perfil/'}" class="btn btn-primary btn-round" id="ver_perfil">Ver perfil</a>
                     </div>
                 </div>
+                <div th:if="${session.u.id == tour.guia.id}" class="bg-white widget border rounded">
+                  <div class="card_guia">
 
+                    <a th:href="@{'/tour/'+${tour.id}+'/editarTour'}" class="btn btn-primary btn-round" >Editar Tour</a>
+                  </div>
+                </div>
                 <div class="bg-white widget border rounded convocatorias">
 
                   <h3 class="h4 text-black widget-title mb-3">Fechas disponibles</h3>
@@ -148,35 +153,62 @@
                       <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="droppydown-content">
-                      <a th:each="t: ${tour.instancias}" th:text="${t.fechaIni}" th:onclick="'muestraInstancia(\'' + ${t.id} + '\', \'' + ${tour.instancias.size} + '\');'">Fecha</a>
+                      <a th:each="t: ${tour.instancias}" th:text="${t.getFechaIniString()}" th:onclick="'muestraInstancia(\'' + ${t.id} + '\', \'' + ${tour.instancias.size} + '\');'">Fecha</a>
                     </div>
                   </div>
                 
 
                   <div th:each="t: ${tour.instancias}" th:id="'instancia' + ${t.id}" class="contratacion">
 
-                    <div class="row mb-5">
+                    <div class="row">
                       <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
                         <span class="d-inline-block text-black mb-0 caption-text" >Inicio</span>
-                        <strong id="fechaIni" class="d-block" th:text="${t.fechaIni}">Fecha ini</strong>
+                        <strong id="fechaIni" class="d-block" th:text="${t.getFechaIniString()}">Fecha ini</strong>
                       </div>
                       <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
                         <span class="d-inline-block text-black mb-0 caption-text" >Fin</span>
-                        <strong id="fechaFin" class="d-block" th:text="${t.fechaFin}">Fecha fin</strong>
+                        <strong id="fechaFin" class="d-block" th:text="${t.getFechaFinString()}">Fecha fin</strong>
                       </div>
                       <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
                         <span class="d-inline-block text-black mb-0 caption-text" >Libre</span>
                         <strong id="libres" class="d-block" th:text="${tour.maxTuristas - t.actTuristas}">Libres</strong>
                       </div>
-                      <div class="row no-gutters mt-5">
-                        <!-- <a th:href="@{'/tour/'+${t.id}+'/review/'}"class="btn btn-primary btn-round" id="hacer_review" th:if="${session.u.id != tour.guia.id && session.u.toursAsistidos.contains(t) && valorados.get(t.id) != true}">Valorar el tour</a> -->
-                        <div class="row form-group" th:id="esconder">
+                      <div class="col-md-12 py-3 border-bottom" id="form_valorar" th:if="${session.u.id != tour.guia.id && session.u.toursAsistidos.contains(t) && valorados.get(t.id) != true && t.cerrado()}">
+                        <h3 class="h4 text-black widget-title mb-3">Valoración</h3>
+                        <div class="form-group m-auto">
                           <input type="hidden" th:id="elegida" th:value="${t.id}">
-                          <label for="valoracion" th:if="${session.u.id != tour.guia.id && session.u.toursAsistidos.contains(t) && valorados.get(t.id) != true}">Valoracion</label>
-                          <input name="valoracion" id="valoracion" type="number" class="form-control" th:value="0" th:min=0 th:max=5 th:if="${session.u.id != tour.guia.id && session.u.toursAsistidos.contains(t) && valorados.get(t.id) != true}">
-                          <label for="textoReview" th:if="${session.u.id != tour.guia.id && session.u.toursAsistidos.contains(t) && valorados.get(t.id) != true}">Explique aqui los motivos de su valoracion</label>
-                          <input name="textoReview" id="textoReview" type="text" class="form-control" th:if="${session.u.id != tour.guia.id && session.u.toursAsistidos.contains(t) && valorados.get(t.id) != true}">
-                          <button id="add-review" class="btn btn-primary py-2 px-4 rounded-0 col-lg-3" th:if="${session.u.id != tour.guia.id && session.u.toursAsistidos.contains(t) && valorados.get(t.id) != true}">Enviar</button>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="valoracion" id="inlineRadio1" value="1">
+                            <label class="form-check-label" for="inlineRadio1">1</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="valoracion" id="inlineRadio2" value="2">
+                            <label class="form-check-label" for="inlineRadio2">2</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="valoracion" id="inlineRadio3" value="3" required checked>
+                            <label class="form-check-label" for="inlineRadio3">3</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="valoracion" id="inlineRadio4" value="4">
+                            <label class="form-check-label" for="inlineRadio4">4</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="valoracion" id="inlineRadio5" value="5">
+                            <label class="form-check-label" for="inlineRadio5">5</label>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="textoReview">Explique aqui los motivos de su valoracion</label>
+                          <input name="textoReview" id="textoReview" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                          <button id="add-review" class="btn btn-primary">Enviar</button>
+                          
+                        </div>
+                      </div>
+                      <div class="col-md-12 py-3 border-bottom">
+                        <div class="form-group">
                           <a th:href="@{'/tour/'+${t.id}+'/reviewUser/'}" class="btn btn-primary btn-round" id="hacer_review_guia" th:if="${session.u.id == tour.guia.id}">Valorar asistentes del tour</a>
                         </div>
                       </div>
@@ -197,8 +229,8 @@
 
                   </div>
 
-                  <div class="convocatorias">
-                    <a th:if="${session.u.id == tour.guia.id}" onclick="instanciaNueva()" class="btn btn-primary btn-round" >Nueva convocatoria</a>
+                  <div class="convocatorias" th:if="${session.u.id == tour.guia.id}">
+                    <button onclick="instanciaNueva()" class="btn btn-primary btn-round" >Nueva convocatoria</a>
                   </div>
 
                 </div>
@@ -218,29 +250,18 @@
                       <button id="buttonInstancia" class="btn btn-primary btn-round margen" type="submit">Crear</button>
                     </form>
                   </div>
+                </div>                
+                <div th:if="${session.u.id != tour.guia.id}" class="bg-white widget border rounded">
+                  <div class="card_guia">
+                    <a th:href="@{'/tour/'+${tour.id}+'/reportarTour'}" class="btn btn-primary btn-round" >Reportar Tour</a>
+                  </div>
                 </div>
-
-    
-
-                  <div th:if="${session.u.id != tour.guia.id}" class="bg-white widget border rounded">
-                    <div class="card_guia">
-
-                          <a th:href="@{'/tour/'+${tour.id}+'/reportarTour'}" class="btn btn-primary btn-round" >Reportar Tour</a>
-                        </div>
-                    </div>
-                
-
-                 
-
-                </div>
-  
-            </div>
-            
+              </div>  
+            </div>            
           </div>
         </div>
       </div>
       <nav th:replace="fragments/footer.html :: footer">
-        Nav goes here
       </nav>
   
   <script th:src="@{~/js/jquery-migrate-3.0.1.min.js}"></script>

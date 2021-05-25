@@ -302,11 +302,7 @@ public class UserController {
 		user.setRespuestaSeguridad(respuesta);
 		session.setAttribute("u", user);
 		model.addAttribute("u", user);
-		List<String> idiomas = entityManager.createNamedQuery("User.haslanguajes")
-		.setParameter("user_id", user.getId())
-		.getResultList();
-		model.addAttribute("idiomas", idiomas);
-        return "editarDatos";
+		return perfil(model,session,user.getId());
 
     }
 	@PostMapping("/actualizarFoto")
@@ -339,7 +335,7 @@ public class UserController {
             ((User)session.getAttribute("u")).getId());
 		u.addLanguaje(idioma);
 		session.setAttribute("u", u);
-		return "index";
+		return perfil(model,session,u.getId());
 	}
 
 

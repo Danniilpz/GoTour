@@ -118,8 +118,7 @@ public class TourController {
                     valorados.put(t.getId(), true);
                     log.info("EL VALOR DE REVISADO ES {}" ,valorados.get(tour.getId()));
                 }
-            }
-        
+            }        
         }
         model.addAttribute("valorados", valorados);
         model.addAttribute("tour",tour);
@@ -128,6 +127,17 @@ public class TourController {
         session.setAttribute("u", u);
 		return "tour";
 	}
+    public void actualizarTours(){
+        List<Tour> tours = entityManager.createNamedQuery("AllTours").getResultList(); 
+        for(Tour t:tours){
+            if(t.cerrado()){
+                t.getDatos().setDisponible(false);
+            }
+            else{
+                t.getDatos().setDisponible(true);
+            }
+        }
+    }		
     @GetMapping(value="/{id}/review")
 	public String review(@PathVariable long id, Model model, HttpSession session) {
         Tour t = entityManager.find(Tour.class, id);
@@ -167,17 +177,20 @@ public class TourController {
         Tour t = entityManager.find(Tour.class, id); // mejor que PreparedQueries que sólo buscan por ID
         User u = entityManager.find(User.class,      // IMPORTANTE: tiene que ser el de la BD, no vale el de la sesión
             ((User)session.getAttribute("u")).getId());
-        Review r = new Review();
-        log.info("SE PROCEDE A CREAR LA REVIEW");
-        r.setCreador(u);
-        r.setDestinatario(t.getDatos().getGuia());
-        r.setPuntuacion(valoracion);
-        r.setTexto(textoReview);
-        r.setTourValorado(t);
-        log.info("La review actual es {}", r);
-        entityManager.persist(r);
-        entityManager.flush();
+        if(!t.existeReview(u)&&t.getFechaFin().isBefore(LocalDateTime.now())){
+            Review r = new Review();
+            log.info("SE PROCEDE A CREAR LA REVIEW");
+            r.setCreador(u);
+            r.setDestinatario(t.getDatos().getGuia());
+            r.setPuntuacion(valoracion);
+            r.setTexto(textoReview);
+            r.setTourValorado(t);
+            log.info("La review actual es {}", r);
+            entityManager.persist(r);
+            entityManager.flush();
+        }
         return "redirect:/tour/"+t.getDatos().getId();
+        
     }
 
     @GetMapping("/{id}/reviewUser")
@@ -316,14 +329,10 @@ public class TourController {
 		return "{\"result\": \"mensaje sent.\"}";
 	}
 
-    @GetMapping("/{id}/crearInstancia")
-    @Transactional
-    public String crearInstancia(@PathVariable("id") long id, Model model, HttpSession session)
+	@GetMapping("/crearTour")
+    public String crearTour(Model model, HttpSession session)
     {
-        TourOfertado tour = entityManager.find(TourOfertado.class, id);
-        model.addAttribute("tour", tour);
-
-        return "crearInstancia";
+        return "crearTour";
     }
 
     @PostMapping("/crearTour")
@@ -361,31 +370,87 @@ public class TourController {
         entityManager.persist(tourO);
         entityManager.flush();
 
-        portada(tourO.getId(), portada, mapa, model, session);
-        nuevoTour(tourO.getId(), fechaIni, fechaFin, model, session);
+        portada(tourO.getId(), portada, mapa, model, session);    
+        nuevoTour(tourO.getId(), fechaIni, fechaFin, model, session);    
 
         return "redirect:/tour/" + tourO.getId();
     }
 
-    @GetMapping("/{id}/actualizarPortada")
+    @GetMapping("/{id}/editarTour")
+    public String editarTour(Model model,@PathVariable("id") long id, HttpSession session)
+    {
+        TourOfertado tour = entityManager.find(TourOfertado.class, id);
+        List<String> etiquetas = entityManager.createNamedQuery("TourOfertado.getEtiquetas")
+            .setParameter("id", id)
+            .getResultList();
+        User u = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
+        if(tour.getGuia().getId()==u.getId()){
+            model.addAttribute("tour", tour);            
+            model.addAttribute("etiquetas",etiquetas);
+            return "editarTour";
+        }
+        else{
+            return "redirect:/tour/" + tour.getId();
+
+
+        }
+    }
+
+    @PostMapping("/{id}/editarTour")
+	@Transactional
+    public String editarTour(@RequestParam String pais,
+                            @RequestParam String ciudad,
+                            @RequestParam String lugar,
+                            @RequestParam String titulo,
+                            @RequestParam String descripcion,
+                            @RequestParam int maxTuristas,
+                            @RequestParam double precio,
+                            @RequestParam("portada") MultipartFile portada,
+                            @RequestParam("mapa") MultipartFile mapa,
+                            @RequestParam String etiquetas,
+                            @PathVariable("id") long id,
+                            Model model, HttpSession session) throws IOException {
+
+        TourOfertado datos=entityManager.find(TourOfertado.class, id);
+        User u = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
+        if(datos.getGuia().getId()==u.getId()){
+            datos.setPais(pais);
+            datos.setCiudad(ciudad);
+            datos.setLugar(lugar);
+            datos.setTitulo(titulo);
+            datos.setDescripcion(descripcion);
+            datos.setMaxTuristas(maxTuristas);
+            datos.setPrecio(precio);
+            datos.setDisponible(true);
+            datos.setEtiquetas(Arrays.asList(etiquetas.split(";")));
+            portada(datos.getId(), portada, mapa, model, session);
+        }
+        
+
+        return "redirect:/tour/" + datos.getId();
+    }
+
+    /*@GetMapping("/{id}/actualizarPortada")
     @Transactional
     public String portada(@PathVariable("id") long id, Model model, HttpSession session)
     {
+        User u = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
         TourOfertado tour = entityManager.find(TourOfertado.class, id);
         model.addAttribute("tour", tour);
         model.addAttribute("inicial", true);
 
         return "portada";
-    }
+    }*/
 
 
-    @PostMapping("/{id}/portada")
+    //@PostMapping("/{id}/portada")
     @Transactional
-    public String portada(@PathVariable("id") long id, 
+    public void portada(@PathVariable("id") long id, 
                           @RequestParam("portada") MultipartFile portada,
                           @RequestParam("mapa") MultipartFile mapa,
                           Model model, HttpSession session) throws IOException{
 
+        User u = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
         log.info("Updating portada for tour {}", id);
 		File f = localData.getFile("tourOfertado/portada", String.valueOf(id)); 
 		if (portada.isEmpty()) {
@@ -416,8 +481,19 @@ public class TourController {
 			log.info("Successfully uploaded mapa for {} into {}!", id, map.getAbsolutePath());
 		}
 
-        return crearInstancia(id, model, session);
+        //return crearInstancia(id, model, session);
     }
+
+    /*@GetMapping("/{id}/crearInstancia")
+    @Transactional
+    public String crearInstancia(@PathVariable("id") long id, Model model, HttpSession session)
+    {
+        User guia = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
+        TourOfertado tour = entityManager.find(TourOfertado.class, id);
+        model.addAttribute("tour", tour);
+
+        return "crearInstancia";
+    }*/
 
     @GetMapping("/{id}/portada")
 	public StreamingResponseBody getPortada(@PathVariable long id, Model model) throws IOException {		
@@ -463,34 +539,29 @@ public class TourController {
                             Model model, HttpSession session){
 
         TourOfertado tourO = entityManager.find(TourOfertado.class, idTourO);
-        User guia = entityManager.find(User.class, tourO.getGuia().getId());
-        Tour tour = new Tour();
-
-        tour.setFechaIni(fechaIni);
-        tour.setFechaFin(fechaFin);
-        tour.setActTuristas(0);
-        tour.setDatos(tourO);
-        //Random r= new Random();
-        //int topicId = r.nextInt();
-        String topicId = UUID.randomUUID().toString();
-        topicId = topicId.replace("-", "");
-        topicId = topicId.substring(0, 10);
-        tour.setTopicId(topicId);
-        guia.getTourOfertados().add(tour);
-        tourO.getInstancias().add(tour);
-
-        entityManager.persist(tour);
-        entityManager.flush();
-
-        return "redirect:/tour/" + idTourO;
+        User guia = entityManager.find(User.class,((User)session.getAttribute("u")).getId());
+        if(guia==tourO.getGuia()){
+            Tour tour = new Tour();
+            tour.setFechaIni(fechaIni);
+            tour.setFechaFin(fechaFin);
+            tour.setActTuristas(0);
+            tour.setDatos(tourO);
+            String topicId = UUID.randomUUID().toString();
+            topicId = topicId.replace("-", "");
+            topicId = topicId.substring(0, 10);
+            tour.setTopicId(topicId);
+            guia.getTourOfertados().add(tour);
+            tourO.getInstancias().add(tour);
+        }       
+        return "redirect:/tour/" + tourO.getId();        
     }
 
-    @GetMapping(value="{id}/apuntarse")
+    /*@GetMapping(value="{id}/apuntarse")
     public String apuntarse(@PathVariable("id") Long id, Model model, HttpSession session){
         Tour t = entityManager.createNamedQuery("Tour.getTour", Tour.class)
                 .setParameter("id", id)
                 .getSingleResult();
-                List<String> etiquetas = entityManager.createNamedQuery("TourOfertado.getEtiquetas")
+        List<String> etiquetas = entityManager.createNamedQuery("TourOfertado.getEtiquetas")
                 .setParameter("id", id)
                 .getResultList();
         long id_guia = t.getDatos().getGuia().getId();
@@ -518,7 +589,7 @@ public class TourController {
         entityManager.persist(t);
         entityManager.flush();
         return "tour";
-    }
+    }*/
 
     @PostMapping("/{id}/tourReportado")
 	@Transactional

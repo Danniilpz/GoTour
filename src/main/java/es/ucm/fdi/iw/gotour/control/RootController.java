@@ -96,8 +96,8 @@ public class RootController {
         return index(model, session);
     }
 
-    @Transactional
-    @GetMapping("/")            // <-- en qué URL se expone, y por qué métodos (GET)        
+    @GetMapping("/")  
+    @Transactional          // <-- en qué URL se expone, y por qué métodos (GET)        
     public String index(        // <-- da igual, sólo para desarrolladores
             Model model, HttpSession session)        // <-- hay muchos, muchos parámetros opcionales
     {
@@ -121,7 +121,7 @@ public class RootController {
         model.addAttribute("classActiveHome","active");		
         return "index";
     }
-
+    
     public void actualizarTours(){
         List<Tour> tours = entityManager.createNamedQuery("AllTours").getResultList(); 
         for(Tour t:tours){
@@ -149,12 +149,6 @@ public class RootController {
         model.addAttribute("classActiveRegistro","active");
 		return "registro";
 	}
-
-	@GetMapping("/crearTour")
-    public String crearTour(Model model, HttpSession session)
-    {
-        return "crearTour";
-    }
 
     // Un getMapping por vista que queramos en el proyecto. Y un template por vista
 

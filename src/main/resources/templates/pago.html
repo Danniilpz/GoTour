@@ -79,18 +79,18 @@
                 <div class="row mb-5">
                   <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
                     <span class="d-inline-block text-black mb-0 caption-text" >Inicio</span>
-                    <strong class="d-block" th:text="${tour.fechaIni}">Condo</strong>
+                    <strong class="d-block" th:text="${tour.getFechaIniString()}"></strong>
                     <span class="d-inline-block text-black mb-0 caption-text" >Fin</span>
-                    <strong class="d-block" th:text="${tour.fechaFin}">2018</strong>
+                    <strong class="d-block" th:text="${tour.getFechaFinString()}"></strong>
                   </div>
                 
                   <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
-                    <span class="d-inline-block text-black mb-0 caption-text" >Ciudad</span>
-                    <strong class="d-block" th:text="${tour.datos.ciudad}">$520</strong>
+                    <span class="d-inline-block text-black mb-0 caption-text" ></span>
+                    <strong class="d-block" th:text="${tour.datos.ciudad}"></strong>
                   </div>
                   <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
-                    <span class="d-inline-block text-black mb-0 caption-text">Lugar</span>
-                    <strong class="d-block" th:text="${tour.datos.lugar}">$520</strong>
+                    <span class="d-inline-block text-black mb-0 caption-text"></span>
+                    <strong class="d-block" th:text="${tour.datos.lugar}"></strong>
                   </div>
                 </div>
                 <h2 class="h4 text-black"th:if="${session.u.numTarjeta == 0}">Introduzca sus datos de pago para completar la transacción</h2>

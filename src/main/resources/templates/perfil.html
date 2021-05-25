@@ -52,7 +52,7 @@
                            <div class="ml-3"><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editarPerfil"><a th:href="@{'/user/editarDatos'}" th:id="editarPerfil">Editar perfil</a></button></div>
                         </div>
                         <div th:if="${(session.u != null) and (session.u.id == user.id)} " >
-                           <div class="ml-3"><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#crearTour"><a th:href="@{'/crearTour'}" th:id="crearTour">Crear Tour</a></button></div>
+                           <div class="ml-3"><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#crearTour"><a th:href="@{'/tour/crearTour'}" th:id="crearTour">Crear Tour</a></button></div>
                         </div>
                         <div th:if="${(session.u != null) and (session.u.id != user.id)} " >
                            <div class="ml-3"><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#crearTour"><a th:href="@{'/user/'+${user.id}+'/reporteUser'}">Reportar</a></button></div>
@@ -86,12 +86,11 @@
                                     <div th:if="${!tour.datos.disponible}" class="property-entry h-100">
                                        <a th:href="@{'/tour/'+${tour.id}}" class="property-thumbnail">
                                           <div class="offer-type-wrap">
-                                             <span class="offer-type bg-danger">Cerrado</span>
+                                             <span class="offer-type bg-danger">CERRADO</span>
                                           </div>
                                           <img th:href="@{'/tour/'+${tour.id}}" th:src="@{/tour/{id}/portada(id=${tour.id})}" alt="Image" class="img-fluid">
                                        </a>
                                        <div class="p-4 property-body">
-                                          <a href="#" class="property-favorite"><span class="icon-heart-o"></span></a>
                                           <h2 class="property-title"  th:text="${tour.datos.guia.nombre}"><a th:href="@{'/user/' +tour.datos.guia.id+ '/perfil'}"></a></h2>
                                           <span class="property-location d-block mb-3"  th:text="${tour.datos.titulo}"><span class="property-icon icon-room"></span></span>
                                           <strong class="property-price text-primary mb-3 d-block text-success" th:text="${tour.datos.precio}+'€'"></strong>
@@ -150,7 +149,6 @@
                                  <img th:href="@{'/tour/'+${tour.id}}" th:src="@{/tour/{id}/portada(id=${tour.id})}" alt="Image" class="img-fluid">
                               </a>
                               <div class="p-4 property-body">
-                                 <a href="#" class="property-favorite"><span class="icon-heart-o"></span></a>
                                  <h2 class="property-title"  th:text="${tour.datos.guia.nombre}"><a th:href="@{'/user/' +tour.datos.guia.id+ '/perfil'}"></a></h2>
                                  <span class="property-location d-block mb-3"  th:text="${tour.datos.titulo}"><span class="property-icon icon-room"></span> Sidney, Australia</span>
                                  <strong class="property-price text-primary mb-3 d-block text-success" th:text="${tour.datos.precio}+'€'"></strong>
@@ -160,7 +158,7 @@
                                  <ul class="property-specs-wrap mb-3 mb-lg-0">
                                     <li>
                                        <span class="property-specs">Inicio</span>
-                                       <span class="property-specs-number"  th:text="'Inicio: '+${tour.fechaIni}"></span>
+                                       <span class="property-specs-number"  th:text="'Inicio: '+${tour.getFechaIniString()}"></span>
                                     </li>
                                     <li>
                                        <span class="property-specs">Turistas</span>
@@ -168,10 +166,11 @@
                                     </li>
                                     <li>
                                        <span class="property-specs">Fin</span>
-                                       <span class="property-specs-number" th:text="'Fin: '+${tour.fechaFin}"></span>
+                                       <span class="property-specs-number" th:text="'Fin: '+${tour.getFechaFinString()}"></span>
                                     </li>
                                  </ul>
                               </div>
+                              <div class="ml-3"><button type="button" class="btn btn-secondary" data-toggle="modal" ><a th:href="@{'/tour/'+${tour.id}+'/chat'}">Chat</a></button></div>
                            </div>
                            <div class="ml-3"><button type="button" class="btn btn-secondary" data-toggle="modal" ><a th:href="@{'/tour/'+${tour.id}+'/chat'}" th:id="chat+${tour.id}">Chat</a></button></div>
                         </div>
@@ -193,7 +192,6 @@
                                  <img th:href="@{'/tour/'+${tour.id}}" th:src="@{/tour/{id}/portada(id=${tour.datos.id})}" alt="Image" class="img-fluid">
                               </a>
                               <div class="p-4 property-body">
-                                 <a href="#" class="property-favorite"><span class="icon-heart-o"></span></a>
                                  <h2 class="property-title"  th:text="${tour.datos.guia.nombre}"><a th:href="@{'/user/' +tour.datos.guia.id+ '/perfil'}"></a></h2>
                                  <span class="property-location d-block mb-3"  th:text="${tour.datos.titulo}"><span class="property-icon icon-room"></span></span>
                                  <strong class="property-price text-primary mb-3 d-block text-success" th:text="${tour.datos.precio}+'€'"></strong>
@@ -203,7 +201,7 @@
                                  <ul class="property-specs-wrap mb-3 mb-lg-0">
                                     <li>
                                        <span class="property-specs">Inicio</span>
-                                       <span class="property-specs-number"  th:text="'Inicio: '+${tour.fechaIni}"></span>
+                                       <span class="property-specs-number"  th:text="'Inicio: '+${tour.getFechaIniString()}"></span>
                                     </li>
                                     <li>
                                        <span class="property-specs">Turistas</span>
@@ -211,7 +209,7 @@
                                     </li>
                                     <li>
                                        <span class="property-specs">Fin</span>
-                                       <span class="property-specs-number" th:text="'Fin: '+${tour.fechaFin}"></span>
+                                       <span class="property-specs-number" th:text="'Fin: '+${tour.getFechaFinString()}"></span>
                                     </li>
                                  </ul>
                               </div>
@@ -226,17 +224,19 @@
                      <div>
                         <h2 class="h2 text-black widget-title mb-3">Reviews</h2>
                      </div>
-                     <div class="card resenya" th:each="review: ${user.reviewsRecibidas}">
-                        <img class="card-img-top" id="user" th:src="@{~/img/defaultuser.png}" alt="user">
-                        <div class="card-body">
-                           <h5 class="card-title creador"><a th:href="@{/user/{id}/perfil(id=${review.creador.id})}" th:text="${review.creador.username}"></a></h5>
-                           <h5 class="card-title tour"><a th:href="@{/tour/{id}(id=${review.tourValorado.Id})}" th:text="${review.tourValorado.datos.titulo}"></a></h5>
-                           <div class="row">
-                              <div th:each="i: ${#numbers.sequence(1, user.puntuacion)}" class="col-lg-1"><img th:src="@{/img/estrellas.png}" width="30" /></div>
+                     <div  class="row lista-tours">
+                        <div class="card resenya col-12" th:each="review: ${user.reviewsRecibidas}">
+                           <img class="card-img-top" id="user" th:src="@{~/img/defaultuser.png}" alt="user">
+                           <div class="card-body">
+                              <h5 class="card-title creador"><a th:href="@{/user/{id}/perfil(id=${review.creador.id})}" th:text="${review.creador.username}"></a></h5>
+                              <h5 class="card-title tour"><a th:href="@{/tour/{id}(id=${review.tourValorado.Id})}" th:text="${review.tourValorado.datos.titulo}"></a></h5>
+                              <div class="row">
+                                 <div th:each="i: ${#numbers.sequence(1, review.puntuacion)}" class="col-lg-1"><img th:src="@{/img/estrellas.png}" width="30" /></div>
+                              </div>
+                              <p class="card-text textoReview" th:text="${review.texto}"></p>
                            </div>
-                           <p class="card-text textoReview" th:text="${review.texto}"></p>
                         </div>
-                     </div>
+                     </div>                     
                   </div>
                </div>
             </div>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Crear un tour</title>
+    <meta charset="utf-8">
+    <th:block th:replace="fragments/head :: header"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900|Roboto+Mono:300,400,500"> 
+    <link rel="stylesheet" th:href="@{/fonts/icomoon/style.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/css/jquery-ui.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.css}">
+    <link rel="stylesheet" th:href="@{/css/mediaelementplayer.css}">
+    <link rel="stylesheet" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" th:href="@{/fonts/flaticon/font/flaticon.css}">
+    <link rel="stylesheet" th:href="@{/css/fl-bigmug-line.css}">
+    <link rel="stylesheet" th:href="@{/css/aos.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/style_tour.css}">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script type="text/javascript" th:src="@{/js/tour.js}"></script>
+
+  </head>
+  <body>
+    <div class="site-loader"></div>
+  
+    <div class="site-wrap">
+  
+      <div class="site-mobile-menu">
+        <div class="site-mobile-menu-header">
+          <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
+          </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+      </div> <!-- .site-mobile-menu -->
+  
+      <nav th:replace="fragments/nav.html :: nav">
+        Nav goes here
+      </nav>
+
+      <div th:replace="fragments/imagenes-principales.html :: images-principales"></div>
+  
+      <div class="site-section site-section-sm">
+        <div class="container">
+          <div class="row">
+            <form class="form-tour" method="post" th:action="@{'/tour/'+${tour.id}+'/editarTour'}" enctype="multipart/form-data">
+              <div class="col-lg-8">
+
+                <div class="bg-white property-body border-bottom border-left border-right">
+
+                  <div class="row mb-5">
+                    <div class="col-md-6"><h3 class="h4 text-black widget-title mb-3">EDITAR UN TOUR OFERTADO</h3></div>
+                      <div class="col-md-6">
+                        <ul class="property-specs-wrap mb-3 mb-lg-0  float-lg-right">
+                          <li>
+                            <span class="property-specs">Nº turistas</span>
+                            <input type="number" id="maxTuristas" name="maxTuristas" value="1" min="1" th:value="${tour.maxTuristas}" required>
+                            
+                          </li>
+                          <li>
+                
+                            <span class="property-specs">Precio</span>
+                            <input type="number" id="precio" name="precio" value="5.0" step="0.01" min="0" th:value="${tour.precio}" required>
+                            
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                  <div class="row mb-5">
+                    <div class="col-md-6">
+                      <strong class="text-success h1 mb-3">Título</strong>
+                    </div>
+                    <div class="col-md-6">
+                      <input type="text" id="titulo" name="titulo" placeholder="EL Madrid del sigo XIX" th:value="${tour.titulo}" required>
+                    </div>
+                  </div>
+
+                  <div class="row mb-5">                
+                    <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
+                      <span class="d-inline-block text-black mb-0 caption-text">País</span>
+                      <input type="text" id="pais" name="pais" placeholder="España" th:value="${tour.pais}" required>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
+                      <span class="d-inline-block text-black mb-0 caption-text" >Ciudad</span>
+                      <input type="text" id="ciudad" name="ciudad" placeholder="Madrid" th:value="${tour.ciudad}" required>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
+                      <span class="d-inline-block text-black mb-0 caption-text">Lugar</span>
+                      <input type="text" id="lugar" name="lugar" placeholder="Madrid" th:value="${tour.lugar}">
+                    </div>
+                    
+                  </div>             
+                  
+                  <h2 class="h4 text-black">Descripcion</h2>
+                  <input type="text" id="descripcion" class="inputBonito" name="descripcion" placeholder="Tour por el Madrid del sigo XIX." th:value="${tour.descripcion}" required>
+                  
+                  <div class="row no-gutters mt-5">
+                    <div class="col-12">
+                      <h2 class="h4 text-black mb-3">Etiquetas</h2>
+                    </div>
+                    <input type="text" id="etiqueta">
+                    <div class="col-md-6">
+                      <span class="btn btn-lg btn-primary btn-block" onclick="anadirEtiqueta()">Añadir</span>
+                    </div>
+                    <div class="col-12 etiquetas_tour" id="etiq">
+                      <div class="d-inline" th:each="etiqueta:${etiquetas}"><button th:id="${etiqueta}" disabled th:text="${etiqueta}"></button><i class='fas fa-times' th:title="${etiqueta}" onclick='eliminarEtiqueta(this)'></i></div>
+
+                    </div>
+                    <input type="hidden" id="etiquetas" name="etiquetas">
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="col-lg-4">
+
+                <div class="bg-white widget border rounded">
+                  <h5>Imagen de portada</h5>
+                  <input type="file" id="portada" class="inputBonito" name="portada">
+
+                  <h5>Mapa del tour</h5>
+                  <input type="file" id="mapa" class="inputBonito" name="mapa">
+                </div>
+
+                <div class="bg-white widget rounded">
+                  <button class="btn btn-lg btn-primary btn-block" type="submit" >Editar tour</button>
+                </div>
+    
+              </div>
+            </form>
+            
+          </div>
+        </div>
+      </div>
+      <nav th:replace="fragments/footer.html :: footer">
+      </nav>
+  
+  <script th:src="@{~/js/jquery-migrate-3.0.1.min.js}"></script>
+  <script th:src="@{~/js/jquery-3.3.1.min.js}"></script>
+  <script th:src="@{~/js/popper.min.js}"></script>
+  <script th:src="@{~/js/jquery-ui.js}"></script>
+  <script th:src="@{~/js/owl.carousel.min.js}"></script>
+  <script th:src="@{~/js/bootstrap.min.js}"></script>
+  <script th:src="@{~/js/jquery.stellar.min.js}"></script>
+  <script th:src="@{~/js/mediaelement-and-player.min.js}"></script>
+  <script th:src="@{~/js/jquery.magnific-popup.min.js}"></script>
+  <script th:src="@{~/js/jquery.countdown.min.js}"></script>
+  <script th:src="@{~/js/aos.js}"></script>
+  <script th:src="@{~/js/bootstrap-datepicker.min.js}"></script>
+  <script th:src="@{~/js/circleaudioplayer.js}"></script>
+  <script th:src="@{~/js/main.js}"></script>
+  </body>
+</html>

@@ -109,6 +109,12 @@ public class Tour {
 		String[] parts = fechaIni.toString().split("-");
 		return "Guía desde "+parts[1]+"/"+parts[0];
 	}
+	public boolean existeReview(User u){
+		for(Review r:reviews){
+			if(r.getCreador()==u) return true;
+		}
+		return false;
+	}
 	public boolean cerrado(){
 		return this.fechaIni.isBefore(LocalDateTime.now());
 	}
