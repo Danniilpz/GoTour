@@ -140,7 +140,7 @@
                        
                     </div>
                     <div class="type_msg">
-                        <form class="input_msg_write" th:action="@{'/tour/'+${tour_id}+'/msg'}" method="POST">
+                        <form class="input_msg_write" th:action="@{'/tour/'+${tour_id}+'/msg?topic='+${topic_id}}" method="POST">
                             <input type="text" class="write_msg" id="message" placeholder="Type a message" />
                             <button class="msg_send_btn" id="sendmsg" type="submit"><i class="fa fa-paper-plane-o"
                                     aria-hidden="true"></i></button>
@@ -163,6 +163,7 @@
     <script>
         const tour_id = (document.getElementsByClassName("tour_id")[0].id).slice(4);
         const user_id = (document.getElementsByClassName("user_id")[0].id).slice(4);
+        const topic_id = document.getElementsByClassName("topic_id")[0].id;
         function formatDate(d) {
             // 2020-03-23T10:48:11.074 => 23/3/2020@10:48:18
             return new Date(d).toLocaleString("es-ES").split(" ").join(" ")
@@ -171,8 +172,9 @@
         // mostrando una tabla dinámica con datos cargados del servidor vía AJAX
         $.ajax({
             type:"GET",
-            url: config.rootUrl + "mensaje/tour/"+tour_id+"/received",
+            url: config.rootUrl + "mensaje/tour/"+tour_id+"/received?topic="+topic_id,
             success: function(data){
+                console.log(data);
                 data.forEach(element => {
                     procesarMensaje(element);
                 });

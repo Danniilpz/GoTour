@@ -183,16 +183,17 @@
 
                   <nav class="tabs-a">
                      <div class="selector"></div>
-                     <a href="#" id="turista-b" class="active"><i class="fab fa-superpowers"></i>Rol Turista</a>
-                     <a href="#" id="guia-b"><i class="fas fa-hand-rock"></i>Rol Guia</a>
-                   </nav>
+                     <a href="#" id="turista-b" class="active"><i class="fab"></i>Rol Turista</a>
+                     <a href="#" id="guia-b"><i class="fas"></i>Rol Guia</a>
+                  </nav>
 
 
                   <section id="wrapper">
                      <div class="content">
                         <!-- Tab links -->
                         <div class="tabs">
-                           <button class="tablinks guia-disp guia-first" style="display: none;" data-country="Abiertos-guia">
+                           <button class="tablinks guia-disp guia-first" style="display: none;"
+                              data-country="Abiertos-guia">
                               <p data-title="Abiertos-guia">Abiertos</p>
                            </button>
                            <button class="tablinks guia-disp" style="display: none;" data-country="Cerrados-guia">
@@ -208,7 +209,7 @@
                         <!-- Tab content -->
                         <div class="wrapper_tabcontent">
 
-                           <div id="Abiertos-guia" class="tabcontent" >
+                           <div id="Abiertos-guia" class="tabcontent">
                               <div class="row lista-tours">
                                  <div class="col-md-6 col-lg-6 mb-4" th:each="tour: ${user.tourOfertados}"
                                     th:if="${tour.datos.disponible}">
@@ -224,7 +225,8 @@
                                        <div class="p-4 property-body">
                                           <div class="fila1">
                                              <h4 class="property-location d-block mb-3" th:text="${tour.datos.titulo}">
-                                                <span class="p, h3aroperty-icon icon-room"></span> Sidney</h4>
+                                                <span class="p, h3aroperty-icon icon-room"></span> Sidney
+                                             </h4>
                                              <strong class="property-price text-primary mb-3 d-block text-success fecha"
                                                 th:text="${tour.datos.precio}+'€'"></strong>
                                           </div>
@@ -250,10 +252,8 @@
                                              </li>
                                           </ul>
                                        </div>
-                                       <button type="button" class="btn btn-secondary chat" data-toggle="modal"><a
-                                             class="property-icon icon-whatsapp"
-                                             th:href="@{'/tour/'+${tour.id}+'/chat'}"
-                                             th:id="chat+${tour.id}"></a></button>
+                                       <a class="btn btn-secondary chat property-icon icon-whatsapp"
+                                          th:href="@{'/tour/'+${tour.id}+'/chat'}" th:id="chat+${tour.id}"></a>
                                     </div>
                                  </div>
                               </div>
@@ -275,7 +275,8 @@
                                        <div class="p-4 property-body">
                                           <div class="fila1">
                                              <h4 class="property-location d-block mb-3" th:text="${tour.datos.titulo}">
-                                                <span class="p, h3aroperty-icon icon-room"></span> Sidney</h4>
+                                                <span class="p, h3aroperty-icon icon-room"></span> Sidney
+                                             </h4>
                                              <strong class="property-price text-primary mb-3 d-block text-success fecha"
                                                 th:text="${tour.datos.precio}+'€'"></strong>
                                           </div>
@@ -301,10 +302,8 @@
                                              </li>
                                           </ul>
                                        </div>
-                                       <button type="button" class="btn btn-secondary chat" data-toggle="modal"><a
-                                             class="property-icon icon-whatsapp"
-                                             th:href="@{'/tour/'+${tour.id}+'/chat'}"
-                                             th:id="chat+${tour.id}"></a></button>
+                                       <a class="btn btn-secondary chat property-icon icon-whatsapp"
+                                          th:href="@{'/tour/'+${tour.id}+'/chat'}" th:id="chat+${tour.id}"></a>
                                     </div>
                                  </div>
                               </div>
@@ -328,7 +327,8 @@
                                        <div class="p-4 property-body">
                                           <div class="fila1">
                                              <h4 class="property-location d-block mb-3" th:text="${tour.datos.titulo}">
-                                                <span class="p, h3aroperty-icon icon-room"></span> Sidney</h4>
+                                                <span class="p, h3aroperty-icon icon-room"></span> Sidney
+                                             </h4>
                                              <strong class="property-price text-primary mb-3 d-block text-success fecha"
                                                 th:text="${tour.datos.precio}+'€'"></strong>
                                           </div>
@@ -354,10 +354,8 @@
                                              </li>
                                           </ul>
                                        </div>
-                                       <button type="button" class="btn btn-secondary chat" data-toggle="modal"><a
-                                             class="property-icon icon-whatsapp"
-                                             th:href="@{'/tour/'+${tour.id}+'/chat'}"
-                                             th:id="chat+${tour.id}"></a></button>
+                                       <a class="btn btn-secondary chat property-icon icon-whatsapp"
+                                          th:href="@{'/tour/'+${tour.id}+'/chat'}" th:id="chat+${tour.id}"></a>
                                     </div>
                                  </div>
                               </div>
@@ -379,7 +377,8 @@
                                        <div class="p-4 property-body">
                                           <div class="fila1">
                                              <h4 class="property-location d-block mb-3" th:text="${tour.datos.titulo}">
-                                                <span class="p, h3aroperty-icon icon-room"></span> Sidney</h4>
+                                                <span class="p, h3aroperty-icon icon-room"></span> Sidney
+                                             </h4>
                                              <strong class="property-price text-primary mb-3 d-block text-success fecha"
                                                 th:text="${tour.datos.precio}+'€'"></strong>
                                           </div>
@@ -405,10 +404,8 @@
                                              </li>
                                           </ul>
                                        </div>
-                                       <button type="button" class="btn btn-secondary chat" data-toggle="modal"><a
-                                             class="property-icon icon-whatsapp"
-                                             th:href="@{'/tour/'+${tour.id}+'/chat'}"
-                                             th:id="chat+${tour.id}"></a></button>
+                                       <a class="btn btn-secondary chat property-icon icon-whatsapp"
+                                          th:href="@{'/tour/'+${tour.id}+'/chat'}" th:id="chat+${tour.id}"></a>
                                     </div>
                                  </div>
                               </div>

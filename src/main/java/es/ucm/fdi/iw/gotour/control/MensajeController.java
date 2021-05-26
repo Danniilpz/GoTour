@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,20 +35,18 @@ public class MensajeController {
 	
 	@Autowired 
 	private EntityManager entityManager;
-		
-	@GetMapping("/")
-	public String getMensajes(Model model, HttpSession session) {
-		model.addAttribute("users", entityManager.createQuery(
-			"SELECT u FROM User u").getResultList());
-		return "chat";
-	}
+	
 
-	@GetMapping(path = "tour/{id}/received", produces = "application/json")
+	@GetMapping(path = "/tour/{id}/received", produces = "application/json")
 	@Transactional // para no recibir resultados inconsistentes
 	@ResponseBody  // para indicar que no devuelve vista, sino un objeto (jsonizado)
-	public List<Mensaje.Transfer> retrieveMensajes(@PathVariable long id,HttpSession session) {
+	public List<Mensaje.Transfer> retrieveMensajes(@PathVariable long id, @RequestParam String topic, HttpSession session) {
 		Tour u = entityManager.find(Tour.class, id);
-		return  u.getMensajes().stream().map(Transferable::toTransfer).collect(Collectors.toList());
+		if((u.getTopicId()).equals(topic)){
+			return u.getMensajes().stream().map(Transferable::toTransfer).collect(Collectors.toList());
+		}
+		return null;
+		
 	}	
 	
 	/*@GetMapping(path = "/unread", produces = "application/json")

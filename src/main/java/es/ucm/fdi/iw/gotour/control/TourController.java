@@ -278,12 +278,13 @@ public class TourController {
     @PostMapping("/{id}/msg")
 	@ResponseBody
 	@Transactional
-	public String postMsg(@PathVariable long id, 
-			@RequestBody JsonNode o, Model model, HttpSession session) 
-		throws JsonProcessingException {
+	public String postMsg(@PathVariable long id, @RequestParam String topic, @RequestBody JsonNode o, Model model, HttpSession session) throws JsonProcessingException {
 		
 		String text = o.get("message").asText();
 		Tour tour = entityManager.find(Tour.class, id);
+        if(!(tour.getTopicId()).equals(topic)){
+            return null;
+        }
         log.info("El tour con id {} es {}",id, tour.getId());
 		User sender = entityManager.find(
 				User.class, ((User)session.getAttribute("u")).getId());
@@ -470,8 +471,6 @@ public class TourController {
         tour.setFechaFin(fechaFin);
         tour.setActTuristas(0);
         tour.setDatos(tourO);
-        //Random r= new Random();
-        //int topicId = r.nextInt();
         String topicId = UUID.randomUUID().toString();
         topicId = topicId.replace("-", "");
         topicId = topicId.substring(0, 10);
