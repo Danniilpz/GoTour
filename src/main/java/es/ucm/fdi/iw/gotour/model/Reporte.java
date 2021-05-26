@@ -32,7 +32,7 @@ import lombok.AllArgsConstructor;
 @NamedQueries({
 	@NamedQuery(name="AllReportes", query="Select r from Reporte r"),
 	@NamedQuery(name="AllTypeReportes", query="Select r from Reporte r  where r.tipo=:tipo"),
-	@NamedQuery(name="ReportesByAdminSearch", query="Select r from Reporte r  where r.creador = :usernameParam")
+	@NamedQuery(name="ReportesByAdminSearch", query="Select r from Reporte r  where r.creador LIKE :usernameParam OR r.motivo LIKE :motivoParam OR r.texto LIKE :textoParam")
 	
 })
 public class Reporte {
