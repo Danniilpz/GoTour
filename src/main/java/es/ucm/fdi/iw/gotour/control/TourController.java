@@ -166,6 +166,16 @@ public class TourController {
 		return pasado ? "index" : "pago";
 	}
 
+    @PostMapping("/{id}/cancelar")
+    @Transactional
+    public String cancelar(@PathVariable("id") long id,Model model,@RequestParam int turistascancel,HttpSession session){
+        Tour t = entityManager.find(Tour.class, id);
+        User u = entityManager.find(User.class,      // IMPORTANTE: tiene que ser el de la BD, no vale el de la sesión
+            ((User)session.getAttribute("u")).getId());
+        t.delTurista(u, turistascancel);
+        return "redirect:/";
+    }
+
     @PostMapping("/{id}/valorar")
     @Transactional
     public String valorar(@PathVariable("id") long id,@RequestParam int valoracion, @RequestParam String textoReview, Model model, HttpSession session){

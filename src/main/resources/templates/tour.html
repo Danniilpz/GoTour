@@ -224,6 +224,17 @@
                         <input type="submit" id="contratar" class="btn btn-primary" value="Contratar">
                       </div>
                     </form>
+
+                    <h3 class="h4 text-black widget-title mb-3" th:unless="${session.u.id == tour.guia.id && session.u.toursAsistidos.contains(t) || t.cerrado()}">Cancelar Inscripcion</h3>
+                    <form method="post" class="form-contact-agent" th:action="@{/tour/{id}/cancelar(id=${t.id})}" th:unless="${session.u.id == tour.guia.id && session.u.toursAsistidos.contains(t) || t.cerrado()}">
+                      <div class="form-group">
+                        <label for="phone">Indique el numero de plazas que van a quedar libre</label>
+                        <input name="turistascancel" id="turistascancel" type="number" class="form-control" value="1"  min="1" th:max="${tour.maxTuristas}">
+                      </div>
+                      <div class="form-group" >
+                        <input type="submit" id="cancelar" class="btn btn-primary" value="Cancelar">
+                      </div>
+                    </form>
                     </div>
                     
 

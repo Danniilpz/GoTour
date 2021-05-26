@@ -90,6 +90,15 @@ public class Tour {
 			u.addTour(this);
 		}
 	}
+	public void delTurista(User u,int numero){
+		if(turistas.contains(u) && numero <= actTuristas){
+			turistas.remove(u);
+			actTuristas-=numero;
+			u.delTour(this);
+		}
+	}
+
+
 	public void addTurista(int numero){
 		if(datos.getMaxTuristas() >= (actTuristas+numero)){
 			actTuristas+=numero;

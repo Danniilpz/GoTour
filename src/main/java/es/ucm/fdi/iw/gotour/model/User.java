@@ -209,6 +209,10 @@ public class User implements Transferable<User.Transfer> {
 		this.toursAsistidos.add(t);
 	}
 
+	public void delTour(Tour t){
+		this.toursAsistidos.remove(t);
+	}
+
 	public void addLanguaje(String idioma){
 		idiomasHablados.add(idioma);
 	}
