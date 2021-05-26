@@ -1,109 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <title>Iniciar sesion</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900|Roboto+Mono:300,400,500"> 
-    <link rel="stylesheet" th:href="@{~/fonts/icomoon/style.css}">
+<head>
+  <title>GoTour</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" th:href="@{~/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{~/css/magnific-popup.css}">
-    <link rel="stylesheet" th:href="@{~/css/jquery-ui.css}">
-    <link rel="stylesheet" th:href="@{~/css/owl.carousel.min.css}">
-    <link rel="stylesheet" th:href="@{~/css/owl.theme.default.min.css}">
-    <link rel="stylesheet" th:href="@{~/css/bootstrap-datepicker.css}">
-    <link rel="stylesheet" th:href="@{~/css/mediaelementplayer.css}">
-    <link rel="stylesheet" th:href="@{~/css/animate.css}">
-    <link rel="stylesheet" th:href="@{~/fonts/flaticon/font/flaticon.css}">
-    <link rel="stylesheet" th:href="@{~/css/fl-bigmug-line.css}">
-    
-  
-    <link rel="stylesheet" th:href="@{~/css/aos.css}">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" th:href="@{~/css/style.css}">
-    
-  </head>
-  <body>
-  
-  <div class="site-loader"></div>
-  
-  <div class="site-wrap">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <div class="site-mobile-menu">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
+  <link rel="stylesheet" href="css/login.css">
+
+</head>
+
+<body class="img js-fullheight" style="background-image: url(img/bg.jpg);">
+  <section class="ftco-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 text-center mb-5">
+          <h2 class="heading-section">Go Tour</h2>
         </div>
       </div>
-      <div class="site-mobile-menu-body"></div>
-    </div> <!-- .site-mobile-menu -->
-
-    <nav th:replace="fragments/nav.html :: nav">
-      Nav goes here
-    </nav>
-
-
-    <div class="site-blocks-cover inner-page-cover overlay" th:style="'background-image:url(' + @{img/hero_bg_2.jpg} + ');'" data-aos="fade" data-stellar-background-ratio="0.5">
-      <div class="container">
-        <div class="row align-items-center justify-content-center text-center">
-          <div class="col-md-10">
-            <form th:action="@{/login}" method="post" class="d-inline-block bg-success text-white px-3 mb-3 property-offer-type rounded">
-
-              
-              <form method="post" th:action="@{~/login}" class="form-signin">
-              
-                <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="font-weight-bold" for="fullname">Username</label>
-                  <input type="text" id="username" name="username" 
-                  class="form-control" placeholder="Username" required="required"></input>
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+          <div class="login-wrap p-0">
+            <h3 class="mb-4 text-center">Have an account?</h3>
+            <form method="post" th:action="@{~/login}" class="signin-form">
+              <div class="form-group">
+                <input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
+              </div>
+              <div class="form-group">
+                <input id="password" name="password" type="password" class="form-control" placeholder="Password"
+                  required>
+                <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
+              </div>
+              <div class="form-group d-md-flex">
+                <div class="w-50">
+                  <label class="checkbox-wrap checkbox-primary">Remember Me
+                    <input type="checkbox" checked>
+                    <span class="checkmark"></span>
+                  </label>
                 </div>
-          
-
-                <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="font-weight-bold" for="fullname">Contraseña</label>
-                  <input type="password" id="password" name="password" 
-                  class="form-control" placeholder="Password" required="required"></input>
-                </div>
-            
-             
-
-                <br>
-                <div class="col-md-12">
-                  <input type="submit"  class="btn btn-primary  py-2 px-4 rounded-0">
+                <div class="w-50 text-md-right">
+                  <a href="#" style="color: #fff">Forgot Password</a>
                 </div>
               </div>
-
-  
             </form>
+            <p class="w-100 text-center">&mdash; Don't have an account? &mdash;</p>
+            <div class="social d-flex text-center">
+              <a th:href="@{/registro}" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Sing Up</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </section>
 
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/login.js"></script>
 
-    
+</body>
 
-
-
-  </div>
-
-  <!-- <script th:src="@{~/js/jquery-migrate-3.0.1.min.js}"></script> -->
-  <script th:src="@{~/js/jquery-3.3.1.min.js}"></script>
-  <script th:src="@{~/js/jquery-ui.js}"></script>
-  <script th:src="@{~/js/popper.min.js}"></script>
-  <script th:src="@{~/js/bootstrap.min.js}"></script>
-  <script th:src="@{~/js/owl.carousel.min.js}"></script>
-  <script th:src="@{~/js/mediaelement-and-player.min.js}"></script>
-  <script th:src="@{~/js/jquery.stellar.min.js}"></script>
-  <script th:src="@{~/js/jquery.countdown.min.js}"></script>
-  <script th:src="@{~/js/jquery.magnific-popup.min.js}"></script>
-  <script th:src="@{~/js/bootstrap-datepicker.min.js}"></script>
-  <script th:src="@{~/js/aos.js}"></script>
-  <script th:src="@{~/js/circleaudioplayer.js}"></script>
-
-  <script th:src="@{~/js/main.js}"></script>
-    
-  </body>
 </html>
