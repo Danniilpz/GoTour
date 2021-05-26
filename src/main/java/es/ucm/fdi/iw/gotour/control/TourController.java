@@ -519,7 +519,7 @@ public class TourController {
         userCreador.getReporteCreados().add(r);
         entityManager.persist(r);
         entityManager.flush();
-		List<User> users = entityManager.createNamedQuery("AdminUsers").getResultList(); 
+		List<User> users = entityManager.createNamedQuery("RolSearchUsers").setParameter("rolparameter", "ADMIN").getResultList(); 
 
 		for(int i=0; i<users.size();i++){
 			User admin=users.get(i);
