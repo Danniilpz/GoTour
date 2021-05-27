@@ -61,12 +61,12 @@ import lombok.AllArgsConstructor;
 		@NamedQuery(name="userByLogin",
 				query="select u from User u where u.email = :loginParam"),
 		@NamedQuery(name="AllUsers", query="Select u from User u"),
-		@NamedQuery(name="AdminUsers", query="SELECT u FROM User u "
-		+ "WHERE role='ADMIN'"),
+		@NamedQuery(name="RolSearchUsers", query="SELECT u FROM User u "
+		+ "WHERE Roles = :rolparameter"),
 		@NamedQuery(name="AllUsersByPuntuacion",
 				query="select u from User u order by puntuacion desc"),
 		@NamedQuery(name="UsersByAdminSearch", query="SELECT u FROM User u "
-		+ "WHERE u.username = :usernameParam or u.email = :emailParam"),
+		+ "WHERE u.username LIKE :usernameParam OR u.email LIKE :emailParam ")
 		@NamedQuery(name="UserByReview", 
 				query ="select r.destinatario FROM Review r WHERE r.creador.id =:guiaParam AND r.tourValorado.id =:tourParam")
 		// @NamedQuery(name="User.byTour",

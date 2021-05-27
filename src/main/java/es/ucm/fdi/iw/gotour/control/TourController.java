@@ -626,15 +626,13 @@ public class TourController {
         userCreador.getReporteCreados().add(r);
         entityManager.persist(r);
         entityManager.flush();
-		List<User> users = entityManager.createNamedQuery("AllUsers").getResultList(); 
+		List<User> users = entityManager.createNamedQuery("RolSearchUsers").setParameter("rolparameter", "ADMIN").getResultList(); 
 
 		for(int i=0; i<users.size();i++){
 			User admin=users.get(i);
 			boolean a=false;
-			if(admin.hasRole(Role.ADMIN)){
-				a=true;
-				admin.getReporteRecibidos().add(r);
-			}
+			admin.getReporteRecibidos().add(r);
+			
 		}
         
 		return "gracias-reporte-ha-sido-recibido";

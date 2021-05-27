@@ -57,7 +57,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Direccion Email</label>
-                          <input type="email" class="form-control" name="email">
+                          <input type="text" class="form-control" name="email">
                         </div>
                       </div>
                     </div>
@@ -99,19 +99,19 @@
                       </thead>
                       <tbody>
                         <tr th:each="user: ${users}">
-                          <td  th:text="${user.id}" th:if="${user.enabled == 1}">
+                          <td  th:text="${user.Id}">
                             
                           </td>
-                          <td th:text="${user.username}" th:if="${user.enabled == 1}">
+                          <td th:text="${user.Username}">
                             
                           </td>
-                          <td th:text="${user.email}" th:if="${user.enabled == 1}">
+                          <td th:text="${user.email}">
                          
                           </td> 
                           <td>
-                            <form method="post" th:action="@{/admin/toggleuser(id=${user.id})}">
-                              <button type="submit" class="btn btn-primary" th:if="${user.enabled == 1}">Deshabilitar</button>
-                              
+                            <form method="post" th:action="@{/admin/toggleuser(id=${user.Id})}">
+                              <button type="submit" class="btn btn-primary" th:if="${user.Enabled == 1}">Deshabilitar</button>
+                              <button type="submit" class="btn btn-primary" th:if="${user.Enabled == 0}">Habilitar</button>
                             </form>
                             
                           </td>

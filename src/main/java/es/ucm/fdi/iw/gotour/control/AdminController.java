@@ -143,7 +143,16 @@ public class AdminController {
 			// enable user
 			target.setEnabled(1);
 		}
-		return index(model);
+		List<User> users = entityManager.createNamedQuery("AllUsers").getResultList();        
+        // dumps them via log
+        log.info("Dumping table {}", "user");
+        for (Object o : users) {
+            log.info("\t{}", o);
+        }        
+        // adds them to model
+        model.addAttribute("users", users);
+		model.addAttribute("classActiveUsers","active");
+		return "admin/users";
 	}
 
 
@@ -228,7 +237,7 @@ public class AdminController {
 
 											
         List<Reporte> busqueda = entityManager.createNamedQuery("ReportesByAdminSearch")
-            .setParameter("usernameParam", username).getResultList();      	
+            .setParameter("usernameParam",  "%" + username + "%").setParameter("motivoParam",  "%" + motivo + "%").setParameter("textoParam",  "%" + texto + "%").getResultList();      	
         model.addAttribute("busqueda", busqueda);
 		
         return reporteBusqueda(model,busqueda);
@@ -286,10 +295,12 @@ public class AdminController {
                                         ,@RequestParam String email
                                         ){
 
-											
+					
         List<User> busqueda = entityManager.createNamedQuery("UsersByAdminSearch")
-            .setParameter("usernameParam", username)
-            .setParameter("emailParam", email).getResultList();      	
+            .setParameter("usernameParam", "%" + username + "%") 
+            .setParameter("emailParam","%" + email + "%").getResultList();
+	
+
         model.addAttribute("busqueda", busqueda);
 		
         return userBusqueda(model,busqueda);
