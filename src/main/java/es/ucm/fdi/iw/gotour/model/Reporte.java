@@ -31,9 +31,15 @@ import lombok.AllArgsConstructor;
 @Data
 @NamedQueries({
 	@NamedQuery(name="AllReportes", query="Select r from Reporte r"),
-	@NamedQuery(name="AllTypeReportes", query="Select r from Reporte r  where r.tipo=:tipo"),
-	@NamedQuery(name="ReportesByAdminSearch", query="Select r from Reporte r  where r.creador LIKE :usernameParam OR r.motivo LIKE :motivoParam OR r.texto LIKE :textoParam")
-	
+	@NamedQuery(name="TypeReportes", query="Select r from Reporte r  where r.tipo=:tipoparam"),
+	@NamedQuery(name="ReportesByAdminSearchTodo", query="Select r from Reporte r  where r.creador LIKE :usernameParam OR r.motivo LIKE :motivoParam OR r.texto LIKE :textoParam"),
+	@NamedQuery(name="ReportesByAdminSearchCreadorMotivo", query="Select r from Reporte r  where r.creador LIKE :usernameParam OR r.motivo LIKE :motivoParam"),
+	@NamedQuery(name="ReportesByAdminSearchCreadorTexto", query="Select r from Reporte r  where r.creador LIKE :usernameParam  OR r.texto LIKE :textoParam"),
+	@NamedQuery(name="ReportesByAdminSearchMotivoTexto", query="Select r from Reporte r  where  r.motivo LIKE :motivoParam OR r.texto LIKE :textoParam"),
+	@NamedQuery(name="ReportesByAdminSearchUser", query="Select r from Reporte r  where r.creador LIKE :usernameParam "),
+	@NamedQuery(name="ReportesByAdminSearchMotivo", query="Select r from Reporte r  where r.motivo LIKE :motivoParam "),
+	@NamedQuery(name="ReportesByAdminSearchTexto", query="Select r from Reporte r  where  r.texto LIKE :textoParam")
+
 })
 public class Reporte {
 
