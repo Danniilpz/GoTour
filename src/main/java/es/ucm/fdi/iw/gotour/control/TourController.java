@@ -545,10 +545,9 @@ public class TourController {
             tour.setTopicId(topicId);
             guia.getTourOfertados().add(tour);
             tourO.getInstancias().add(tour);
-        entityManager.persist(tour);
-        entityManager.flush();
+            entityManager.persist(tour);
+            entityManager.flush();
         }       
-        return "redirect:/tour/" + idTourO;
     }
 
     /*@GetMapping(value="{id}/apuntarse")
