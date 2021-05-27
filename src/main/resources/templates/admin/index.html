@@ -19,6 +19,16 @@
   <link th:href="@{/admin/assets/css/material-dashboard.css?v=2.1.2}" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link th:href="@{/admin/assets/demo/demo.css}" rel="stylesheet}" />
+  <script>
+    $('nav link').click(function(e) {
+        //e.preventDefault();
+        var $this = $(this);
+        $this.closest('ul').find('tab-content,tab-pane.active').removeClass('active');
+        $this.addClass('active');
+        $this.parent().addClass('active');
+
+    });
+  </script>
 </head>
 
 <body class="">
@@ -103,15 +113,15 @@
                       <span class="nav-tabs-title">Reportes:</span>
                       <ul class="nav nav-tabs" data-tabs="tabs">
                         <li class="nav-item">
-                          <a class="nav-link active" data-toggle="tab">
+                          <a class="nav-link" data-toggle="tab">
                             De Usuario
-                            <div class="ripple-container" th:text="${reportesUserNumber}"></div>
+                            <div class="ripple-container" ></div>
                           </a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="#messages" data-toggle="tab">
+                          <a class="nav-link"  data-toggle="tab">
                              De Tours
-                            <div class="ripple-container" th:text="${reportesTourNumber}"></div>
+                            <div class="ripple-container"></div>
                           </a>
                         </li>
                        
@@ -124,7 +134,7 @@
                     <div class="tab-pane active" id="profile">
                       <table class="table">
                         <tbody>
-                          <tr th:each="reporte: ${reportes}">
+                          <tr th:each="reporte: ${reportesUser}">
                         
                             <td th:text="${reporte.motivo}" ></td>
                             <td class="td-actions text-right">
@@ -143,7 +153,7 @@
                     <div class="tab-pane" id="messages">
                       <table class="table">
                         <tbody>
-                          <tr th:each="reporte: ${reportes}">
+                          <tr th:each="reporte: ${reportesTour}">
                         
                             <td th:text="${reporte.motivo}" ></td>
                             <td class="td-actions text-right">

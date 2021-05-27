@@ -96,17 +96,18 @@ public class AdminController {
         int reportesNumber=0;
 		reportesNumber= reportes.size();
   
-		List<Reporte> reportesTour= entityManager.createNamedQuery("AllTypeReportes").setParameter("tipo", "TOUR").getResultList();
-		List<Reporte> reportesUser= entityManager.createNamedQuery("AllTypeReportes").setParameter("tipo", "USER").getResultList();
+		List<Reporte> reportesTour= entityManager.createNamedQuery("TypeReportes").setParameter("tipoparam", "TOUR").getResultList();
+		List<Reporte> reportesUser= entityManager.createNamedQuery("TypeReportes").setParameter("tipoparam", "USER").getResultList();
       
 		
 
 		int reportesTourNumber=0;
         reportesTourNumber=reportesTour.size();
-
+		
 		int reportesUserNumber=0;
         reportesUserNumber=reportesUser.size();
-		
+		System.out.println("Macarrones "+reportesTourNumber);
+		System.out.println("Pizza "+reportesUserNumber);
         // adds them to model
         model.addAttribute("userNumber", userNumber);
 		model.addAttribute("users", users);
@@ -115,8 +116,8 @@ public class AdminController {
 		model.addAttribute("reportesNumber", reportesNumber);
 		model.addAttribute("reportesUser", reportesTour);
 		model.addAttribute("reportesTour", reportesUser);
-		model.addAttribute("reportesUser", reportesTourNumber);
-		model.addAttribute("reportesTour", reportesUserNumber);
+		model.addAttribute("reportesUserNumber", reportesTourNumber);
+		model.addAttribute("reportesTourNumber", reportesUserNumber);
 		model.addAttribute("classActiveAdmin","active");		
         return "admin/index";
 
@@ -198,14 +199,11 @@ public class AdminController {
 		model.addAttribute("activeProfiles", env.getActiveProfiles());
 		model.addAttribute("basePath", env.getProperty("es.ucm.fdi.base-path"));
 		model.addAttribute("debug", env.getProperty("es.ucm.fdi.debug"));
-		List<Reporte> reportes = entityManager.createNamedQuery("AllReportes").getResultList();        
-        // dumps them via log
-        log.info("Dumping table {}", "user");
-        for (Object o : reportes) {
-            log.info("\t{}", o);
-        }        
+		List<Reporte> reportesTour= entityManager.createNamedQuery("TypeReportes").setParameter("tipoparam", "TOUR").getResultList();
+		List<Reporte> reportesUser= entityManager.createNamedQuery("TypeReportes").setParameter("tipoparam", "USER").getResultList();     
         // adds them to model
-        model.addAttribute("reportes", reportes);
+        model.addAttribute("reportesTour", reportesTour);
+		model.addAttribute("reportesUser", reportesUser);
 		model.addAttribute("classActiveReportes","active");
 		
 		return "admin/reportes-usuarios";
@@ -225,19 +223,70 @@ public class AdminController {
             log.info("\t{}", o);
         }        
         // adds them to model
-        model.addAttribute("reportes", reportes);
+		model.addAttribute("reportesTour", reportes);
+        model.addAttribute("reportesUser", reportes);
 		model.addAttribute("classActiveReportes","active");
 		return "admin/reporte-usuario";
 	}
+
 
 	@PostMapping("/reporteSearch")
     public String searchReporte(Model model,@RequestParam String username
                                         , @RequestParam String motivo, @RequestParam String texto
                                         ){
+        List<Reporte> busqueda = new ArrayList<Reporte>();
+		
+		if(username.length()>0&&motivo.length()>0&&texto.length()>0){
+			System.out.println("Pizza1");
+			busqueda = entityManager.createNamedQuery("ReportesByAdminSearchTodo")
+            .setParameter("usernameParam",  "%" + username + "%").setParameter("motivoParam",  "%" + motivo + "%").setParameter("textoParam",  "%" + texto + "%").getResultList();
+		}else{
+			if(username.length()>0&&motivo.length()>0&&texto.length()<1){
+				System.out.println("Pizza2");
+				busqueda = entityManager.createNamedQuery("ReportesByAdminSearchCreadorMotivo")
+            .setParameter("usernameParam",  "%" + username + "%").setParameter("motivoParam",  "%" + motivo + "%").getResultList();
 
-											
-        List<Reporte> busqueda = entityManager.createNamedQuery("ReportesByAdminSearch")
-            .setParameter("usernameParam",  "%" + username + "%").setParameter("motivoParam",  "%" + motivo + "%").setParameter("textoParam",  "%" + texto + "%").getResultList();      	
+			}else{
+				if(username.length()>0&&motivo.length()<1&&texto.length()>0){
+					System.out.println("Pizza3");
+					busqueda = entityManager.createNamedQuery("ReportesByAdminSearchCreadorTexto")
+            .setParameter("usernameParam",  "%" + username + "%").setParameter("textoParam",  "%" + texto + "%").getResultList();
+					
+				}else{
+
+					if(username.length()<1&&motivo.length()>0&&texto.length()>0){
+						System.out.println("Pizza4");
+						busqueda = entityManager.createNamedQuery("ReportesByAdminSearchMotivoTexto").setParameter("motivoParam",  "%" + motivo + "%").setParameter("textoParam",  "%" + texto + "%").getResultList();
+
+					}else{
+						if(username.length()>0&&motivo.length()<1&&texto.length()<1){
+							System.out.println("Pizza5");
+							busqueda = entityManager.createNamedQuery("ReportesByAdminSearchUser").setParameter("usernameParam",  "%" + username + "%").getResultList();
+							
+						}else{
+
+							if(username.length()<1&&motivo.length()>0&&texto.length()<1){
+								System.out.println("Pizza6");
+								busqueda = entityManager.createNamedQuery("ReportesByAdminSearchMotivo").setParameter("motivoParam",  "%" + motivo + "%").getResultList();
+		
+							}else{
+								if(username.length()<1&&motivo.length()<1&&texto.length()>0){
+									System.out.println("Pizza7");
+									busqueda = entityManager.createNamedQuery("ReportesByAdminSearchTexto")
+            .setParameter("textoParam",  "%" + texto + "%").getResultList();
+								}
+
+							}
+
+
+						}
+					}
+
+				}
+
+			}
+		}
+             	
         model.addAttribute("busqueda", busqueda);
 		
         return reporteBusqueda(model,busqueda);
@@ -295,10 +344,25 @@ public class AdminController {
                                         ,@RequestParam String email
                                         ){
 
-					
-        List<User> busqueda = entityManager.createNamedQuery("UsersByAdminSearch")
+		List<User> busqueda= new ArrayList<User>();
+        if(username.length()>0&&email.length()>0){
+			busqueda = entityManager.createNamedQuery("UsersByAdminSearchEmailUser")
             .setParameter("usernameParam", "%" + username + "%") 
             .setParameter("emailParam","%" + email + "%").getResultList();
+
+		}else{
+			if(username.length()>0&&email.length()<1){
+				busqueda = entityManager.createNamedQuery("UsersByAdminSearchUser")
+				.setParameter("usernameParam", "%" + username + "%").getResultList();
+	
+			}else{
+				if(username.length()<1&&email.length()>0){
+					busqueda = entityManager.createNamedQuery("UsersByAdminSearchEmail").setParameter("emailParam","%" + email + "%").getResultList();
+		
+				}
+			}
+		}
+       
 	
 
         model.addAttribute("busqueda", busqueda);
