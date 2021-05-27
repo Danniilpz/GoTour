@@ -254,12 +254,12 @@ public class TourController {
         }        
         // adds them to model
         log.info("LOS TURISTAS SON {}", asistentes);
-        if(!u.getToursAsistidos().contains(t)){
-            t.addTurista(u, asistentes);
-        }
-        else{
-            t.addTurista(asistentes);
-        }
+        // if(!u.getToursAsistidos().contains(t)){
+        //     t.addTurista(u, asistentes);
+        // }
+        // else{
+        //     t.addTurista(asistentes);
+        // }
 
         model.addAttribute("tours", tours);
         session.setAttribute("u", u);	

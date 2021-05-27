@@ -161,6 +161,9 @@ public class User implements Transferable<User.Transfer> {
 	@ManyToMany(targetEntity=Tour.class, fetch=FetchType.EAGER)
 	private List<Tour> toursAsistidos=new ArrayList<>(); 
 
+	@OneToMany(mappedBy = "usuario",  fetch=FetchType.EAGER)
+	private List<Reserva> reservas=new ArrayList<>(); 
+
 	@OneToMany(targetEntity=Review.class, fetch=FetchType.EAGER)
 	@JoinColumn(name="Creador_id")
 	private List<Review> reviewsHechas=new ArrayList<>();
@@ -244,6 +247,7 @@ public class User implements Transferable<User.Transfer> {
 		private int puntuacion;
 		private List<Tour> tourOfertados;
 		private List<Tour> toursAsistidos;
+		private List<Reserva> reservas;
 		private List<Review> reviewsHechas;
 		private List<Mensaje> sent;
 		private List<Mensaje> received;
@@ -257,7 +261,7 @@ public class User implements Transferable<User.Transfer> {
 
 	@Override
     public Transfer toTransfer() {
-		return new Transfer(id, apellidos, nombre,	username, numTelefono, puntuacion, tourOfertados, toursAsistidos, reviewsHechas, sent,  received, reviewsRecibidas, idiomasHablados, reporteRecibidos, reporteCreados, reportesAdmin);
+		return new Transfer(id, apellidos, nombre,	username, numTelefono, puntuacion, tourOfertados, toursAsistidos, reservas, reviewsHechas, sent,  received, reviewsRecibidas, idiomasHablados, reporteRecibidos, reporteCreados, reportesAdmin);
     }
 
 	@Override

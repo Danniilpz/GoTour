@@ -86,18 +86,21 @@ public class Tour {
 	@ManyToMany (mappedBy="toursAsistidos", fetch=FetchType.EAGER)
 	public List<User>  turistas = new ArrayList<>();
 
+	@OneToMany (mappedBy = "tourReservado",  fetch=FetchType.EAGER)
+	private List<Reserva> reservas = new ArrayList();
+
 	public void addTurista(User u,int numero){
 		if(datos.getMaxTuristas() >= (actTuristas+numero)){
 			turistas.add(u);
 			actTuristas+=numero;
-			u.addTour(this);
+			// u.addTour(this);
 		}
 	}
 	public void delTurista(User u,int numero){
 		if(turistas.contains(u) && numero <= actTuristas){
 			turistas.remove(u);
 			actTuristas-=numero;
-			u.delTour(this);
+			// u.delTour(this);
 		}
 	}
 
