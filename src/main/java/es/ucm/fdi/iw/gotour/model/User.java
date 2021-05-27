@@ -71,7 +71,7 @@ import lombok.AllArgsConstructor;
 		+ "WHERE u.username LIKE :usernameParam"),
 		@NamedQuery(name="UsersByAdminSearchEmail", query="SELECT u FROM User u "
 		+ "WHERE  u.email LIKE :emailParam "
-		)
+		),
 		@NamedQuery(name="UserByReview", 
 				query ="select r.destinatario FROM Review r WHERE r.creador.id =:guiaParam AND r.tourValorado.id =:tourParam")
 		// @NamedQuery(name="User.byTour",
