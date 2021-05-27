@@ -1,67 +1,72 @@
-.etiquetas_tour{
-    margin-top: 10px;
-    display: flex;
+.etiquetas_tour {
+  margin-top: 10px;
+  display: flex;
 }
 
-.guia_tour_foto{
-    width: 100%;
+.guia_tour_foto {
+  width: 100%;
 }
-.estrellas{
-    width: 70%;
-    margin: 5%;
+
+.estrellas {
+  width: 70%;
+  margin: 5%;
 }
-.card_guia{
-    text-align: center;
+
+.card_guia {
+  text-align: center;
 
 }
 
-.idiomas{
-    font-size: 20px;
-    font-weight: lighter;
-    margin: 0;
-}
-.box_idiomas{
-    border: 1px solid lightgray;
-    border-radius: 05px;
-    margin: 20px;
+.idiomas {
+  font-size: 20px;
+  font-weight: lighter;
+  margin: 0;
 }
 
-.contratacion{
-    display: none;
+.box_idiomas {
+  border: 1px solid lightgray;
+  border-radius: 05px;
+  margin: 20px;
+  max-height: 200px;
+  overflow: auto;
 }
-  
-  .droppy .dropbtn {
-    font-size: 16px;  
-    border: none;
-    outline: none;
-    padding: 14px 16px;
-    background-color: inherit;
-    font-family: inherit;
-    margin: 0;
-  }
-  
-  .droppydown-content {
-    display: none;
-    text-decoration: none;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  .droppydown-content a {
-    float: none;
-    color: black;
-    display: block;
-  }
-  
-  .droppydown-content a:hover {
-    background-color: rgb(148, 141, 141);
-    cursor: pointer;
-  }
-  
-  .droppy:hover .droppydown-content {
-    display: block;
-  }
+
+.contratacion {
+  display: none;
+}
+
+.droppy .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.droppydown-content {
+  display: none;
+  text-decoration: none;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.droppydown-content a {
+  float: none;
+  color: black;
+  display: block;
+}
+
+.droppydown-content a:hover {
+  background-color: rgb(148, 141, 141);
+  cursor: pointer;
+}
+
+.droppy:hover .droppydown-content {
+  display: block;
+}
 
 #divFinal {
   margin: 20px;
@@ -73,18 +78,18 @@
   display: none;
 }
 
-.convocatorias{
+.convocatorias {
   text-align: center;
 }
 
-.margen{
+.margen {
   margin: 20px;
 }
 
-form{
+form {
   display: contents;
 }
 
-.inputBonito{
+.inputBonito {
   width: -webkit-fill-available;
 }

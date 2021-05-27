@@ -88,7 +88,9 @@
                                           <div class="offer-type-wrap">
                                              <span class="offer-type bg-danger">CERRADO</span>
                                           </div>
-                                          <img th:href="@{'/tour/'+${tour.datos.id}}" th:src="@{/tour/{id}/portada(id=${tour.id})}" alt="Image" class="img-fluid">
+                                          <div class="img-tourList">
+                                             <img th:src="@{/tour/{id}/portada(id=${tour.datos.id})}" alt="Image" class="img-tourList-maxSize">
+                                           </div>                                        
                                        </a>
                                        <div class="p-4 property-body">
                                           <h2 class="property-title"  th:text="${tour.datos.guia.nombre}"><a th:href="@{'/user/' +tour.datos.guia.id+ '/perfil'}"></a></h2>
@@ -117,15 +119,15 @@
                <div class="col-lg-4">
                   <div class="bg-white widget border rounded">
                      <div class="card_guia">
-                        <div class="card-avatar">
-                           <a href="javascript:;">
-                           <img class="img guia_tour_foto" th:src="@{/user/{id}/foto(id=${user.id})}" alt="La imagen del guia" >
-                           </a>
+                        <div class="card-avatar guia-container">
+                           <img class="img guia-maxSize" th:src="@{/user/{id}/foto(id=${user.id})}" alt="La imagen del guia" >
                         </div>
-                        <div class="box_idiomas">
-                           <h5 th:text="Idiomas"></h5>
-                           <div th:each="idioma: ${idiomas}">
-                              <p class="idiomas" th:text="${idioma}">Ingles</p>
+                        <div class="card-body">
+                           <h5 class="h2 text-black widget-title">Idiomas</h5>
+                           <div class="box_idiomas py-2">
+                              <div th:each="idioma: ${idiomas}">
+                                 <p class="idiomas" th:text="${idioma}"></p>
+                              </div>
                            </div>
                         </div>
                      </div>
@@ -142,17 +144,19 @@
                      <div class="row lista-tours">
                         <div class="col-md-6 col-lg-6 mb-4" th:each="tour: ${user.tourOfertados}" th:if="${tour.datos.disponible}">
                            <div class="property-entry h-100">
-                              <a th:href="@{'/tour/'+${tour.datos.id}}" class="property-thumbnail">
+                              <a th:href="@{'/tour/'+${tour.id}}" class="property-thumbnail">
                                  <div class="offer-type-wrap">
                                     <span class="offer-type bg-success">Abierto</span>
                                  </div>
-                                 <img th:href="@{'/tour/'+${tour.id}}" th:src="@{/tour/{id}/portada(id=${tour.id})}" alt="Image" class="img-fluid">
+                                 <div class="img-tourList">
+                                    <img th:src="@{/tour/{id}/portada(id=${tour.datos.id})}" alt="Image" class="img-tourList-maxSize">
+                                 </div>                               
                               </a>
                               <div class="p-4 property-body">
                                  <h2 class="property-title"  th:text="${tour.datos.guia.nombre}"><a th:href="@{'/user/' +tour.datos.guia.id+ '/perfil'}"></a></h2>
                                  <span class="property-location d-block mb-3"  th:text="${tour.datos.titulo}"><span class="property-icon icon-room"></span> Sidney, Australia</span>
                                  <strong class="property-price text-primary mb-3 d-block text-success" th:text="${tour.datos.precio}+'€'"></strong>
-                                 <h2 class="property-title"><a th:href="@{'/tour/'+${tour.datos.id}}" th:text="${tour.datos.titulo}" id="tour_ref"></a></h2>
+                                 <h2 class="property-title"><a th:href="@{'/tour/'+${tour.id}}" th:text="${tour.datos.titulo}" id="tour_ref"></a></h2>
                                  <span class="property-location d-block mb-3" ><span class="property-icon icon-room"></span><span th:text="${tour.datos.ciudad}+', '+${tour.datos.pais}"></span></span>
                                  <strong class="property-price text-primary mb-3 d-block text-success" th:text="${tour.datos.precio}+'€/persona'"></strong>
                                  <ul class="property-specs-wrap mb-3 mb-lg-0">
@@ -172,7 +176,6 @@
                               </div>
                               <div class="ml-3"><button type="button" class="btn btn-secondary" data-toggle="modal" ><a th:href="@{'/tour/'+${tour.id}+'/chat'}">Chat</a></button></div>
                            </div>
-                           <div class="ml-3"><button type="button" class="btn btn-secondary" data-toggle="modal" ><a th:href="@{'/tour/'+${tour.id}+'/chat'}" th:id="chat+${tour.id}">Chat</a></button></div>
                         </div>
                      </div>                     
                   </div>
@@ -189,7 +192,9 @@
                                     <span class="offer-type bg-danger" th:if="${tour.cerrado()}">CERRADO</span>
                                     <span class="offer-type bg-success" th:if="${!tour.cerrado()}">ABIERTO</span>
                                  </div>
-                                 <img th:href="@{'/tour/'+${tour.datos.id}}" th:src="@{/tour/{id}/portada(id=${tour.datos.id})}" alt="Image" class="img-fluid">
+                                 <div class="img-tourList">
+                                    <img th:src="@{/tour/{id}/portada(id=${tour.datos.id})}" alt="Image" class="img-tourList-maxSize">
+                                 </div>                                
                               </a>
                               <div class="p-4 property-body">
                                  <h2 class="property-title"  th:text="${tour.datos.guia.nombre}"><a th:href="@{'/user/' +tour.datos.guia.id+ '/perfil'}"></a></h2>
@@ -225,8 +230,10 @@
                         <h2 class="h2 text-black widget-title mb-3">Reviews</h2>
                      </div>
                      <div  class="row lista-tours">
-                        <div class="card resenya col-12" th:each="review: ${user.reviewsRecibidas}">
-                           <img class="card-img-top" id="user" th:src="@{~/img/defaultuser.png}" alt="user">
+                        <div class="card resenya col-12 pt-3" th:each="review: ${user.reviewsRecibidas}">
+                           <div class="card-avatar guia-container">
+                              <img class="img guia-maxSize" th:src="@{/user/{id}/foto(id=${review.creador.id})}" alt="La imagen del guia" >
+                           </div>
                            <div class="card-body">
                               <h5 class="card-title creador"><a th:href="@{/user/{id}/perfil(id=${review.creador.id})}" th:text="${review.creador.username}"></a></h5>
                               <h5 class="card-title tour"><a th:href="@{/tour/{id}(id=${review.tourValorado.Id})}" th:text="${review.tourValorado.datos.titulo}"></a></h5>

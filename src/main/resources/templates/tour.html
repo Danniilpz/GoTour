@@ -40,11 +40,9 @@
           </div>
         </div>
         <div class="site-mobile-menu-body"></div>
-      </div> <!-- .site-mobile-menu -->
+      </div>
   
-      <nav th:replace="fragments/nav.html :: nav">
-        Nav goes here
-      </nav>
+      <nav th:replace="fragments/nav.html :: nav"> </nav>
 
       <div th:replace="fragments/imagenes-principales.html :: images-principales">
      
@@ -57,8 +55,8 @@
             <div class="col-lg-8">
               <div>
                 <div class="slide-one-item home-slider owl-carousel">
-                  <div><img th:src="@{/tour/{id}/portada(id=${tour.id})}" alt="Imágen del tour" class="img-fluid"></div>
-                  <div><img th:src="@{/tour/{id}/mapa(id=${tour.id})}" alt="La imagen del mapa" class="img-fluid"></div>
+                  <div class="img-tour"><img th:src="@{/tour/{id}/portada(id=${tour.id})}" alt="Imagen del tour" class="img-tour-maxSize"></div>
+                  <div class="img-tour"><img th:src="@{/tour/{id}/mapa(id=${tour.id})}" alt="Imagen del mapa" class="img-tour-maxSize"></div>
                 </div>
               </div>
               <div class="bg-white property-body border-bottom border-left border-right">
@@ -121,20 +119,22 @@
               <div class="bg-white widget border rounded">
                 <div class="card_guia">
                     <div class="card-avatar">
-                      <a href="javascript:;">
-                        <img class="img guia_tour_foto" th:src="@{/user/{id}/foto(id=${tour.guia.id})}" alt="La imagen del guia" >
-                      </a>
+                      <div class="card-avatar guia-container">
+                        <img class="img guia-maxSize" th:src="@{/user/{id}/foto(id=${tour.guia.id})}" alt="La imagen del guia" >
+                     </div>
                     </div>
                       <div class="row justify-content-center mt-2 mb-2">
                         <div th:each="i: ${#numbers.sequence(1, tour.guia.puntuacion)}"><img class="card-category img-fluid ml-2" th:src="@{/img/estrellas.png}" width="30"/></div>
                       </div>
                       <h4 class="card-title" th:text="${tour.guia.nombre}"></h4>
-                      <div class="box_idiomas">
-                        <h5 th:text="Idiomas"></h5>
-                          <div th:each="idioma: ${idiomas}">
-                            <p class="idiomas" th:text="${idioma}">Ingles</p>
-                          </div>
-                      </div>
+                      <div class="card-body">
+                        <h5 class="h2 text-black widget-title">Idiomas</h5>
+                        <div class="box_idiomas py-2">
+                           <div th:each="idioma: ${idiomas}">
+                              <p class="idiomas" th:text="${idioma}"></p>
+                           </div>
+                        </div>
+                     </div>
                       <a th:href="@{'/user/'+${tour.guia.id}+'/perfil/'}" class="btn btn-primary btn-round" id="ver_perfil">Ver perfil</a>
                     </div>
                 </div>
