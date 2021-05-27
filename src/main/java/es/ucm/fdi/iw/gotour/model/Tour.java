@@ -43,7 +43,10 @@ import lombok.NoArgsConstructor;
 			+ "ORDER BY u.fechaIni DESC"),
 	@NamedQuery(name="Tour.getToursByUser",
 		query="SELECT u FROM Tour u "
-			+ "WHERE u.datos.guia.id = :guia_id")
+			+ "WHERE u.datos.guia.id = :guia_id"),
+	@NamedQuery(name="Tour.getToursByTopic",
+	query="SELECT u FROM Tour u "
+		+ "WHERE u.topicId = :topic_id")
 
 
 })
