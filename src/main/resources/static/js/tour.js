@@ -13,7 +13,6 @@ function validarFechas()
 {
    var fechaIni = document.getElementById("fechaInicial").value;
    var fechaFin = document.getElementById("fechaFinal").value;
-   document.getElementById("divFinal").innerHTML = "";
 
    var now = new Date(Date.now());
 
@@ -21,6 +20,10 @@ function validarFechas()
        document.getElementById("fechaFinal").value = "";
        document.getElementById("divFinal").innerHTML = "La fecha inicial debe ser menor que la fecha final y mayor que la fecha actual";
    }
+}
+
+function siguientePaso(){
+    document.getElementById("divFinal").style.display = "block";
 }
 
 function instanciaNueva(){

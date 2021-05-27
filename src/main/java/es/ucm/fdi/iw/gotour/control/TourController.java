@@ -526,7 +526,7 @@ public class TourController {
 
     @PostMapping("{id}/instancia")
 	@Transactional
-    public void nuevoTour(@PathVariable("id") long idTourO,
+    public String nuevoTour(@PathVariable("id") long idTourO,
                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaIni,
                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaFin,
                             Model model, HttpSession session){
@@ -547,7 +547,8 @@ public class TourController {
             tourO.getInstancias().add(tour);
             entityManager.persist(tour);
             entityManager.flush();
-        }       
+        }
+        return "redirect:/tour/" + idTourO;       
     }
 
     /*@GetMapping(value="{id}/apuntarse")
