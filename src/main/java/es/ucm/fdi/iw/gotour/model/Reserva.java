@@ -49,6 +49,12 @@ import lombok.AllArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+@NamedQueries({@NamedQuery(name="User.Reserva",
+        query="select r FROM Reserva r WHERE r.usuario= :userParam and r.tourReservado =:tourParam"),
+        @NamedQuery(name="deleteReserva",
+            query ="delete FROM Reserva r WHERE r.usuario= :userParam and r.tourReservado =:tourParam")
+})
+
 public class Reserva{
 
 

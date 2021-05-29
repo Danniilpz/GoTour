@@ -93,21 +93,22 @@ public class Tour {
 		if(datos.getMaxTuristas() >= (actTuristas+numero)){
 			turistas.add(u);
 			actTuristas+=numero;
-			// u.addTour(this);
+			u.addTour(this);
 		}
 	}
 	public void delTurista(User u,int numero){
 		if(turistas.contains(u) && numero <= actTuristas){
 			turistas.remove(u);
 			actTuristas-=numero;
-			// u.delTour(this);
+			u.delTour(this);
 		}
 	}
 
 
-	public void addTurista(int numero){
+	public void addTurista(int numero, Reserva r){
 		if(datos.getMaxTuristas() >= (actTuristas+numero)){
 			actTuristas+=numero;
+			r.setAsistentes(r.getAsistentes()+numero);
 		}
 	}
 	public String getFechaIniString(){
@@ -132,5 +133,10 @@ public class Tour {
 	}
 	public boolean cerrado(){
 		return this.fechaIni.isBefore(LocalDateTime.now());
+	}
+	public void delReserva(Reserva r){
+		reservas.remove(r);
+		actTuristas -= r.getAsistentes();
+		r.getUsuario().getReservas().remove(r);
 	}
 }

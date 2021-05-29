@@ -74,8 +74,7 @@ import lombok.AllArgsConstructor;
 		),
 		@NamedQuery(name="UserByReview", 
 				query ="select r.destinatario FROM Review r WHERE r.creador.id =:guiaParam AND r.tourValorado.id =:tourParam")
-		// @NamedQuery(name="User.byTour",
-		// 		query="select u FROM User u JOIN User_Tours_Asistidos t WHERE t.Tours_Asistidos_Id= :tourParam")
+		
 })
 
 @NamedNativeQueries({
@@ -92,7 +91,9 @@ import lombok.AllArgsConstructor;
 	@NamedNativeQuery(name="User.haslanguajes",
 	query="SELECT idiomas_hablados from user_idiomas_hablados WHERE user_idiomas_hablados.User_id = :user_id"),
 	@NamedNativeQuery(name="ChatUser",
-				query = "select COUNT(turistas_id) FROM USER_TOURS_ASISTIDOS t WHERE t.turistas_id =:idParam AND t.tours_asistidos_id =:tourParam")
+				query = "select COUNT(turistas_id) FROM USER_TOURS_ASISTIDOS t WHERE t.turistas_id =:idParam AND t.tours_asistidos_id =:tourParam"),
+	@NamedNativeQuery(name="deleteTourAsistido",
+				query ="delete FROM USER_TOURS_ASISTIDOS t WHERE t.turistas_id =:idParam AND t.tours_asistidos_id =:tourParam")
 })
 public class User implements Transferable<User.Transfer> {
 
@@ -235,6 +236,7 @@ public class User implements Transferable<User.Transfer> {
 	public void addReportesAdmin(Reporte e){
 		reportesAdmin.add(e);
 	}
+	
 
     @Getter
     @AllArgsConstructor

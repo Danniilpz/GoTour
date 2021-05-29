@@ -57,6 +57,7 @@ import es.ucm.fdi.iw.gotour.model.User;
 import es.ucm.fdi.iw.gotour.model.Review;
 import es.ucm.fdi.iw.gotour.model.Mensaje;
 import es.ucm.fdi.iw.gotour.model.Reporte;
+import es.ucm.fdi.iw.gotour.model.Reserva;
 import es.ucm.fdi.iw.gotour.model.User.Role;
 
 /**
@@ -168,11 +169,21 @@ public class TourController {
 
     @PostMapping("/{id}/cancelar")
     @Transactional
-    public String cancelar(@PathVariable("id") long id,Model model,@RequestParam int turistascancel,HttpSession session){
+    public String cancelar(@PathVariable("id") long id,Model model,HttpSession session){
         Tour t = entityManager.find(Tour.class, id);
         User u = entityManager.find(User.class,      // IMPORTANTE: tiene que ser el de la BD, no vale el de la sesión
             ((User)session.getAttribute("u")).getId());
-        t.delTurista(u, turistascancel);
+        Reserva r =  (Reserva)entityManager.createNamedQuery("User.Reserva")
+            .setParameter("userParam", u)
+            .setParameter("tourParam", t)
+            .getSingleResult();
+        t.delReserva(r);
+        entityManager.createNamedQuery("deleteReserva")
+            .setParameter("userParam", u)
+            .setParameter("tourParam", t);
+        entityManager.createNamedQuery("deleteTourAsistido")
+            .setParameter("idParam", u)
+            .setParameter("tourParam", t);
         return "redirect:/";
     }
 
@@ -254,12 +265,24 @@ public class TourController {
         }        
         // adds them to model
         log.info("LOS TURISTAS SON {}", asistentes);
-        // if(!u.getToursAsistidos().contains(t)){
-        //     t.addTurista(u, asistentes);
-        // }
-        // else{
-        //     t.addTurista(asistentes);
-        // }
+        if(!u.getToursAsistidos().contains(t)){
+            t.addTurista(u, asistentes);
+            Reserva r = new Reserva();
+			r.setTourReservado(t);
+			r.setUsuario(u);
+			r.setAsistentes(asistentes);
+            entityManager.persist(r);
+		    entityManager.flush(); // to get Id before commit
+        }
+        else{
+            Reserva r =  (Reserva)entityManager.createNamedQuery("User.Reserva")
+            .setParameter("userParam", u)
+            .setParameter("tourParam", t)
+            .getSingleResult();
+            log.info("EL TOUR DE LA RESERVA OBTENIDA ES {}", r.getTourReservado().getId());
+            log.info("AHORA VAMOS A AÑADIR EL TURISTA A LA RESERVA");
+            t.addTurista(asistentes, r);
+        }
 
         model.addAttribute("tours", tours);
         session.setAttribute("u", u);	
