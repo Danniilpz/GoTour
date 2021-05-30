@@ -106,8 +106,7 @@ public class AdminController {
 		
 		int reportesUserNumber=0;
         reportesUserNumber=reportesUser.size();
-		System.out.println("Macarrones "+reportesTourNumber);
-		System.out.println("Pizza "+reportesUserNumber);
+	
         // adds them to model
         model.addAttribute("userNumber", userNumber);
 		model.addAttribute("users", users);
@@ -199,11 +198,11 @@ public class AdminController {
 		model.addAttribute("activeProfiles", env.getActiveProfiles());
 		model.addAttribute("basePath", env.getProperty("es.ucm.fdi.base-path"));
 		model.addAttribute("debug", env.getProperty("es.ucm.fdi.debug"));
-		List<Reporte> reportesTour= entityManager.createNamedQuery("TypeReportes").setParameter("tipoparam", "TOUR").getResultList();
-		List<Reporte> reportesUser= entityManager.createNamedQuery("TypeReportes").setParameter("tipoparam", "USER").getResultList();     
+		List<Reporte> reportes= entityManager.createNamedQuery("AllReportes").getResultList();
+		   
         // adds them to model
-        model.addAttribute("reportesTour", reportesTour);
-		model.addAttribute("reportesUser", reportesUser);
+        model.addAttribute("reportes", reportes);
+	
 		model.addAttribute("classActiveReportes","active");
 		
 		return "admin/reportes-usuarios";
@@ -223,8 +222,8 @@ public class AdminController {
             log.info("\t{}", o);
         }        
         // adds them to model
-		model.addAttribute("reportesTour", reportes);
-        model.addAttribute("reportesUser", reportes);
+		
+        model.addAttribute("reportes", reportes);
 		model.addAttribute("classActiveReportes","active");
 		return "admin/reporte-usuario";
 	}
@@ -235,57 +234,60 @@ public class AdminController {
                                         , @RequestParam String motivo, @RequestParam String texto
                                         ){
         List<Reporte> busqueda = new ArrayList<Reporte>();
-		
-		if(username.length()>0&&motivo.length()>0&&texto.length()>0){
-			System.out.println("Pizza1");
-			busqueda = entityManager.createNamedQuery("ReportesByAdminSearchTodo")
-            .setParameter("usernameParam",  "%" + username + "%").setParameter("motivoParam",  "%" + motivo + "%").setParameter("textoParam",  "%" + texto + "%").getResultList();
-		}else{
-			if(username.length()>0&&motivo.length()>0&&texto.length()<1){
-				System.out.println("Pizza2");
-				busqueda = entityManager.createNamedQuery("ReportesByAdminSearchCreadorMotivo")
-            .setParameter("usernameParam",  "%" + username + "%").setParameter("motivoParam",  "%" + motivo + "%").getResultList();
-
-			}else{
-				if(username.length()>0&&motivo.length()<1&&texto.length()>0){
-					System.out.println("Pizza3");
-					busqueda = entityManager.createNamedQuery("ReportesByAdminSearchCreadorTexto")
-            .setParameter("usernameParam",  "%" + username + "%").setParameter("textoParam",  "%" + texto + "%").getResultList();
-					
-				}else{
-
-					if(username.length()<1&&motivo.length()>0&&texto.length()>0){
-						System.out.println("Pizza4");
-						busqueda = entityManager.createNamedQuery("ReportesByAdminSearchMotivoTexto").setParameter("motivoParam",  "%" + motivo + "%").setParameter("textoParam",  "%" + texto + "%").getResultList();
-
-					}else{
-						if(username.length()>0&&motivo.length()<1&&texto.length()<1){
-							System.out.println("Pizza5");
-							busqueda = entityManager.createNamedQuery("ReportesByAdminSearchUser").setParameter("usernameParam",  "%" + username + "%").getResultList();
-							
-						}else{
-
-							if(username.length()<1&&motivo.length()>0&&texto.length()<1){
-								System.out.println("Pizza6");
-								busqueda = entityManager.createNamedQuery("ReportesByAdminSearchMotivo").setParameter("motivoParam",  "%" + motivo + "%").getResultList();
-		
-							}else{
-								if(username.length()<1&&motivo.length()<1&&texto.length()>0){
-									System.out.println("Pizza7");
-									busqueda = entityManager.createNamedQuery("ReportesByAdminSearchTexto")
-            .setParameter("textoParam",  "%" + texto + "%").getResultList();
-								}
-
-							}
-
-
-						}
-					}
-
+		List<Reporte> auxReporte = new ArrayList<Reporte>();
+        if(username.length()>0){
+			List<User> userBusqueda = entityManager.createNamedQuery("UsersByAdminSearchUser")
+				.setParameter("usernameParam", "%" + username + "%").getResultList();
+		for (User user : userBusqueda) {
+            List<Reporte> auxbusqueda = entityManager.createNamedQuery("AllReportes").getResultList();
+            for(Reporte report: auxbusqueda){
+				if(report.getCreador().getId()==user.getId()){
+					busqueda.add(report);
 				}
-
 			}
+
 		}
+
+
+		
+		}
+        if(username.length()<1&&motivo.length()<1&&texto.length()<1){
+			busqueda=entityManager.createNamedQuery("AllReportes").getResultList();
+		}else{
+			if(motivo.length()>0&&texto.length()>0){
+				auxReporte= entityManager.createNamedQuery("ReportesByAdminSearchMotivoTexto").setParameter("motivoParam",  "%" + motivo + "%").setParameter("textoParam",  "%" + texto + "%").getResultList();
+			}else{
+	
+				if(motivo.length()>0&&texto.length()<1){
+	
+					auxReporte= entityManager.createNamedQuery("ReportesByAdminSearchMotivo").setParameter("motivoParam",  "%" + motivo + "%").getResultList();
+	
+				}else{
+	
+					if(motivo.length()<1&&texto.length()>0){
+	
+						auxReporte= entityManager.createNamedQuery("ReportesByAdminSearchTexto").setParameter("textoParam",  "%" + texto + "%").getResultList();
+		
+					}
+	
+				}
+	
+			}
+	
+	
+			
+				
+		}
+		
+		
+		
+
+		for (Reporte reporte : auxReporte) {
+			busqueda.add(reporte);
+		
+		}
+		
+		
              	
         model.addAttribute("busqueda", busqueda);
 		
@@ -317,7 +319,7 @@ public class AdminController {
 	r.setContestada(true);
 	Reporte respuestaAdmin= new Reporte();
 	User userContestado = r.getCreador();
-	System.out.println("Hola"+userContestado.getId());
+	
 	User userCreador = entityManager.find(User.class,((User)session.getAttribute("u")).getId());
 	respuestaAdmin.setTipo("ADMIN");
 	respuestaAdmin.setCreador(userCreador);
