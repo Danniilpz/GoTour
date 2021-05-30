@@ -174,16 +174,15 @@ public class TourController {
         User u = entityManager.find(User.class,      // IMPORTANTE: tiene que ser el de la BD, no vale el de la sesión
             ((User)session.getAttribute("u")).getId());
         Reserva r =  (Reserva)entityManager.createNamedQuery("User.Reserva")
-            .setParameter("userParam", u)
-            .setParameter("tourParam", t)
+            .setParameter("userParam", u.getId())
+            .setParameter("tourParam", t.getId())
             .getSingleResult();
         t.delReserva(r);
         entityManager.createNamedQuery("deleteReserva")
-            .setParameter("userParam", u)
-            .setParameter("tourParam", t);
-        entityManager.createNamedQuery("deleteTourAsistido")
-            .setParameter("idParam", u)
-            .setParameter("tourParam", t);
+            .setParameter("reservaParam", r);
+        /*entityManager.createNamedQuery("deleteTourAsistido")
+            .setParameter("idParam", u.getId())
+            .setParameter("tourParam", t.getId());*/
         return "redirect:/";
     }
 

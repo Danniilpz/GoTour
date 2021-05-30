@@ -136,7 +136,9 @@ public class Tour {
 	}
 	public void delReserva(Reserva r){
 		reservas.remove(r);
+		turistas.remove(r.getUsuario());
+		r.getUsuario().delTour(this);
+		r.getUsuario().delReserva(r);
 		actTuristas -= r.getAsistentes();
-		r.getUsuario().getReservas().remove(r);
 	}
 }
