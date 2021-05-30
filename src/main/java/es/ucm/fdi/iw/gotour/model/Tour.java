@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -46,7 +47,9 @@ import lombok.NoArgsConstructor;
 			+ "WHERE u.datos.guia.id = :guia_id"),
 	@NamedQuery(name="Tour.getToursByTopic",
 	query="SELECT u FROM Tour u "
-		+ "WHERE u.topicId = :topic_id")
+		+ "WHERE u.topicId = :topic_id"),
+		@NamedQuery(name="Tour.delete",
+		query="delete FROM Tour where id = :id")
 
 
 })
@@ -73,20 +76,20 @@ public class Tour {
 	@NotNull
 	private String topicId;
 
-	@OneToMany (mappedBy="tourValorado", fetch=FetchType.EAGER)
+	@OneToMany (mappedBy="tourValorado", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private List<Review>  reviews = new ArrayList<>();
 	
 	//@OneToOne
 	//private Chat chat;
 
-	@OneToMany
+	@OneToMany(cascade=CascadeType.REMOVE)
 	@JoinColumn(name = "tour_id")
 	private List<Mensaje> mensajes = new ArrayList<>();
 
 	@ManyToMany (mappedBy="toursAsistidos", fetch=FetchType.EAGER)
 	public List<User>  turistas = new ArrayList<>();
 
-	@OneToMany (mappedBy = "tourReservado",  fetch=FetchType.EAGER)
+	@OneToMany (mappedBy = "tourReservado", cascade=CascadeType.REMOVE,  fetch=FetchType.EAGER)
 	private List<Reserva> reservas = new ArrayList();
 
 	public void addTurista(User u,int numero){
