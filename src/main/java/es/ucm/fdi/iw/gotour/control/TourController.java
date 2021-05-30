@@ -178,12 +178,9 @@ public class TourController {
             .setParameter("tourParam", t.getId())
             .getSingleResult();
         t.delReserva(r);
-        entityManager.createNamedQuery("deleteReserva")
-            .setParameter("reservaParam", r);
-        /*entityManager.createNamedQuery("deleteTourAsistido")
-            .setParameter("idParam", u.getId())
-            .setParameter("tourParam", t.getId());*/
-        return "redirect:/";
+        entityManager.remove(r);
+        u.removeTour(t);
+        return "index";
     }
 
     @PostMapping("/{id}/valorar")

@@ -135,10 +135,10 @@ public class Tour {
 		return this.fechaIni.isBefore(LocalDateTime.now());
 	}
 	public void delReserva(Reserva r){
-		reservas.remove(r);
-		turistas.remove(r.getUsuario());
-		r.getUsuario().delTour(this);
-		r.getUsuario().delReserva(r);
+		//reservas.remove(r);
+		//turistas.remove(r.getUsuario());
+		//r.getUsuario().delTour(this);
+		//r.getUsuario().delReserva(r);
 		actTuristas -= r.getAsistentes();
 	}
 }

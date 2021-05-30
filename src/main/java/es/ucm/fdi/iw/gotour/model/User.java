@@ -241,6 +241,15 @@ public class User implements Transferable<User.Transfer> {
 		reportesAdmin.add(e);
 	}
 	
+	public void removeTour(Tour t){
+		int i=0;
+		while(i < toursAsistidos.size() && toursAsistidos.get(i).getId() != t.getId()){
+			i++;
+		}
+		if(i < toursAsistidos.size()){
+			toursAsistidos.remove(i);
+		}
+	}
 
     @Getter
     @AllArgsConstructor
