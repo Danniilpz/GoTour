@@ -240,6 +240,7 @@ public class AdminController {
 				.setParameter("usernameParam", "%" + username + "%").getResultList();
 		for (User user : userBusqueda) {
             List<Reporte> auxbusqueda = entityManager.createNamedQuery("AllReportes").getResultList();
+			System.out.println("Pizza");
             for(Reporte report: auxbusqueda){
 				if(report.getCreador().getId()==user.getId()){
 					busqueda.add(report);
