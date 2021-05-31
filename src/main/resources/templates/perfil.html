@@ -216,12 +216,12 @@
                                  <div class="col-md-6 col-lg-6 mb-4" th:each="tour: ${user.tourOfertados}"
                                     th:if="${tour.datos.disponible}">
                                     <div class="property-entry h-100" th:if="${!tour.cerrado()}">
-                                       <a th:href="@{'/tour/'+${tour.id}}" class="property-thumbnail">
+                                       <a th:href="@{'/tour/'+${tour.datos.id}}" class="property-thumbnail">
                                           <div class="offer-type-wrap">
                                              <span class="offer-type bg-success">Abierto</span>
                                           </div>
-                                          <img th:href="@{'/tour/'+${tour.id}}"
-                                             th:src="@{/tour/{id}/portada(id=${tour.id})}" alt="Image"
+                                          <img th:href="@{'/tour/'+${tour.datos.id}}"
+                                             th:src="@{/tour/{id}/portada(id=${tour.datos.id})}" alt="Image"
                                              class="img-fluid">
                                        </a>
                                        <div class="p-4 property-body">
@@ -266,12 +266,12 @@
                               <div class="row lista-tours">
                                  <div class="col-md-6 col-lg-6 mb-4" th:each="tour: ${user.tourOfertados}">
                                     <div class="property-entry h-100" th:if="${tour.cerrado()}">
-                                       <a th:href="@{'/tour/'+${tour.id}}" class="property-thumbnail">
+                                       <a th:href="@{'/tour/'+${tour.datos.id}}" class="property-thumbnail" th:id="tourReviewGuia">
                                           <div class="offer-type-wrap">
                                              <span class="offer-type bg-danger">Cerrado</span>
                                           </div>
-                                          <img th:href="@{'/tour/'+${tour.id}}"
-                                             th:src="@{/tour/{id}/portada(id=${tour.id})}" alt="Image"
+                                          <img th:href="@{'/tour/'+${tour.datos.id}}"
+                                             th:src="@{/tour/{id}/portada(id=${tour.datos.id})}" alt="Image"
                                              class="img-fluid">
                                        </a>
                                        <div class="p-4 property-body">
@@ -318,12 +318,12 @@
                                  <div class="col-md-6 col-lg-6 mb-4" th:each="tour: ${user.toursAsistidos}"
                                     th:if="${tour.datos.disponible}">
                                     <div class="property-entry h-100" th:if="${!tour.cerrado()}">
-                                       <a th:href="@{'/tour/'+${tour.id}}" class="property-thumbnail">
+                                       <a th:href="@{'/tour/'+${tour.datos.id}}" class="property-thumbnail">
                                           <div class="offer-type-wrap">
                                              <span class="offer-type bg-success">Abierto</span>
                                           </div>
-                                          <img th:href="@{'/tour/'+${tour.id}}"
-                                             th:src="@{/tour/{id}/portada(id=${tour.id})}" alt="Image"
+                                          <img th:href="@{'/tour/'+${tour.datos.id}}"
+                                             th:src="@{/tour/{id}/portada(id=${tour.datos.id})}" alt="Image"
                                              class="img-fluid">
                                        </a>
                                        <div class="p-4 property-body">
@@ -368,12 +368,12 @@
                               <div class="row lista-tours">
                                  <div class="col-md-6 col-lg-6 mb-4" th:each="tour: ${user.toursAsistidos}">
                                     <div class="property-entry h-100" th:if="${tour.cerrado()}">
-                                       <a th:href="@{'/tour/'+${tour.id}}" class="property-thumbnail">
+                                       <a th:href="@{'/tour/'+${tour.datos.id}}" class="property-thumbnail" th:id ="tour_ref">
                                           <div class="offer-type-wrap">
                                              <span class="offer-type bg-danger">Cerrado</span>
                                           </div>
-                                          <img th:href="@{'/tour/'+${tour.id}}"
-                                             th:src="@{/tour/{id}/portada(id=${tour.id})}" alt="Image"
+                                          <img th:href="@{'/tour/'+${tour.datos.id}}"
+                                             th:src="@{/tour/{id}/portada(id=${tour.datos.id})}" alt="Image"
                                              class="img-fluid">
                                        </a>
                                        <div class="p-4 property-body">
