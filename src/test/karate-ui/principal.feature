@@ -10,9 +10,9 @@ Background:
 Scenario: logear, elegir un tour e inscribirse al tour
     Given driver 'http://localhost:8080/login'
     #Iniciamos sesion
-  * input('#username', 'vicky')
+  * input('#username', 'SONIA')
   * input('#password', 'aa')
-   #vamos a la pagina de inicio para acceder a un tour
+   #vamos a acceder a un tour
   * submit().click("[type=submit]")
   * match html('title') contains 'Perfil'
   * click("a[id=logo_box]")
@@ -22,8 +22,6 @@ Scenario: logear, elegir un tour e inscribirse al tour
   * click("a[id=tour_ref]")
   * match html('title') contains 'Tour'
   # hacemos una review sobre el mismo
-  * value('#valoracion', '')
-  * input('#valoracion', '3')
   * input('#textoReview', 'Un treh porque el guia era mu soso aunque el tour ha sido mu bonito')
   * driver.screenshot()
   * click("[id=add-review]")

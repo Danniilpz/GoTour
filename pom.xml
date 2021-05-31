@@ -219,11 +219,11 @@
 					<arguments>
 						<!-- mete aqui una linea para cada feature a probar -->
 						<!--<argument>src/test/karate-ui/login.feature</argument>--> 
-						<!-- <argument>src/test/karate-ui/principal.feature</argument> -->
+						<argument>src/test/karate-ui/principal.feature</argument>
 						<!-- <argument>src/test/karate-ui/secondary.feature</argument>				 -->
 						<!-- <argument>src/test/karate-ui/fecha.feature</argument> -->
 						<!-- <argument>src/test/karate-ui/editarDatos.feature</argument> -->
-						<argument>src/test/karate-ui/mensaje.feature</argument>
+						<!-- <argument>src/test/karate-ui/mensaje.feature</argument> -->
 					</arguments>
 				</configuration>
 			</plugin>
