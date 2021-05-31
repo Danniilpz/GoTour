@@ -211,9 +211,8 @@ public class TourController {
                 entityManager.remove(r);
             }
         }
-        entityManager.remove(t);
-        entityManager.createNamedQuery("Tour.delete").setParameter("id", t.getId()).executeUpdate();
-        return "index";
+        t.getDatos().getInstancias().remove(t);
+        return "redirect:/";
     }
 
     @PostMapping("/{id}/valorar")
