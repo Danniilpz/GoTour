@@ -414,9 +414,18 @@ public class UserController {
     { 
 		User user = entityManager.find(User.class, id);
 	    
-		List<Reporte> reportes = entityManager.createNamedQuery("ReportesCreadorTipo",Reporte.class)
-		.setParameter("typeParam", "ADMIN").setParameter("userParam",user).getResultList();
-	
+		List<Reporte> reportesAux = user.getReporteRecibidos();
+		List<Reporte> reportes = new ArrayList<Reporte>();
+       
+		for(Reporte repor: reportesAux){
+
+			if(repor.getReporteContestado().getId()==id){
+				reportes.add(repor);
+			}
+
+		}
+
+	    System.out.println("Hamburguesa "+reportesAux.size());
 		model.addAttribute("reportesNumber", reportes.size());
         model.addAttribute("reportesa", reportes);
         return "respuestasAdmin";

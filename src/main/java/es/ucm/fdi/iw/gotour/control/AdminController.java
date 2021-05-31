@@ -350,7 +350,7 @@ public class AdminController {
 	respuestaAdmin.setReporteContestado(r);
 	userCreador.getReporteCreados().add(respuestaAdmin);
 	userContestado.getReporteRecibidos().add(respuestaAdmin);
-
+	
 
     
 	
