@@ -240,7 +240,6 @@ public class AdminController {
 				.setParameter("usernameParam", "%" + username + "%").getResultList();
 		for (User user : userBusqueda) {
             List<Reporte> auxbusqueda = entityManager.createNamedQuery("AllReportes").getResultList();
-			System.out.println("Pizza");
             for(Reporte report: auxbusqueda){
 				if(report.getCreador().getId()==user.getId()){
 					busqueda.add(report);
@@ -306,7 +305,18 @@ public class AdminController {
 	@GetMapping("reporte/{id}/gestion-reporte")
 	public String contestaReporte(Model model, @PathVariable("id") long id) {
 	Reporte r = entityManager.find(Reporte.class, id);
-	model.addAttribute("user",r.getCreador());
+	switch(r.getTipo()){
+		case "USER":
+		model.addAttribute("user",r.getUserReportado());
+		break;
+		case "TOUR":
+		model.addAttribute("user",r.getTourReportado().getDatos().getGuia());
+		break;
+		case "ADMIN":
+		User userAdmin = entityManager.find(User.class, id);
+		model.addAttribute("user",userAdmin);
+	}
+	
 	model.addAttribute("reporte",r);
 	model.addAttribute("classActiveSettings","active");
 	return "admin/gestion-reporte";
@@ -326,11 +336,19 @@ public class AdminController {
 	respuestaAdmin.setCreador(userCreador);
 	respuestaAdmin.setMotivo(motivo);
 	respuestaAdmin.setTexto(respuesta);
-	respuestaAdmin.setTourReportado(null);
-	respuestaAdmin.setUserReportado(null);
+	switch(r.getTipo()){
+		case "TOUR":
+		respuestaAdmin.setTourReportado(r.getTourReportado());
+		break;
+		case "USER":
+		respuestaAdmin.setUserReportado(r.getUserReportado());
+		break;
+	}
 	respuestaAdmin.setUserContestado(userContestado);
+	respuestaAdmin.setReporteContestado(r);
 	userCreador.getReporteCreados().add(respuestaAdmin);
 	userContestado.getReporteRecibidos().add(respuestaAdmin);
+
 
     
 	

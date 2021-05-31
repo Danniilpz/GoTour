@@ -408,15 +408,32 @@ public class UserController {
 		return "gracias-reporte-ha-sido-recibido";
     }
 
-	@GetMapping("/{id}/reporteUser")
+	@GetMapping("/{id}/respuestasAdmin/(reporteId)")
 	@Transactional
-    public String reporteUser(Model model, HttpSession session, @PathVariable("id") long id)
-    {
+    public String reporteUser(Model model, HttpSession session, @PathVariable("id") long id, @PathVariable("reporteId") Integer reporteId )
+    { 
 		
-	    User user = entityManager.find(User.class, id);
-        model.addAttribute("user", user);
-        return "reporteUser";
+	    
+		List<Reporte> reportes = entityManager.createNamedQuery("ReportesCreador",Reporte.class)
+		.setParameter("typeAdmin", "ADMIN").setParameter("idReporte",reporteId).getResultList();	
+        model.addAttribute("reportes", reportes);
+        return "/{id}/respuestasAdmin";
     }
+
+
+	
+	@GetMapping("/{id}/perfil-reportes")
+	@Transactional
+    public String perfilReportes(Model model, HttpSession session, @PathVariable("id") long id)
+    {    
+		User user = entityManager.find(User.class, id);
+	    List<Reporte> reportes = entityManager.createNamedQuery("ReportesCreador",Reporte.class)
+		.setParameter("userParam", user).getResultList();	
+		
+        model.addAttribute("reportes", reportes);
+        return "perfil-reportes";
+    }
+	
 
 	@GetMapping("/{id}/foto")
 	public StreamingResponseBody getFoto(@PathVariable long id, Model model) throws IOException {		
@@ -445,6 +462,8 @@ public class UserController {
         model.addAttribute("u", user);
 		return "editarDatos";
 	}
+
+
 
 
 }

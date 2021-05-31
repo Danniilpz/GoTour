@@ -93,7 +93,9 @@
                             <table class="table">
                               <thead class=" text-primary">
                                 <tr>
+                                  <td>Creador</td>
                                   <td>Categoria</td>
+                                  <td>Tour/User Reportado</td>
                                   <td>Motivo</td>
                                   <td>Texto</td>
                                   <td class="td-actions text-right"> Contestar </td>
@@ -105,7 +107,11 @@
                               <tbody>
                                 
                                 <tr th:each="reporte: ${reportes}">
+                                  <td><h4 th:text="${reporte.creador.username}"></h4> </td>
                                   <td><h4 th:text="${reporte.tipo}"></h4> </td>
+                                
+                                  <td th:if="${reporte.tipo=='USER'}"><h4 th:text="${reporte.userReportado.username}"></h4> </td>
+                                  <td th:if="${reporte.tipo=='TOUR'}"><h4 th:text="${reporte.tourReportado.id}"></h4> </td>
                                   <td ><h4 th:text="${reporte.motivo}" ></h4></td>
                                   <td th:text="${reporte.texto}" ></td>
                                   <td class="td-actions text-right">

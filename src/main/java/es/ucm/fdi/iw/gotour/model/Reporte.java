@@ -33,12 +33,10 @@ import lombok.AllArgsConstructor;
 	@NamedQuery(name="AllReportes", query="Select r from Reporte r"),
 	@NamedQuery(name="TypeReportes", query="Select r from Reporte r  where r.tipo=:tipoparam"),
 	@NamedQuery(name="ReportesByAdminSearchTodo", query="Select r from Reporte r  where r.creador LIKE :usernameParam OR r.motivo LIKE :motivoParam OR r.texto LIKE :textoParam"),
-	@NamedQuery(name="ReportesByAdminSearchCreadorMotivo", query="Select r from Reporte r  where r.creador LIKE :usernameParam OR r.motivo LIKE :motivoParam"),
-	@NamedQuery(name="ReportesByAdminSearchCreadorTexto", query="Select r from Reporte r  where r.creador LIKE :usernameParam  OR r.texto LIKE :textoParam"),
 	@NamedQuery(name="ReportesByAdminSearchMotivoTexto", query="Select r from Reporte r  where  r.motivo LIKE :motivoParam OR r.texto LIKE :textoParam"),
-	@NamedQuery(name="ReportesByAdminSearchUser", query="Select r from Reporte r  where r.creador LIKE :usernameParam "),
-	@NamedQuery(name="ReportesByAdminSearchMotivo", query="Select r from Reporte r  where r.motivo LIKE :motivoParam "),
-	@NamedQuery(name="ReportesByAdminSearchTexto", query="Select r from Reporte r  where  r.texto LIKE :textoParam")
+    @NamedQuery(name="ReportesByAdminSearchMotivo", query="Select r from Reporte r  where r.motivo LIKE :motivoParam "),
+	@NamedQuery(name="ReportesByAdminSearchTexto", query="Select r from Reporte r  where  r.texto LIKE :textoParam"),
+	@NamedQuery(name="ReportesCreador", query="Select r from Reporte r  where r.creador=:userParam")
 
 })
 public class Reporte {
@@ -64,6 +62,9 @@ public class Reporte {
 	
     @ManyToOne(targetEntity=User.class)
 	private User userContestado;
+    
+	@ManyToOne(targetEntity=Reporte.class)
+	private Reporte reporteContestado;
 
 	private String tipo;
 
