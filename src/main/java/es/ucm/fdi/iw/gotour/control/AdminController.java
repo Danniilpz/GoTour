@@ -294,13 +294,7 @@ public class AdminController {
         return reporteBusqueda(model,busqueda);
     }
 
-	 @GetMapping("/configuracion")
-	public String configuracion(Model model) {
-		model.addAttribute("classActiveSettings","active");
-	return "admin/configuracion";
-
-
-	}
+	
 
 	@GetMapping("reporte/{id}/gestion-reporte")
 	public String contestaReporte(Model model, @PathVariable("id") long id) {
@@ -325,6 +319,7 @@ public class AdminController {
 	}
 
 	@PostMapping("reporte/{id}/gestion-reporte-admin")
+	@Transactional
 	public String contestarAlReporte(Model model, HttpSession session,@RequestParam String motivo, @RequestParam String respuesta,  @PathVariable("id") long id) {
 	Reporte r = entityManager.find(Reporte.class, id);
 
@@ -348,11 +343,17 @@ public class AdminController {
 	}
 	respuestaAdmin.setUserContestado(userContestado);
 	respuestaAdmin.setReporteContestado(r);
+	
 	userCreador.getReporteCreados().add(respuestaAdmin);
 	userContestado.getReporteRecibidos().add(respuestaAdmin);
-	
+	entityManager.persist(respuestaAdmin);
+	entityManager.flush(); 
 
-    
+   
+	List<Reporte> reportes= entityManager.createNamedQuery("AllReportes").getResultList();
+	
+     
+    model.addAttribute("reportes", reportes);
 	
 	return "admin/reporte-usuario";
 

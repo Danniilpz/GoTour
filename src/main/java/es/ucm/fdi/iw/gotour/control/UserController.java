@@ -412,22 +412,23 @@ public class UserController {
 	@Transactional
     public String reporteUser(Model model, HttpSession session, @PathVariable("id") long id, @PathVariable("idUser") long idUser)
     { 
-		User user = entityManager.find(User.class, id);
+		User user = entityManager.find(User.class, idUser);
 	    
 		List<Reporte> reportesAux = user.getReporteRecibidos();
 		List<Reporte> reportes = new ArrayList<Reporte>();
        
 		for(Reporte repor: reportesAux){
+		
 
 			if(repor.getReporteContestado().getId()==id){
 				reportes.add(repor);
 			}
 
 		}
+	
 
-	    System.out.println("Hamburguesa "+reportesAux.size());
 		model.addAttribute("reportesNumber", reportes.size());
-        model.addAttribute("reportesa", reportes);
+        model.addAttribute("reportes", reportes);
         return "respuestasAdmin";
     }
 
@@ -473,6 +474,18 @@ public class UserController {
         model.addAttribute("u", user);
 		return "editarDatos";
 	}
+
+
+	@GetMapping("/{id}/reporteUser")
+	@Transactional
+    public String reporteUser(Model model, HttpSession session, @PathVariable("id") long id)
+    {
+		
+	    User user = entityManager.find(User.class, id);
+        model.addAttribute("user", user);
+        return "reporteUser";
+    }
+
 
 
 

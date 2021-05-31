@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8" />
@@ -98,7 +98,8 @@
                                   <td>Tour/User Reportado</td>
                                   <td>Motivo</td>
                                   <td>Texto</td>
-                                  <td class="td-actions text-right"> Contestar </td>
+                                  <td>Contestada</td>
+                                  <td> Contestar </td>
       
       
                                 </tr>
@@ -114,14 +115,10 @@
                                   <td th:if="${reporte.tipo=='TOUR'}"><h4 th:text="${reporte.tourReportado.id}"></h4> </td>
                                   <td ><h4 th:text="${reporte.motivo}" ></h4></td>
                                   <td th:text="${reporte.texto}" ></td>
-                                  <td class="td-actions text-right">
-                                    <a th:href="@{'/admin/reporte/'+${reporte.id}+'/gestion-reporte/'}"><button type="button" rel="tooltip" title="Contestar" class="btn btn-primary btn-link btn-sm" th:if="reporte.contestada!=false">
-                                      <i class="material-icons">edit</i></a>
-                                    </button>
-                                    
-                              
-                                    
-                                  </td>
+                                  <td th:text="${reporte.contestada}" ></td>
+                                  <td><a th:href="@{'/admin/reporte/'+${reporte.id}+'/gestion-reporte/'}"><button type="button" rel="tooltip" title="Contestar" class="btn btn-primary btn-link btn-sm" >
+                                    <i class="material-icons">edit</i></a>
+                                  </button></td>
                                 </tr>
                                 
                               </tbody>
