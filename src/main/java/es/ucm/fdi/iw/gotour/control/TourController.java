@@ -180,7 +180,7 @@ public class TourController {
         t.delReserva(r);
         entityManager.remove(r);
         u.removeTour(t);
-        return "index";
+        return "redirect:/";
     }
 
     @PostMapping("/{id}/cancelarTour")
