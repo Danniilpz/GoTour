@@ -216,10 +216,15 @@ public class TourController {
         model.addAttribute("tour", t);
         User guia = entityManager.find(User.class,      // IMPORTANTE: tiene que ser el de la BD, no vale el de la sesión
             ((User)session.getAttribute("u")).getId());
-        List <Long> turistas = entityManager.createNamedQuery("UserByReview")
+        List <User> turistas = entityManager.createNamedQuery("UserByReview")
         .setParameter("guiaParam", guia.getId())
         .setParameter("tourParam", t.getId())
         .getResultList();
+        log.info("EL GUIA ES {}", guia.getId());
+        log.info("EL TOUR VALORADO ES {}", t.getId());
+        if(turistas.size() > 0){
+            log.info("LOS TURISTAS QUE HAN SIDO VALORADOS SON {}", turistas.get(0).getId());
+        }
         model.addAttribute("turistas", turistas);
         return "reviewUsuarios";
     }

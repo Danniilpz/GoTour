@@ -62,17 +62,17 @@
                 </div>
                 <h2 class="h4 text-black"></h2>
                 <div th:each="u: ${tour.turistas}">
-                  <div class="card_guia" th:unless="${turistas.contains(u.id)}" th:id="'esconderTurista' +${u.id}">
-                    <div class="card-avatar" th:unless="${turistas.contains(u.id)}">
-                      <a href="javascript:;" th:unless="${turistas.contains(u.id)}">
+                  <div class="card_guia" th:unless="${turistas.contains(u)}" th:id="'esconderTurista' +${u.id}">
+                    <div class="card-avatar" th:unless="${turistas.contains(u)}">
+                      <a href="javascript:;" th:unless="${turistas.contains(u)}">
                         <img class="img guia_tour_foto" th:src="@{/user/{id}/foto(id=${u.id})}" alt="La imagen del usuario" th:unless="${turistas.contains(u.id)}">
                       </a>
                     </div>
-                      <h4 class="card-title" th:text="${u.nombre}" th:unless="${turistas.contains(u.id)}">Alec Thompson</h4>
-                      <h2 class="h4 text-black" th:unless="${turistas.contains(u.id)}">Indique a continuacion su valoracion respecto al usuario y los motivos de dicha valoracion</h2>
+                      <h4 class="card-title" th:text="${u.nombre}" th:unless="${turistas.contains(u)}">Alec Thompson</h4>
+                      <h2 class="h4 text-black" th:unless="${turistas.contains(u)}">Indique a continuacion su valoracion respecto al usuario y los motivos de dicha valoracion</h2>
                 <!-- <form method="post" class="form-contact-agent" th:action="@{/tour/{id}/valorarUser/{iduser}(id=${tour.id}, iduser=${u.id})}" th:if="${valoradosu.get(u.id)!= true}"> -->
                     
-                    <div class="form-group" th:unless="${turistas.contains(u.id)}">
+                    <div class="form-group" th:unless="${turistas.contains(u)}">
                         <input th:class="usuario" type="hidden" th:value="${u.id}">
                         <input th:id="tour" type="hidden" th:value="${tour.id}">
                         <label for="valoracion">Valoracion</label>
