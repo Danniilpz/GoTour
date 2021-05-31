@@ -132,7 +132,7 @@
                           <tr th:each="reporte: ${reportes}">
                         
                             <td th:text="${reporte.motivo}" ></td>
-                            <td class="td-actions text-right">
+                            <td class="td-actions text-right" th:if="reporte.contestada!=false">
                               <a th:href="@{'/admin/reporte/'+${reporte.id}+'/gestion-reporte/'}"><button type="button" rel="tooltip" title="Contestar" class="btn btn-primary btn-link btn-sm">
                                 <i class="material-icons">edit</i></a>
                               </button>

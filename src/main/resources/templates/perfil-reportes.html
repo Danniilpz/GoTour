@@ -83,8 +83,8 @@
                                    <td th:text="${reporte.texto}">
                                   
                                    </td> 
-                                   <td>
-                                     <form method="post" th:action="@{'/user/'${session.u.id}'/respuestasAdmin/(reporteId=${reporte.id})}">
+                                   <td>              
+                                     <form method="post" th:action="@{'/user/'+ ${session.u.id}+'/respuestasAdmin/'+${reporte.id}+'/respuestaReporte/'}" >
                                        <button type="submit" class="btn btn-primary" >RespuestasAdmin</button>
                                        
                                      </form>

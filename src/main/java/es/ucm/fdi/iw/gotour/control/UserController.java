@@ -408,16 +408,18 @@ public class UserController {
 		return "gracias-reporte-ha-sido-recibido";
     }
 
-	@GetMapping("/{id}/respuestasAdmin/(reporteId)")
+	@PostMapping("/{idUser}/respuestasAdmin/{id}/respuestaReporte")
 	@Transactional
-    public String reporteUser(Model model, HttpSession session, @PathVariable("id") long id, @PathVariable("reporteId") Integer reporteId )
+    public String reporteUser(Model model, HttpSession session, @PathVariable("id") long id, @PathVariable("idUser") long idUser)
     { 
-		
+		User user = entityManager.find(User.class, id);
 	    
-		List<Reporte> reportes = entityManager.createNamedQuery("ReportesCreador",Reporte.class)
-		.setParameter("typeAdmin", "ADMIN").setParameter("idReporte",reporteId).getResultList();	
-        model.addAttribute("reportes", reportes);
-        return "/{id}/respuestasAdmin";
+		List<Reporte> reportes = entityManager.createNamedQuery("ReportesCreadorTipo",Reporte.class)
+		.setParameter("typeParam", "ADMIN").setParameter("userParam",user).getResultList();
+	
+		model.addAttribute("reportesNumber", reportes.size());
+        model.addAttribute("reportesa", reportes);
+        return "respuestasAdmin";
     }
 
 
@@ -426,7 +428,7 @@ public class UserController {
 	@Transactional
     public String perfilReportes(Model model, HttpSession session, @PathVariable("id") long id)
     {    
-		User user = entityManager.find(User.class, id);
+		User user = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
 	    List<Reporte> reportes = entityManager.createNamedQuery("ReportesCreador",Reporte.class)
 		.setParameter("userParam", user).getResultList();	
 		

@@ -327,7 +327,9 @@ public class AdminController {
 	@PostMapping("reporte/{id}/gestion-reporte-admin")
 	public String contestarAlReporte(Model model, HttpSession session,@RequestParam String motivo, @RequestParam String respuesta,  @PathVariable("id") long id) {
 	Reporte r = entityManager.find(Reporte.class, id);
+
 	r.setContestada(true);
+	
 	Reporte respuestaAdmin= new Reporte();
 	User userContestado = r.getCreador();
 	
