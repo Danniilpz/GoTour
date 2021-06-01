@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8" />
@@ -118,12 +118,7 @@
                             <div class="ripple-container" ></div>
                           </a>
                         </li>
-                        <li class="nav-item">
-                          <a class="nav-link"  data-toggle="tab">
-                             De Tours
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
+                       
                        
                       </ul>
                     </div>
@@ -134,10 +129,10 @@
                     <div class="tab-pane active" id="profile">
                       <table class="table">
                         <tbody>
-                          <tr th:each="reporte: ${reportesUser}">
+                          <tr th:each="reporte: ${reportes}">
                         
                             <td th:text="${reporte.motivo}" ></td>
-                            <td class="td-actions text-right">
+                            <td class="td-actions text-right" th:if="reporte.contestada!=false">
                               <a th:href="@{'/admin/reporte/'+${reporte.id}+'/gestion-reporte/'}"><button type="button" rel="tooltip" title="Contestar" class="btn btn-primary btn-link btn-sm">
                                 <i class="material-icons">edit</i></a>
                               </button>
@@ -150,23 +145,7 @@
                         </tbody>
                       </table>
                     </div>
-                    <div class="tab-pane" id="messages">
-                      <table class="table">
-                        <tbody>
-                          <tr th:each="reporte: ${reportesTour}">
-                        
-                            <td th:text="${reporte.motivo}" ></td>
-                            <td class="td-actions text-right">
-                              <a th:href="@{'/admin/reporte/'+${reporte.id}+'/gestion-reporte/'}"></a><button type="button" rel="tooltip" title="Contestar" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button></a>
-                             
-                            </td>
-                          </tr>
-                        
-                        </tbody>
-                      </table>
-                    </div>
+                    
                    
                   </div>
                 </div>

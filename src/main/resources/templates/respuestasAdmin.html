@@ -42,20 +42,58 @@
       <div th:replace="fragments/imagenes-principales.html :: images-principales">
       </div>
       <div class="site-section site-section-sm">
-         <div class="container">
+         <div class="container" th:if="${reportesNumber>0}">
             <div class="row">
-               <div class="col-lg-12">
-                  <div class="bg-white property-body border rounded widget">
-                     <div class="row">
-                        <h2 class="card-title">Gracias hemos recibido tu reporte, contactaremos contigo lo antes posible</h2> 
-                                                                                                               
-                     </div>
-                     
+               <div class="card-body">
+                  <div class="table-responsive">
+                     <h1>Respuestas ADMIN</h1>
+                    <table class="table">
+                      <thead class=" text-primary">
+                   
+                        <th>
+                           Motivo
+                        </th>
+                        <th>
+                          Texto
+                        </th>
+      
 
-            </div>
+                      </thead>
+                      <tbody>
+                        <tr th:each="reporte: ${reportes}">
+                         
+                 
+                           <td ><h4 th:text="${reporte.motivo}" ></h4></td>
+                           <td th:text="${reporte.texto}" ></td>
+                         
+                          </td> 
+                      
+                          
+                        </tr>
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                 
             
          </div>
       </div>
+      <div class="container" th:if="${reportesNumber==0}">
+         <div class="row">
+            <div class="card-body">
+               <div class="table-responsive">
+                  <h1>Respuestas ADMIN</h1>
+                 <h2>No hay ninguna respuesta del Admin</h2>
+               </div>
+             </div>
+               
+                  
+
+         </div>
+         
+      </div>
+   </div>
       <nav th:replace="fragments/footer.html :: footer">
          Nav goes here
       </nav>

@@ -30,15 +30,14 @@ import lombok.AllArgsConstructor;
 @Entity
 @Data
 @NamedQueries({
-	@NamedQuery(name="AllReportes", query="Select r from Reporte r"),
-	@NamedQuery(name="TypeReportes", query="Select r from Reporte r  where r.tipo=:tipoparam"),
-	@NamedQuery(name="ReportesByAdminSearchTodo", query="Select r from Reporte r  where r.creador LIKE :usernameParam OR r.motivo LIKE :motivoParam OR r.texto LIKE :textoParam"),
-	@NamedQuery(name="ReportesByAdminSearchCreadorMotivo", query="Select r from Reporte r  where r.creador LIKE :usernameParam OR r.motivo LIKE :motivoParam"),
-	@NamedQuery(name="ReportesByAdminSearchCreadorTexto", query="Select r from Reporte r  where r.creador LIKE :usernameParam  OR r.texto LIKE :textoParam"),
-	@NamedQuery(name="ReportesByAdminSearchMotivoTexto", query="Select r from Reporte r  where  r.motivo LIKE :motivoParam OR r.texto LIKE :textoParam"),
-	@NamedQuery(name="ReportesByAdminSearchUser", query="Select r from Reporte r  where r.creador LIKE :usernameParam "),
-	@NamedQuery(name="ReportesByAdminSearchMotivo", query="Select r from Reporte r  where r.motivo LIKE :motivoParam "),
-	@NamedQuery(name="ReportesByAdminSearchTexto", query="Select r from Reporte r  where  r.texto LIKE :textoParam")
+	@NamedQuery(name="AllReportes", query="Select r from Reporte r where r.tipo!='ADMIN'"),
+	@NamedQuery(name="TypeReportes", query="Select r from Reporte r  where r.tipo=:tipoparam and r.tipo!='ADMIN'"),
+	@NamedQuery(name="ReportesByAdminSearchTodo", query="Select r from Reporte r  where r.creador LIKE :usernameParam OR r.motivo LIKE :motivoParam OR r.texto LIKE :textoParam AND r.tipo!='ADMIN'"),
+	@NamedQuery(name="ReportesByAdminSearchMotivoTexto", query="Select r from Reporte r  where  r.motivo LIKE :motivoParam OR r.texto LIKE :textoParam and r.tipo!='ADMIN'"),
+    @NamedQuery(name="ReportesByAdminSearchMotivo", query="Select r from Reporte r  where r.motivo LIKE :motivoParam and r.tipo!='ADMIN' "),
+	@NamedQuery(name="ReportesByAdminSearchTexto", query="Select r from Reporte r  where  r.texto LIKE :textoParam and r.tipo!='ADMIN'"),
+	@NamedQuery(name="ReportesCreador", query="Select r from Reporte r  where r.creador=:userParam and r.tipo!='ADMIN'"),
+	@NamedQuery(name="ReportesCreadorTipo", query="Select r from Reporte r  where r.creador=:userParam AND r.tipo= :typeParam")
 
 })
 public class Reporte {
@@ -64,10 +63,23 @@ public class Reporte {
 	
     @ManyToOne(targetEntity=User.class)
 	private User userContestado;
+    
+	@ManyToOne(targetEntity=Reporte.class)
+	private Reporte reporteContestado;
 
 	private String tipo;
 
 	private boolean contestada;
+
+	public boolean getContestada(){
+		return contestada;
+	}
+		
+	
+
+
+
+		
 	
 
 }

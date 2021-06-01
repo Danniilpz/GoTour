@@ -408,15 +408,53 @@ public class UserController {
 		return "gracias-reporte-ha-sido-recibido";
     }
 
-	@GetMapping("/{id}/reporteUser")
+	@PostMapping("/{idUser}/respuestasAdmin/{id}/respuestaReporte")
 	@Transactional
-    public String reporteUser(Model model, HttpSession session, @PathVariable("id") long id)
-    {
+    public String reporteUser(Model model, HttpSession session, @PathVariable("id") long id, @PathVariable("idUser") long idUser)
+    { 
+
+	    User user2 = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
+		User user = entityManager.find(User.class, idUser);
+	    if(user2.equals(user)){
+			List<Reporte> reportesAux = user.getReporteRecibidos();
+		List<Reporte> reportes = new ArrayList<Reporte>();
+        
+		for(Reporte repor: reportesAux){
 		
-	    User user = entityManager.find(User.class, id);
-        model.addAttribute("user", user);
-        return "reporteUser";
+
+			if(repor.getReporteContestado().getId()==id){
+				reportes.add(repor);
+			}
+
+		}
+	
+
+		model.addAttribute("reportesNumber", reportes.size());
+        model.addAttribute("reportes", reportes);
+        return "respuestasAdmin";
+			
+
+		}else{
+			return "redirect:/";
+		}
+		
     }
+
+
+	
+	@GetMapping("/{id}/perfil-reportes")
+	@Transactional
+    public String perfilReportes(Model model, HttpSession session, @PathVariable("id") long id)
+    {    
+		
+		User user = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
+	    List<Reporte> reportes = entityManager.createNamedQuery("ReportesCreador",Reporte.class)
+		.setParameter("userParam", user).getResultList();	
+		
+        model.addAttribute("reportes", reportes);
+        return "perfil-reportes";
+    }
+	
 
 	@GetMapping("/{id}/foto")
 	public StreamingResponseBody getFoto(@PathVariable long id, Model model) throws IOException {		
@@ -445,6 +483,20 @@ public class UserController {
         model.addAttribute("u", user);
 		return "editarDatos";
 	}
+
+
+	@GetMapping("/{id}/reporteUser")
+	@Transactional
+    public String reporteUser(Model model, HttpSession session, @PathVariable("id") long id)
+    {
+		
+	    User user = entityManager.find(User.class, id);
+        model.addAttribute("user", user);
+        return "reporteUser";
+    }
+
+
+
 
 
 }

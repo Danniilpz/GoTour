@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8" />
@@ -77,73 +77,59 @@
                 <div class="container-fluid">
 
         
-            <div class="content">
-              <div class="card">
-                <div class="card-header card-header-tabs card-header-primary">
-                  <div class="nav-tabs-navigation">
-                    <div class="nav-tabs-wrapper">
-                      <span class="nav-tabs-title">Reportes:</span>
-                      <ul class="nav nav-tabs" data-tabs="tabs">
-                        <li class="nav-item">
-                          <a class="nav-link" data-toggle="tab">
-                            De Usuario
-                            <div class="ripple-container" ></div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link"  data-toggle="tab">
-                             De Tours
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                       
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="tab-content">
-                    <div class="tab-pane active" id="profile">
-                      <table class="table">
-                        <tbody>
-                          <tr th:each="reporte: ${reportesUser}">
-                        
-                            <td th:text="${reporte.motivo}" ></td>
-                            <td class="td-actions text-right">
-                              <a th:href="@{'/admin/reporte/'+${reporte.id}+'/gestion-reporte/'}"><button type="button" rel="tooltip" title="Contestar" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i></a>
-                              </button>
-                              
-                        
-                              
-                            </td>
-                          </tr>
+                  <div class="content">
+                    <div class="card">
+                      <div class="card-header card-header-tabs card-header-primary">
+                        <div class="nav-tabs-navigation">
+                          <div class="nav-tabs-wrapper">
+                            <span class="nav-tabs-title">Reportes:</span>
+                            
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="profile">
+                            <table class="table">
+                              <thead class=" text-primary">
+                                <tr>
+                                  <td>Creador</td>
+                                  <td>Categoria</td>
+                                  <td>Tour/User Reportado</td>
+                                  <td>Motivo</td>
+                                  <td>Texto</td>
+                                  <td>Contestada</td>
+                                  <td> Contestar </td>
+      
+      
+                                </tr>
+      
+                              </thead>
+                              <tbody>
+                                
+                                <tr th:each="reporte: ${reportes}">
+                                  <td><h4 th:text="${reporte.creador.username}"></h4> </td>
+                                  <td><h4 th:text="${reporte.tipo}"></h4> </td>
+                                
+                                  <td th:if="${reporte.tipo=='USER'}"><h4 th:text="${reporte.userReportado.username}"></h4> </td>
+                                  <td th:if="${reporte.tipo=='TOUR'}"><h4 th:text="${reporte.tourReportado.id}"></h4> </td>
+                                  <td ><h4 th:text="${reporte.motivo}" ></h4></td>
+                                  <td th:text="${reporte.texto}" ></td>
+                                  <td th:text="${reporte.contestada}" ></td>
+                                  <td><a th:href="@{'/admin/reporte/'+${reporte.id}+'/gestion-reporte/'}"><button type="button" rel="tooltip" title="Contestar" class="btn btn-primary btn-link btn-sm" >
+                                    <i class="material-icons">edit</i></a>
+                                  </button></td>
+                                </tr>
+                                
+                              </tbody>
+                            </table>
+                          </div>
                           
-                        </tbody>
-                      </table>
+                         
+                        </div>
+                      </div>
                     </div>
-                    <div class="tab-pane" id="messages">
-                      <table class="table">
-                        <tbody>
-                          <tr th:each="reporte: ${reportesTour}">
-                        
-                            <td th:text="${reporte.motivo}" ></td>
-                            <td class="td-actions text-right">
-                              <a th:href="@{'/admin/reporte/'+${reporte.id}+'/gestion-reporte/'}"></a><button type="button" rel="tooltip" title="Contestar" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button></a>
-                             
-                            </td>
-                          </tr>
-                        
-                        </tbody>
-                      </table>
-                    </div>
-                   
                   </div>
-                </div>
-              </div>
-            </div>
             
         
         </div>
