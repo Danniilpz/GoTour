@@ -19,10 +19,10 @@ Scenario: Registrarse, crear un tour y editar la direccion de correo nueva
   #En este punto hemos introducido todos los datos necesarios para crear un usuario
   * driver.screenshot() 
   * submit().click("[type=submit]")
-  * match html('title') contains 'GoTour'
-  * driver.screenshot()
+  * input('#username', 'Aragorn')
+  * input('#password', 'patata')
+  * submit().click("[type=submit]")
   # Nos metemos en nuestro perfil
-  * click("a[id=perfil_ref]")
   * match html('title') contains 'Perfil'
   * click("a[id=crearTour]")
   * driver.screenshot()
