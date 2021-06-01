@@ -224,24 +224,8 @@ public class UserController {
 		catch(Exception e){
 			log.error("Fallo al hacer logout", e);
 		}
-		{
-		List<Tour> tours = entityManager.createNamedQuery("AllTours").getResultList();        
-        // dumps them via log
-        log.info("Dumping table {}", "tour");
-        for (Object o : tours) {
-            log.info("\t{}", o);
-        }     
-        List<User> users = entityManager.createNamedQuery("AllUsersByPuntuacion").setMaxResults(20).getResultList();        
-        // dumps them via log
-        log.info("Dumping table {}", "user");
-        for (Object o : users) {
-            log.info("\t{}", o);
-        }       
-        // adds them to model
-        model.addAttribute("tours", tours);	
-        model.addAttribute("users", users);		
-		return "index";
-		}
+		return "redirect:/";
+		
 	}
 
 	@PostMapping("/registro2")
@@ -265,16 +249,12 @@ public class UserController {
         user.setRespuestaSeguridad(respuestaseguridad);
         user.setUsername(username);
         user.setNumTelefono(numtelefono);
+		user.setCaducidadTarjeta("0");
         user.setRoles("USER");
         user.setEnabled(1);
         entityManager.persist(user);
         entityManager.flush();
-        try {
-	        request.login(username, password);
-			session.setAttribute("u", user);
-	    } catch (Exception e) {
-	    }
-        return "redirect:/";
+        return "redirect: /login";
 
     }
 

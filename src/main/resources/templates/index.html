@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <title>GoTour</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900|Roboto+Mono:300,400,500"> 
-    <link rel="stylesheet" th:href="@{~/fonts/icomoon/style.css}">
-    <link rel="stylesheet" th:href="@{~/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{~/css/magnific-popup.css}">
-    <link rel="stylesheet" th:href="@{~/css/jquery-ui.css}">
-    <link rel="stylesheet" th:href="@{~/css/owl.carousel.min.css}">
-    <link rel="stylesheet" th:href="@{~/css/owl.theme.default.min.css}">
-    <link rel="stylesheet" th:href="@{~/css/bootstrap-datepicker.css}">
-    <link rel="stylesheet" th:href="@{~/css/mediaelementplayer.css}">
-    <link rel="stylesheet" th:href="@{~/css/animate.css}">
-    <link rel="stylesheet" th:href="@{~/fonts/flaticon/font/flaticon.css}">
-    <link rel="stylesheet" th:href="@{~/css/fl-bigmug-line.css}">  
-    <link rel="stylesheet" th:href="@{~/css/aos.css}">
-    <link rel="stylesheet" th:href="@{~/css/style.css}">
-    
-  </head>
-  <body>
-  
+<head>
+  <title>GoTour</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900|Roboto+Mono:300,400,500">
+  <link rel="stylesheet" th:href="@{~/fonts/icomoon/style.css}">
+  <link rel="stylesheet" th:href="@{~/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{~/css/magnific-popup.css}">
+  <link rel="stylesheet" th:href="@{~/css/jquery-ui.css}">
+  <link rel="stylesheet" th:href="@{~/css/owl.carousel.min.css}">
+  <link rel="stylesheet" th:href="@{~/css/owl.theme.default.min.css}">
+  <link rel="stylesheet" th:href="@{~/css/bootstrap-datepicker.css}">
+  <link rel="stylesheet" th:href="@{~/css/mediaelementplayer.css}">
+  <link rel="stylesheet" th:href="@{~/css/animate.css}">
+  <link rel="stylesheet" th:href="@{~/fonts/flaticon/font/flaticon.css}">
+  <link rel="stylesheet" th:href="@{~/css/fl-bigmug-line.css}">
+  <link rel="stylesheet" th:href="@{~/css/aos.css}">
+  <link rel="stylesheet" th:href="@{~/css/style.css}">
+
+</head>
+
+<body>
+
   <div class="site-loader"></div>
-  
+
   <div class="site-wrap">
 
-   <div class="site-mobile-menu">
+    <div class="site-mobile-menu">
       <div class="site-mobile-menu-header">
         <div class="site-mobile-menu-close mt-3">
           <span class="icon-close2 js-menu-toggle"></span>
@@ -40,9 +43,9 @@
 
 
     <div th:replace="fragments/imagenes-principales.html :: images-principales">
-     
+
     </div>
-    
+
 
     <div class="site-section site-section-sm pb-0">
       <div class="container">
@@ -58,7 +61,8 @@
               <div class="col-md-2">
                 <label for="ciudad">Ciudad</label>
                 <div class="select-wrap">
-                  <input type="text" class="form-control d-block rounded-0" name="ciudad" th:id="ciudad" placeholder="Ciudad" required>
+                  <input type="text" class="form-control d-block rounded-0" name="ciudad" th:id="ciudad"
+                    placeholder="Ciudad" required>
                 </div>
               </div>
               <div class="col-md-2">
@@ -68,18 +72,18 @@
                 </div>
               </div>
 
-               <div class="col-md-2">
+              <div class="col-md-2">
                 <label for="fechaini">Fecha Inicio</label>
                 <div class="select-wrap">
                   <input type="datetime-local" class="form-control d-block rounded-0" name="fechaini" required />
-                  
+
                 </div>
               </div>
-               <div class="col-md-2">
+              <div class="col-md-2">
                 <label for="fechafin">Fecha Fin</label>
                 <div class="select-wrap">
                   <input type="datetime-local" class="form-control d-block rounded-0" name="fechafin" required />
-                  
+
                 </div>
               </div>
               <div class="col-md-2">
@@ -87,12 +91,12 @@
               </div>
             </div>
           </form>
-        </div>  
+        </div>
 
 
         <div class="site-section site-section-sm bg-light busqueda" th:if="${busqueda!=null}">
           <div class="container">
-          
+
             <div class="row">
               <div class="col-md-6 col-lg-4 mb-4" th:each="tour: ${busqueda}">
                 <div class="property-entry h-100">
@@ -105,35 +109,44 @@
                     </div>
                   </a>
                   <div class="p-4 property-body">
-                    <h2 class="property-title"  th:text="${tour.datos.guia.nombre}"><a th:href="@{'/user/'+${tour.datos.guia.id}+'/perfil/'}"></a></h2>
-                    <span class="property-location d-block mb-3"  th:text="${tour.datos.titulo}"><span class="property-icon icon-room"></span></span>
-                    <strong class="property-price text-primary mb-3 d-block text-success" th:text="${tour.datos.precio}+'€'"></strong>
-                    <ul class="property-specs-wrap mb-3 mb-lg-0">
-    
-                      <li>
-                        <span class="property-specs">Inicio</span>
-                        <span class="property-specs-number"  th:text="'Inicio: '+${tour.getFechaIniString()}"></span>
-                        
-                      </li>
-                      <li>
+                    <div class="fila1">
+                      <h4 th:text="${tour.datos.titulo}"></h4>
+                      <strong class="property-price text-primary mb-3 d-block text-success fecha"
+                        th:text="${tour.datos.precio}+'€'"></strong>
+                    </div>
+                    <div class="fila2">
+                      <div>
+                        <span class="property-specs">Localización</span>
+                        <span class="property-specs-number "
+                          th:text="${tour.datos.ciudad}+', '+${tour.datos.pais}"></span>
+                      </div>
+                      <div>
                         <span class="property-specs">Turistas</span>
-                        <span class="property-specs-number" th:text="${tour.actTuristas}+'/'+${tour.datos.maxTuristas}+' turistas'"></span>
-                        
+                        <span class="property-specs-number"
+                          th:text="${tour.actTuristas}+'/'+${tour.datos.maxTuristas}"></span><span
+                          class="property-icon icon-person"></span>
+                      </div>
+                    </div>
+                    <ul class="property-specs-wrap mb-3 mb-lg-0">
+
+                      <li class="fecha">
+                        <span class="property-specs">Inicio</span>
+                        <span class="property-specs-number" th:text="${tour.getFechaIniString()}"></span>
+
                       </li>
-                      
-                      <li>
+                      <li class="fecha">
                         <span class="property-specs">Fin</span>
-                        <span class="property-specs-number" th:text="'Fin: '+${tour.getFechaFinString()}"></span>
-                        
+                        <span class="property-specs-number" th:text="${tour.getFechaFinString()}"></span>
+
                       </li>
                     </ul>
-    
+
                   </div>
                 </div>
               </div>
             </div>
-            </div>
-            </div>
+          </div>
+        </div>
 
         <div class="row">
           <div class="col-md-12">
@@ -147,89 +160,101 @@
             </div>
           </div>
         </div>
-       
+
       </div>
     </div>
 
     <div class="site-section site-section-sm bg-light" id="exploraTours">
       <div class="site-section-title text-center">
         <h2 class="card-title mb-4">Explora Tours</h2>
-      </div>      
+      </div>
       <div class="container">
-      
+
         <div class="row mb-5 lista-tours">
           <div class="col-md-6 col-lg-4 mb-4" th:each="tour: ${tours}" th:if="${tour.datos.disponible}">
             <div class="property-entry h-100">
               <a th:href="@{'/tour/'+${tour.datos.id}}" class="property-thumbnail">
                 <div class="offer-type-wrap">
-                   <span class="offer-type bg-success">ABIERTO</span>
+                  <span class="offer-type bg-success">ABIERTO</span>
                 </div>
                 <div class="img-tourList">
                   <img th:src="@{/tour/{id}/portada(id=${tour.datos.id})}" alt="Image" class="img-tourList-maxSize">
-                </div>             </a>
-              <div class="p-4 property-body">
-                <h2 class="property-title"  th:text="${tour.datos.guia.nombre}"><a th:href="@{'/user/' +tour.datos.guia.id+ '/perfil'}"></a></h2>
-                <span class="property-location d-block mb-3"  th:text="${tour.datos.titulo}"><span class="property-icon icon-room"></span> Sidney, Australia</span>
-                <strong class="property-price text-primary mb-3 d-block text-success" th:text="${tour.datos.precio}+'€'"></strong>
-                <h2 class="property-title"><a th:href="@{'/tour/'+${tour.datos.id}}" th:text="${tour.datos.titulo}" id="tour_ref"></a></h2>
-                <span class="property-location d-block mb-3" ><span class="property-icon icon-room"></span><span th:text="${tour.datos.ciudad}+', '+${tour.datos.pais}"></span></span>
-                <strong class="property-price text-primary mb-3 d-block text-success" th:text="${tour.datos.precio}+'€/persona'"></strong>
-                <ul class="property-specs-wrap mb-3 mb-lg-0">
-
-                  <li>
-                    <span class="property-specs">Inicio</span>
-                    <span class="property-specs-number"  th:text="'Inicio: '+${tour.getFechaIniString()}"></span>
-                    
-                  </li>
-                  <li>
-                    <span class="property-specs">Turistas</span>
-                    <span class="property-specs-number" th:text="${tour.actTuristas}+'/'+${tour.datos.maxTuristas}+' turistas'"></span>
-                    
-                  </li>
-                  
-                  <li>
-                    <span class="property-specs">Fin</span>
-                    <span class="property-specs-number" th:text="'Fin: '+${tour.getFechaFinString()}"></span>
-                    
-                  </li>
-                </ul>
-
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
-        
-      </div>
-    </div> 
-    <div class="site-section site-section-sm bg-light" id="exploraGuias">
-      <div class="site-section-title text-center">
-        <h2 class="card-title mb-4">Explora Guias</h2>
-      </div>      
-      <div class="container">
-      
-        <div class="row mb-5 lista-tours">
-          <div class="col-md-6 col-lg-4 mb-4" th:each="user: ${users}">
-            <div class="property-entry h-100">
-              <a th:href="@{'/user/'+${user.id}+'/perfil'}" class="property-thumbnail">
-
-                <img th:href="@{'/user/'+${user.id}+'/perfil'}" th:src="@{'/user/'+${user.id}+'/foto'}" alt="Image" class="img-fluid">
+                </div>
               </a>
               <div class="p-4 property-body">
-                <h2 class="property-title"  th:text="${user.nombre}+' '+${user.apellidos}"><a th:href="@{'/user/'+${user.id}+'/perfil'}"></a></h2>
-                <div class="row">
-                  <div th:each="i: ${#numbers.sequence(1, user.puntuacion)}"><img class="card-category img-fluid ml-3" th:src="@{/img/estrellas.png}" width="30"/></div>
-               </div>
+                <div class="fila1">
+                  <h4 th:text="${tour.datos.titulo}"></h4>
+                  <strong class="property-price text-primary mb-3 d-block text-success fecha"
+                    th:text="${tour.datos.precio}+'€'"></strong>
+                </div>
+                <div class="fila2">
+                  <div>
+                    <span class="property-specs">Localización</span>
+                    <span class="property-specs-number " th:text="${tour.datos.ciudad}+', '+${tour.datos.pais}"></span>
+                  </div>
+                  <div>
+                    <span class="property-specs">Turistas</span>
+                    <span class="property-specs-number"
+                      th:text="${tour.actTuristas}+'/'+${tour.datos.maxTuristas}"></span><span
+                      class="property-icon icon-person"></span>
+                  </div>
+                </div>
+                <!--<h2 class="property-title" th:text="${tour.datos.guia.nombre}"><a
+                    th:href="@{'/user/' +tour.datos.guia.id+ '/perfil'}"></a></h2>-->
 
+                <ul class="property-specs-wrap mb-3 mb-lg-0">
+
+                  <li class="fecha">
+                    <span class="property-specs">Inicio</span>
+                    <span class="property-specs-number" th:text="${tour.getFechaIniString()}"></span>
+
+                  </li>
+                  <li class="fecha">
+                    <span class="property-specs">Fin</span>
+                    <span class="property-specs-number" th:text="${tour.getFechaFinString()}"></span>
+
+                  </li>
+
+                </ul>
               </div>
             </div>
           </div>
         </div>
-        </div>
-        
       </div>
-    </div> 
-    <footer th:replace="fragments/footer.html :: footer"></footer>
+
+    </div>
+  </div>
+  <div class="site-section site-section-sm bg-light" id="exploraGuias">
+    <div class="site-section-title text-center">
+      <h2 class="card-title mb-4">Explora Guias</h2>
+    </div>
+    <div class="container">
+
+      <div class="row mb-5 lista-tours">
+        <div class="col-md-6 col-lg-4 mb-4" th:each="user: ${users}">
+          <div class="property-entry h-100">
+            <a th:href="@{'/user/'+${user.id}+'/perfil'}" class="property-thumbnail">
+
+              <img th:href="@{'/user/'+${user.id}+'/perfil'}" th:src="@{'/user/'+${user.id}+'/foto'}" alt="Image"
+                class="img-fluid">
+            </a>
+            <div class="p-4 property-body">
+              <h2 class="property-title" th:text="${user.nombre}+' '+${user.apellidos}"><a
+                  th:href="@{'/user/'+${user.id}+'/perfil'}"></a></h2>
+              <div class="row">
+                <div th:each="i: ${#numbers.sequence(1, user.puntuacion)}"><img class="card-category img-fluid ml-3"
+                    th:src="@{/img/estrellas.png}" width="30" /></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+  <footer th:replace="fragments/footer.html :: footer"></footer>
   </div>
 
   <script th:src="@{~/js/jquery-3.3.1.min.js}"></script>
@@ -246,6 +271,7 @@
   <script th:src="@{~/js/aos.js}"></script>
 
   <script th:src="@{~/js/main.js}"></script>
-    
-  </body>
+
+</body>
+
 </html>

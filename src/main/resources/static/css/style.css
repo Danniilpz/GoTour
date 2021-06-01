@@ -727,7 +727,20 @@ button a {
   height: calc(100vh - 52px);
   padding-bottom: 150px;
 }
-
+.fila1{
+  display: flex;
+  justify-content: space-around;
+}
+.fila2{
+  display: flex;
+  justify-content: space-around;
+}
+.fecha{
+  font-size: 15px;
+}
+.fechas{
+  text-align: center;
+}
 .site-mobile-menu .site-nav-wrap {
   padding: 0;
   margin: 0;

@@ -78,69 +78,7 @@
                         <h5 class="mt-3" th:text="'Ha realizado '+ ${tours.size()}+' tour(s)'"></h5>
                      </div>
                      <h5 class="mt-3" th:text="'Ha asistido a '+ ${user.toursAsistidos.size()}+' tour(s)'"></h5>
-                     <div th:if="${user.tourOfertados.size()>0}">
-                        <div class="mt-3 mb-5"><button type="button" class="btn btn-secondary" data-toggle="modal"
-                              data-target="#toursCerrados">Ver tours cerrados</button></div>
-
-
-                        <div class="modal fade" id="toursCerrados" tabindex="-1" role="dialog"
-                           aria-labelledby="toursCerrados" aria-hidden="true">
-                           <div class="modal-dialog" role="document">
-                              <div class="modal-content">
-                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Tours cerrados</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                       <span aria-hidden="true">&times;</span>
-                                    </button>
-                                 </div>
-                                 <div class="modal-body">
-                                    <div class="row">
-                                       <div class="col-md-6 col-lg-6 mb-4" th:each="tour: ${user.tourOfertados}">
-                                          <div th:if="${!tour.datos.disponible}" class="property-entry h-100">
-                                             <a th:href="@{'/tour/'+${tour.id}}" class="property-thumbnail">
-                                                <div class="offer-type-wrap">
-                                                   <span class="offer-type bg-danger">Cerrado</span>
-                                                </div>
-                                                <img th:href="@{'/tour/'+${tour.id}}"
-                                                   th:src="@{/tour/{id}/portada(id=${tour.id})}" alt="Image"
-                                                   class="img-fluid">
-                                             </a>
-                                             <div class="p-4 property-body">
-                                                <a href="#" class="property-favorite"><span
-                                                      class="icon-heart-o"></span></a>
-                                                <h2 class="property-title" th:text="${tour.datos.guia.nombre}"><a
-                                                      th:href="@{'/user/' +tour.datos.guia.id+ '/perfil'}"></a></h2>
-                                                <span class="property-location d-block mb-3"
-                                                   th:text="${tour.datos.titulo}"><span
-                                                      class="property-icon icon-room"></span></span>
-                                                <strong class="property-price text-primary mb-3 d-block text-success"
-                                                   th:text="${tour.datos.precio}+'€'"></strong>
-                                                <h2 class="property-title"><a th:href="@{'/tour/'+${tour.id}}"
-                                                      th:text="${tour.datos.titulo}" id="tour_ref"></a></h2>
-                                                <span class="property-location d-block mb-3"><span
-                                                      class="property-icon icon-room"></span><span
-                                                      th:text="${tour.datos.ciudad}+', '+${tour.datos.pais}"></span></span>
-                                                <strong class="property-price text-primary mb-3 d-block text-success"
-                                                   th:text="${tour.datos.precio}+'€/persona'"></strong>
-                                                <h5 class="property-location"
-                                                   th:text="@{'Se ha realizado '+${tour.datos.instancias.size}+' veces'}">
-                                                </h5>
-                                                <h5 class="property-location"
-                                                   th:text="@{'Última vez el '+${tour.datos.getFechaUltimaInstancia}}">
-                                                </h5>
-
-                                             </div>
-
-                                          </div>
-
-                                       </div>
-                                    </div>
-
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                    
                   </div>
                </div>
                <div class="col-lg-4">
@@ -386,13 +324,11 @@
                                           </div>
                                           <div class="fila2">
                                              <span class="property-location d-block mb-3"><span
-                                                   class="property-icon icon-room"></span><span
+                                                   class="property-icon icon-location_city"></span><span
                                                    th:text="${tour.datos.ciudad}+', '+${tour.datos.pais}"></span></span>
-                                             <li>
                                                 <span class="property-specs-number "
                                                    th:text="${tour.actTuristas}+'/'+${tour.datos.maxTuristas}"></span><span
                                                    class="property-icon icon-person"></span>
-                                             </li>
                                           </div>
 
                                           <ul class="property-specs-wrap mb-3 mb-lg-0 fechas">

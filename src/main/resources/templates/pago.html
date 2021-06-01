@@ -101,7 +101,7 @@
                         <input th:if="${session.u.numTarjeta == 0}" name="numTarjeta" id="numTarjeta" type="number" class="form-control" th:value="0">
                         <input th:unless="${session.u.numTarjeta == 0}" name="numTarjeta" id="numTarjeta" type="hidden" class="form-control" th:value="${session.u.numTarjeta}">
                         <label for="caducidadTarjeta" th:if="${session.u.numTarjeta == 0}">Fecha de caducidad de la tarjeta</label>
-                        <input th:if="${session.u.numTarjeta == 0}" name="caducidadTarjeta" id="caducidadTarjeta" type="text" class="form-control" th:value="">
+                        <input th:if="${session.u.numTarjeta == 0}" name="caducidadTarjeta" id="caducidadTarjeta" type="text" class="form-control" th:value="caducidad">
                         <input th:unless="${session.u.numTarjeta == 0}" name="caducidadTarjeta" id="caducidadTarjeta" type="hidden" class="form-control" th:value="${session.u.caducidadTarjeta}">
                         <label th:if="${session.u.numTarjeta == 0}" for="numSecreto">Numero secreto</label>
                         <input th:if="${session.u.numTarjeta == 0}"name="numSecreto" id="numSecreto" type="number" class="form-control" th:value="0">

@@ -172,12 +172,16 @@
         // mostrando una tabla dinámica con datos cargados del servidor vía AJAX
         $.ajax({
             type:"GET",
-            url: config.rootUrl + "mensaje/tour/"+tour_id+"/received?topic="+topic_id,
+            url:"/mensaje/tour/"+tour_id+"/received?topic="+topic_id,
             success: function(data){
                 console.log(data);
                 data.forEach(element => {
                     procesarMensaje(element);
                 });
+            },
+            error: function(){
+                console.log("id ", tour_id);
+                console.log("topic ", topic_id);
             }
         });
 
