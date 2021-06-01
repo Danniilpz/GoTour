@@ -67,17 +67,23 @@
         <li><a href="src/main/resources/templates/perfil.html">Perfil: </a> aqui se ven todos los datos relativos al usuario, su informacion personal y toures realizados o por realizar.</li>
         <li><a href="src/main/resources/templates/reviewUsuarios.html">ReviewUsuario </a> En esta página se muestran los asistentes al tour junto con un pequeño formulario para que el guía pueda dejarle una review a cada uno</li>
         <li><a href="src/main/resources/templates/pago.html">Pago:</a> Pestaña de pago por el tour a la que se accede tras inscribirse a un tour</li>
-        <li><a href="src/main/resources/templates/admin/users.html">Desactivar Usuario:</a> Permite ver los usuarios de la aplicacion y deshabilitarlos</li>
+        <li><a href="src/main/resources/templates/admin/users.html">Desactivar Usuario:</a> Permite ver los usuarios de la aplicacion, deshabilitarlos y habilitarlos de nuevo</li>
         <li><a href="src/main/resources/templates/chat.html"> Chat:</a> Chat del tour para hablar con todos los participantes del mismo</li>
         <li><a href="src/main/resources/templates/reporteTour.html">reporteTour:</a> Permite hacer un reporte sobre un tour para que el admin haga lo que considere necesario</li>
         <li><a href="src/main/resources/templates/reporteUser.html">reporteUser:</a> Permite reportar a un usuario por mal comportamiento para que el admin haga lo que considere necesario</li>
+        <li><a href="src/main/resources/templates/admin/reportes-usuarios.html">Reportes usuarios:</a> Aqui se muestran los reportes realizados por los usuarios, además de un buscador de reportes. Se puede contestar al reporte del usuario.</li>
+        <li><a href="src/main/resources/templates/admin/gestion-reporte.html">Gestion reporte:</a>Aqui se permite contestar el reporte que se haya seleccionado en la vista reportes-usuarios además de habilitar o deshabilitar a su creador.</li>
+        <li><a href="src/main/resources/templates/admin/index.html">Gestion reporte:</a>Aqui se muestran estadísticas generales sobre la aplicación.</li>
+        <li><a href="src/main/resources/templates/editarTour.html"> editarTour:</a> permite al guía de un tour editar la información relacionada con el mismo</li>
     </ul>
 
     <h2>Pruebas</h2>
     <p>principal.feature: prueba el proceso de hacer una review a un tour por parte del usuario y de hacer una review a un usuario por parte del guía. Empieza haciendo login, despues selecciona un tour al que asiste y realiza una review. Tras esto cierra sesión, inicia el guía, abre el mismo tour y hace una review sobre un usuario</p>
-    <p>secondary.feature: prueba el proceso de registro de usuario, de creacion de un tour y de actualizacion de un dato privado</p>
+    <p>secondary.feature: prueba el proceso de registro de usuario y de creacion de un tour</p>
+    <p>editarDatos.feature: prueba el proceso de cambiar los datos de un usuario.</p>
+    <p>mensaje.feature: prueba el proceso de mandar mensajes al chat del tour desde un asistente y desde el guía</p>
 
-    <h2>Diagrama de clases(no actualizado desde la ultima entrega)</h2>
+    <h2>Diagrama de clases(actualizado desde la ultima entrega)</h2>
     <img src="diagrama.png" alt="Diagrama de clases" ></span>
 
     <h2>Cambios respecto de la última entrega(siendo la nueva entrega el 6 de abril)</h2>
@@ -87,7 +93,7 @@
     <li>Comienzo de la funcionalidad de crearTour</li>
     <li>Prueba de funcionalidad principal</li>
 
-    <h2>Cambios respecto de la última entrega(siendo la nueva entrega el 19 de abril)</h2>
+    <h2>Cambios respecto de la última entrega(siendo la nueva entrega el 19 de mayo)</h2>
     <li>Creadas las funcionalidades de hacer review, tanto del usuario al guia como del guia al usuario</li>
     <li>Continuacion de adaptacion del bootstrap</li>
     <li>Añadida la vista de pago</li>
@@ -105,6 +111,20 @@
     <li>Eliminados atributos foto, portada y mapa de las clases User y TourOfertado, las imagenes ahora se guardan en la carpeta data</li>
     <li>Añadida validación de usuario en registro con ajax</li>
     <li>Finalizada la funcionalidad de editar datos del perfil de usuario</li>
+    <h2>Cambios respecto de la última entrega(siendo la nueva entrega el 2 de junio)</h2>
+    <li>Cambios en la interfaz en el perfil</li>
+    <li>Añadido boton para cambiar a la vista de admin desde la barra de navegación</li>
+    <li>Añadido seguridad para que no pueda valorar varias veces el mismo usuario a un tour, ahora se ha de esperar además a que la fecha del tour haya pasado para poder valorarlo</li>
+    <li>Añadidas consultas a bd para evitar bucles en ciertas funciones</li>
+    <li>Ahora solo el guía puede cambiar las portadas de los tours</li>
+    <li>Ya no se permite apuntarse a tours del pasado</li>
+    <li>Sacado factor común en los javascript</li>
+    <li>Añadida funcionalidad para cancelar la inscripcion a un tour por parte del turista</li>ç
+    <li>Añadida funcionalidad para cancelar un tour por parte del guía</li>
+    <li>Añadida funcionalidad para permitir editar tours</li>
+    <li>Se controlan las rutas tour/{id}/msg y tour/{id}/received</li>
+    <li>Añadida funcionalidad para poder volver a habilitar usuarios como admin</li>
+    <li>Varias mejoras en la interfaz para mejorar la usabilidad</li>
 
     <h2>Recursos</h2>
     Todas las imagenes usadas que no son nuestras se han buscado utilizando la herramienta de google para buscar por licencia creative commons
@@ -117,7 +137,7 @@
         <li><a href="data:image/png;base64,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">git.png</a></li>
     </ul>
     <h1>Cosas que no funcionan</h1>
-    <li><a href="src/main/resources/templates/admin/reportes-usuarios.html">Reportes usuarios:</a> Aqui se muestran las incidencias de los guías y los usuarios. No se consigue que termine de funcionar porque no muestra el contenido de los reportes</li>    
-    <li>secondary.feature no funciona del todo porque al introducir una fecha no me la toma bien</li>
+       
+    <li>secondary.feature no funciona del todo porque al introducir las fechas las toma como string</li>
 </body>
 </html>
