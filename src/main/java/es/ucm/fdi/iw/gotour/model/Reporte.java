@@ -68,8 +68,6 @@ public class Reporte {
 	private String tipo;
 
 	private boolean contestada;
-
-		
 	
 
 }

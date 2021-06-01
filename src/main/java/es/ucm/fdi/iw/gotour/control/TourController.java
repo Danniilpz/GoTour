@@ -57,8 +57,9 @@ import es.ucm.fdi.iw.gotour.model.User;
 import es.ucm.fdi.iw.gotour.model.Review;
 import es.ucm.fdi.iw.gotour.model.Mensaje;
 import es.ucm.fdi.iw.gotour.model.Reporte;
+import es.ucm.fdi.iw.gotour.model.Reserva;
 import es.ucm.fdi.iw.gotour.model.User.Role;
-
+import es.ucm.fdi.iw.gotour.model.Reporte;
 /**
  * Admin-only controller
  * @author mfreire
@@ -168,11 +169,49 @@ public class TourController {
 
     @PostMapping("/{id}/cancelar")
     @Transactional
-    public String cancelar(@PathVariable("id") long id,Model model,@RequestParam int turistascancel,HttpSession session){
+    public String cancelar(@PathVariable("id") long id,Model model,HttpSession session){
         Tour t = entityManager.find(Tour.class, id);
         User u = entityManager.find(User.class,      // IMPORTANTE: tiene que ser el de la BD, no vale el de la sesión
             ((User)session.getAttribute("u")).getId());
-        t.delTurista(u, turistascancel);
+        Reserva r =  (Reserva)entityManager.createNamedQuery("User.Reserva")
+            .setParameter("userParam", u.getId())
+            .setParameter("tourParam", t.getId())
+            .getSingleResult();
+        t.delReserva(r);
+        entityManager.remove(r);
+        u.removeTour(t);
+        return "redirect:/";
+    }
+
+    @PostMapping("/{id}/cancelarTour")
+    @Transactional
+    public String cancelarTour(@PathVariable("id") long id,Model model,HttpSession session){
+        Tour t = entityManager.find(Tour.class, id);
+        User u = entityManager.find(User.class,      // IMPORTANTE: tiene que ser el de la BD, no vale el de la sesión
+            ((User)session.getAttribute("u")).getId());
+        
+        List<User> turistas = t.turistas;
+        for (User user : turistas) {
+            user.removeTour(t);
+        }
+
+        List<Reporte> reportes = entityManager.createNamedQuery("TypeReportes").setParameter("tipoparam", "TOUR").getResultList();
+        log.info("reportes: {}", reportes);
+        for (Reporte r : reportes) {
+            log.info("reporte.id: {}", r.getTourReportado().getId());
+            if(r.getTourReportado().getId() == id){
+                entityManager.remove(r);
+            }
+        }
+
+        reportes = entityManager.createNamedQuery("TypeReportes").setParameter("tipoparam", "USER").getResultList();
+        for (Reporte r : reportes) {
+            log.info("reporte.id: {}", r.getTourReportado().getId());
+            if(r.getTourReportado().getId() == id){
+                entityManager.remove(r);
+            }
+        }
+        t.getDatos().getInstancias().remove(t);
         return "redirect:/";
     }
 
@@ -256,9 +295,21 @@ public class TourController {
         log.info("LOS TURISTAS SON {}", asistentes);
         if(!u.getToursAsistidos().contains(t)){
             t.addTurista(u, asistentes);
+            Reserva r = new Reserva();
+			r.setTourReservado(t);
+			r.setUsuario(u);
+			r.setAsistentes(asistentes);
+            entityManager.persist(r);
+		    entityManager.flush(); // to get Id before commit
         }
         else{
-            t.addTurista(asistentes);
+            Reserva r =  (Reserva)entityManager.createNamedQuery("User.Reserva")
+            .setParameter("userParam", u)
+            .setParameter("tourParam", t)
+            .getSingleResult();
+            log.info("EL TOUR DE LA RESERVA OBTENIDA ES {}", r.getTourReservado().getId());
+            log.info("AHORA VAMOS A AÑADIR EL TURISTA A LA RESERVA");
+            t.addTurista(asistentes, r);
         }
 
         model.addAttribute("tours", tours);

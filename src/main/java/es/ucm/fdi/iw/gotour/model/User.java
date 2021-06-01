@@ -74,8 +74,7 @@ import lombok.AllArgsConstructor;
 		),
 		@NamedQuery(name="UserByReview", 
 				query ="select r.destinatario FROM Review r WHERE r.creador.id =:guiaParam AND r.tourValorado.id =:tourParam")
-		// @NamedQuery(name="User.byTour",
-		// 		query="select u FROM User u JOIN User_Tours_Asistidos t WHERE t.Tours_Asistidos_Id= :tourParam")
+		
 })
 
 @NamedNativeQueries({
@@ -92,7 +91,9 @@ import lombok.AllArgsConstructor;
 	@NamedNativeQuery(name="User.haslanguajes",
 	query="SELECT idiomas_hablados from user_idiomas_hablados WHERE user_idiomas_hablados.User_id = :user_id"),
 	@NamedNativeQuery(name="ChatUser",
-				query = "select COUNT(turistas_id) FROM USER_TOURS_ASISTIDOS t WHERE t.turistas_id =:idParam AND t.tours_asistidos_id =:tourParam")
+				query = "select COUNT(turistas_id) FROM USER_TOURS_ASISTIDOS t WHERE t.turistas_id =:idParam AND t.tours_asistidos_id =:tourParam"),
+	@NamedNativeQuery(name="deleteTourAsistido",
+				query ="delete FROM USER_TOURS_ASISTIDOS t WHERE t.turistas_id =:idParam AND t.tours_asistidos_id =:tourParam")
 })
 public class User implements Transferable<User.Transfer> {
 
@@ -161,6 +162,9 @@ public class User implements Transferable<User.Transfer> {
 	@ManyToMany(targetEntity=Tour.class, fetch=FetchType.EAGER)
 	private List<Tour> toursAsistidos=new ArrayList<>(); 
 
+	@OneToMany(mappedBy = "usuario",  fetch=FetchType.EAGER)
+	private List<Reserva> reservas=new ArrayList<>(); 
+
 	@OneToMany(targetEntity=Review.class, fetch=FetchType.EAGER)
 	@JoinColumn(name="Creador_id")
 	private List<Review> reviewsHechas=new ArrayList<>();
@@ -218,6 +222,10 @@ public class User implements Transferable<User.Transfer> {
 		this.toursAsistidos.remove(t);
 	}
 
+	public void delReserva(Reserva r){
+		this.reservas.remove(r);
+	}
+
 	public void addLanguaje(String idioma){
 		idiomasHablados.add(idioma);
 	}
@@ -232,6 +240,16 @@ public class User implements Transferable<User.Transfer> {
 	public void addReportesAdmin(Reporte e){
 		reportesAdmin.add(e);
 	}
+	
+	public void removeTour(Tour t){
+		int i=0;
+		while(i < toursAsistidos.size() && toursAsistidos.get(i).getId() != t.getId()){
+			i++;
+		}
+		if(i < toursAsistidos.size()){
+			toursAsistidos.remove(i);
+		}
+	}
 
     @Getter
     @AllArgsConstructor
@@ -244,6 +262,7 @@ public class User implements Transferable<User.Transfer> {
 		private int puntuacion;
 		private List<Tour> tourOfertados;
 		private List<Tour> toursAsistidos;
+		private List<Reserva> reservas;
 		private List<Review> reviewsHechas;
 		private List<Mensaje> sent;
 		private List<Mensaje> received;
@@ -257,7 +276,7 @@ public class User implements Transferable<User.Transfer> {
 
 	@Override
     public Transfer toTransfer() {
-		return new Transfer(id, apellidos, nombre,	username, numTelefono, puntuacion, tourOfertados, toursAsistidos, reviewsHechas, sent,  received, reviewsRecibidas, idiomasHablados, reporteRecibidos, reporteCreados, reportesAdmin);
+		return new Transfer(id, apellidos, nombre,	username, numTelefono, puntuacion, tourOfertados, toursAsistidos, reservas, reviewsHechas, sent,  received, reviewsRecibidas, idiomasHablados, reporteRecibidos, reporteCreados, reportesAdmin);
     }
 
 	@Override

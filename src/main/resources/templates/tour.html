@@ -225,25 +225,29 @@
                       </div>
                     </form>
 
-                    <h3 class="h4 text-black widget-title mb-3" th:unless="${session.u.id == tour.guia.id && session.u.toursAsistidos.contains(t) || t.cerrado()}">Cancelar Inscripcion</h3>
-                    <form method="post" class="form-contact-agent" th:action="@{/tour/{id}/cancelar(id=${t.id})}" th:unless="${session.u.id == tour.guia.id && session.u.toursAsistidos.contains(t) || t.cerrado()}">
-                      <div class="form-group">
-                        <label for="phone">Indique el numero de plazas que van a quedar libre</label>
-                        <input name="turistascancel" id="turistascancel" type="number" class="form-control" value="1"  min="1" th:max="${tour.maxTuristas}">
-                      </div>
+                    <h3 class="h4 text-black widget-title mb-3" th:if="${session.u.id != tour.guia.id && session.u.toursAsistidos.contains(t) && !t.cerrado()}">Cancelar Inscripcion</h3>
+                    <form method="post" class="form-contact-agent" th:action="@{/tour/{id}/cancelar(id=${t.id})}" th:if="${session.u.id != tour.guia.id && session.u.toursAsistidos.contains(t) && !t.cerrado()}">
                       <div class="form-group" >
                         <input type="submit" id="cancelar" class="btn btn-primary" value="Cancelar">
                       </div>
                     </form>
+                    
+                    <h3 class="h4 text-black widget-title mb-3" th:if="${session.u.id == tour.guia.id && !t.cerrado()}">Cancelar tour</h3>
+                    <form method="post" class="form-contact-agent" th:action="@{/tour/{id}/cancelarTour(id=${t.id})}" th:if="${session.u.id == tour.guia.id && !t.cerrado()}">
+                      <div class="form-group" >
+                        <input type="submit" id="cancelar" class="btn btn-primary" value="Cancelar">
+                      </div>
+                    </form>
+                    
                     </div>
                     
 
                   </div>
-
+ 
                   <div class="convocatorias" th:if="${session.u.id == tour.guia.id}">
                     <button onclick="instanciaNueva()" class="btn btn-primary btn-round" >Nueva convocatoria</a>
                   </div>
-
+                  
                 </div>
 
                 <div class="bg-white widget border rounded" id="instanciaNueva" th:if="${session.u.id == tour.guia.id}">
