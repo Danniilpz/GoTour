@@ -56,18 +56,18 @@
             </thead>
             <tbody>
               <tr>
-                <td  th:text="${user.Id}" th:if="${user.Enabled == 1}">
+                <td  th:text="${user.id}" th:if="${user.enabled == 1}">
                   
                 </td>
-                <td th:text="${user.Username}" th:if="${user.Enabled == 1}">
+                <td th:text="${user.username}" th:if="${user.enabled == 1}">
                   
                 </td>
-                <td th:text="${user.email}" th:if="${user.Enabled == 1}">
+                <td th:text="${user.email}" th:if="${user.enabled == 1}">
                
                 </td> 
                 <td>
-                  <form method="post" th:action="@{/admin/toggleuser(id=${user.Id})}">
-                    <button type="submit" class="btn btn-primary" th:if="${user.Enabled == 1}">Deshabilitar</button>
+                  <form method="post" th:action="@{/admin/toggleuser(id=${user.id})}">
+                    <button type="submit" class="btn btn-primary" th:if="${user.enabled == 1}">Deshabilitar</button>
                     
                   </form>
                   
