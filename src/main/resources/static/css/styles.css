@@ -52,6 +52,12 @@ p {
 .info_tour{
       width: 100%;
 }
+.botonchat{
+	position:fixed;
+	height: 50px;
+	width:50px;
+	border-radius:100px;
+}
 .info_tour_int{
       display: flex;
       justify-content: space-between;

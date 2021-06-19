@@ -183,6 +183,35 @@
                 </div>
               </div>
             </div>
+            <div class="col-lg-6 col-md-12">
+              <div class="card">
+                <div class="card-header card-header-warning">
+                  <h4 class="card-title">Tours</h4>
+                  
+                </div>
+                <div class="card-body table-responsive">
+                  <table class="table table-hover">
+                    <thead class="text-warning">
+                      <th>Nombre tour</th>
+                      <th>Fecha ini</th>
+                      <th>Fecha fin</th>
+                      <th>Guía</th>
+                      <th>Plazas ocupadas/totales</th>
+                    </thead>
+                    <tbody>
+                      <tr th:each="tour: ${tours}">
+                        <td ><a th:href="@{'/tour/'+${tour.datos.id}}" th:text="${tour.datos.titulo}"></a></td>
+                        <td  th:text="${tour.fechaIni}"></td>
+                        <td  th:text="${tour.fechaFin}"></td>
+                        <td  th:text="${tour.datos.guia.nombre}"></td>
+                        <td  th:text="${tour.actTuristas}+'/'+${tour.datos.maxTuristas}"></td>
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -230,6 +230,10 @@ public class User implements Transferable<User.Transfer> {
 		idiomasHablados.add(idioma);
 	}
 
+	public void removeLanguaje(String idioma){
+		idiomasHablados.remove(idioma);
+	}
+
 	public void addReporteRespuestas(Reporte e){
 		reporteRecibidos.add(e);
 	}

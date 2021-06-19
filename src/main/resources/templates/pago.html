@@ -98,7 +98,7 @@
                     
                     <div class="form-group">
                         <label for="numTarjeta" th:if="${session.u.numTarjeta == 0}">Numero de tarjeta</label>
-                        <input th:if="${session.u.numTarjeta == 0}" name="numTarjeta" id="numTarjeta" type="number" class="form-control" th:value="0">
+                        <input th:if="${session.u.numTarjeta == 0}" id="numTarjeta" name="numTarjeta" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" class="form-control" maxlength="19" placeholder="xxxx xxxx xxxx xxxx">
                         <input th:unless="${session.u.numTarjeta == 0}" name="numTarjeta" id="numTarjeta" type="hidden" class="form-control" th:value="${session.u.numTarjeta}">
                         <label for="caducidadTarjeta" th:if="${session.u.numTarjeta == 0}">Fecha de caducidad de la tarjeta</label>
                         <input th:if="${session.u.numTarjeta == 0}" name="caducidadTarjeta" id="caducidadTarjeta" type="text" class="form-control" th:value="caducidad">

@@ -322,6 +322,17 @@ public class UserController {
 		return perfil(model,session,u.getId());
 	}
 
+	@PostMapping("/removeLanguaje")
+	@Transactional
+	public String eliminarIdiomas(@RequestParam String idioma,
+						Model model, HttpSession session) throws IOException {
+        User u = entityManager.find(User.class,      // IMPORTANTE: tiene que ser el de la BD, no vale el de la sesión
+            ((User)session.getAttribute("u")).getId());
+		u.removeLanguaje(idioma);
+		session.setAttribute("u", u);
+		return perfil(model,session,u.getId());
+	}
+
 
 	@GetMapping("/{id}/perfil")
 	@Transactional

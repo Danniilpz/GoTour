@@ -3,7 +3,9 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-	<title>Nav fragment - rest intentionally left empty</title>
+  <title>Nav fragment - rest intentionally left empty</title>
+  
+  <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
 
@@ -41,6 +43,12 @@
                 </ul>
               </nav>
             </div>
+            
+          <div id="chats" th:if="${session.u != null}">
+            <div th:each="tour: ${session.u.toursAsistidos}">
+              <a th:href="@{'/tour/'+${tour.id}+'/chat'}" th:id="chat+${tour.id}" ><div class="botonchat" th:style="'background-image:url(' + @{/tour/{id}/portada(id=${tour.id})} + ');'"></div></a>
+            </div>
+          </div>
            
 
           </div>

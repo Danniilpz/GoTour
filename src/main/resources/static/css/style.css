@@ -31,7 +31,13 @@ a:hover {
 button a {
   color: black;
 }
-
+.botonchat{
+	position:fixed;
+	height: 50px;
+	width:50px;
+  border-radius:100px;
+  background-size:50px 50px;
+}
 .guia_tour_foto {
   width: 100%
 }

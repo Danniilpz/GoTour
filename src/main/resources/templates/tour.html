@@ -268,7 +268,7 @@
                 </div>                
                 <div th:if="${session.u.id != tour.guia.id}" class="bg-white widget border rounded">
                   <div class="card_guia">
-                    <a th:href="@{'/tour/'+${tour.id}+'/reportarTour'}" class="btn btn-primary btn-round" >Reportar Tour</a>
+                    <a th:href="@{'/tour/'+${tour.id}+'/reportarTour'}" id="reportar" class="btn btn-primary btn-round" >Reportar Tour</a>
                   </div>
                 </div>
               </div>  

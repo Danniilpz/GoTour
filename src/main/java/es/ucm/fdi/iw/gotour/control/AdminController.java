@@ -73,6 +73,7 @@ public class AdminController {
         }
 
 		List<Tour> tours = entityManager.createNamedQuery("AllTours").getResultList();
+		List<Tour> listaTours = entityManager.createNamedQuery("AllToursOrdered").getResultList();
 		List<TourOfertado> toursOfertados = entityManager.createNamedQuery("AllToursOfer").getResultList();
 		
 		int tourNumber=0;
@@ -110,6 +111,7 @@ public class AdminController {
         // adds them to model
         model.addAttribute("userNumber", userNumber);
 		model.addAttribute("users", users);
+		model.addAttribute("tours", listaTours);
 		model.addAttribute("tourNumber", tourNumber);
 		model.addAttribute("reportes", reportes);
 		model.addAttribute("reportesNumber", reportesNumber);

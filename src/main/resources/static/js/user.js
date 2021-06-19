@@ -32,6 +32,23 @@ function addLanguaje() {
     }
   });
 }
+function removeLanguaje(elemento){
+  let valor = elemento.title;
+  
+  csrfHeader();
+  const dataString = 'idioma=' + valor;
+  $.ajax({
+    url: '/user/removeLanguaje',
+    type: "POST",
+    data: dataString,
+    success: function (respuesta) {
+      $("#"+valor).hide();
+    },
+    error: function () {
+      console.log("No se ha podido obtener la información");
+    }
+  });
+}
 
 $("#add-review").on("click", addReview);
 

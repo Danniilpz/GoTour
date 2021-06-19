@@ -28,6 +28,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @NamedQueries({
 	@NamedQuery(name="AllTours", query="Select t from Tour t"),
+	@NamedQuery(name="AllToursOrdered", query="Select t from Tour t ORDER BY t.fechaIni DESC"),
 	@NamedQuery(name="ToursBySearch", query="Select t from Tour t where t.datos.pais=:paisParam and "+
 																		"t.datos.ciudad=:ciudadParam and "+
 																		"t.datos.lugar=:lugarParam and "+

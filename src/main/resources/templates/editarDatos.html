@@ -19,7 +19,7 @@
     <link rel="stylesheet" th:href="@{~/css/animate.css}">
     <link rel="stylesheet" th:href="@{~/fonts/flaticon/font/flaticon.css}">
     <link rel="stylesheet" th:href="@{~/css/fl-bigmug-line.css}">
-    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   
     <link rel="stylesheet" th:href="@{~/css/aos.css}">
 
@@ -145,7 +145,7 @@
               <div class="card_guia">
                 <div class="card-avatar" id="lista-idiomas">
                   <div th:each="idioma: ${idiomas}">
-                    <p class="idiomas" th:text="${idioma}">Ingles</p>
+                    <div th:id="${idioma}"><p class="idiomas" th:text="${idioma}"></p><i class='fas fa-times' th:title="${idioma}" onclick='removeLanguaje(this)'></i></div>
                  </div>
                 </div>
                 <div class="box_idiomas pt-3">

@@ -3,7 +3,7 @@ Feature: browser automation 1
 Background:
   # chromium bajo linux; 
   # si usas google-chrome, puedes quitar toda la parte de executable
-  * configure driver = { type: 'chrome', showDriverLog: true }
+  * configure driver = { type: 'chrome', showDriverLog: true, executable: ' }
   * url baseUrl
   * def util = Java.type('karate.KarateTests')
 
