@@ -221,6 +221,7 @@
 						<!-- <argument>src/test/karate-ui/login.feature</argument>  -->
 						<!-- <argument>src/test/karate-ui/principal.feature</argument> -->
 						<argument>src/test/karate-ui/reportar.feature</argument>
+						<!-- <argument>src/test/karate-ui/ReportarUser.feature</argument> -->
 						<!-- <argument>src/test/karate-ui/fecha.feature</argument> -->
 						<!-- <argument>src/test/karate-ui/editarDatos.feature</argument> -->
 						<!--<argument>src/test/karate-ui/mensaje.feature</argument>-->

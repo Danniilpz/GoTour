@@ -279,7 +279,7 @@ public class TourController {
 
     @PostMapping("/{id}/pagar/{asistentes}")
     @Transactional
-	public String pagar(@PathVariable("id") long id, @PathVariable("asistentes") Integer asistentes, Model model,@RequestParam int numTarjeta, @RequestParam String caducidadTarjeta,
+	public String pagar(@PathVariable("id") long id, @PathVariable("asistentes") Integer asistentes, Model model,@RequestParam String numTarjeta, @RequestParam String caducidadTarjeta,
                         @RequestParam int numSecreto,HttpSession session) {
                             //Aunque le pido los datos de tarjeta en el formulario realmente no hago nada con ellos
         Tour t = entityManager.find(Tour.class, id);

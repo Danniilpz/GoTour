@@ -96,19 +96,19 @@
                 <h2 class="h4 text-black"th:if="${session.u.numTarjeta == 0}">Introduzca sus datos de pago para completar la transacción</h2>
                 <form method="post" class="form-contact-agent" th:action="@{/tour/{id}/pagar/{asistentes}(id=${tour.id}, asistentes=${asistentes})}">
                     
-                    <div class="form-group">
-                        <label for="numTarjeta" th:if="${session.u.numTarjeta == 0}">Numero de tarjeta</label>
-                        <input th:if="${session.u.numTarjeta == 0}" id="numTarjeta" name="numTarjeta" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" class="form-control" maxlength="19" placeholder="xxxx xxxx xxxx xxxx">
-                        <input th:unless="${session.u.numTarjeta == 0}" name="numTarjeta" id="numTarjeta" type="hidden" class="form-control" th:value="${session.u.numTarjeta}">
-                        <label for="caducidadTarjeta" th:if="${session.u.numTarjeta == 0}">Fecha de caducidad de la tarjeta</label>
-                        <input th:if="${session.u.numTarjeta == 0}" name="caducidadTarjeta" id="caducidadTarjeta" type="text" class="form-control" th:value="caducidad">
-                        <input th:unless="${session.u.numTarjeta == 0}" name="caducidadTarjeta" id="caducidadTarjeta" type="hidden" class="form-control" th:value="${session.u.caducidadTarjeta}">
-                        <label th:if="${session.u.numTarjeta == 0}" for="numSecreto">Numero secreto</label>
-                        <input th:if="${session.u.numTarjeta == 0}"name="numSecreto" id="numSecreto" type="number" class="form-control" th:value="0">
-                        <input th:unless="${session.u.numTarjeta == 0}"name="numSecreto" id="numSecreto" type="hidden" class="form-control" th:value="${session.u.numSecreto}">
-                        <input type="submit" id="enviarPago" class="btn btn-primary" value="Enviar">
-                      </form>
-                      </div>
+                  <div class="form-group">
+                    <label for="numTarjeta">Numero de tarjeta</label>
+                    <input name="numTarjeta" id="numTarjeta" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" class="form-control">
+                    <input th:unless="${session.u.numTarjeta == 0}" name="numTarjeta" id="numTarjeta" type="hidden" class="form-control" th:value="${session.u.numTarjeta}">
+                    <label for="caducidadTarjeta" th:if="${session.u.numTarjeta == 0}">Fecha de caducidad de la tarjeta</label>
+                    <input name="caducidadTarjeta" id="caducidadTarjeta" type="text" class="form-control" th:value="caducidad">
+                    <input th:unless="${session.u.numTarjeta == 0}" name="caducidadTarjeta" id="caducidadTarjeta" type="hidden" class="form-control" th:value="${session.u.caducidadTarjeta}">
+                    <label for="numSecreto">Numero secreto</label>
+                    <input name="numSecreto" id="numSecreto" type="number" class="form-control" th:value="0">
+                    <input th:unless="${session.u.numTarjeta == 0}"name="numSecreto" id="numSecreto" type="hidden" class="form-control" th:value="${session.u.numSecreto}">
+                    <input type="submit" id="enviarPago" class="btn btn-primary" value="Enviar">
+                  </form>
+                  </div>
 
               </div>
             </div>

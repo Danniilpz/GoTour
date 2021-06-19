@@ -138,7 +138,7 @@ public class User implements Transferable<User.Transfer> {
 	
 	private String email;
 	@Size(max=4)
-    private int numTarjeta;
+    private String numTarjeta;
 	private String caducidadTarjeta;
 	private int numSecreto;
 
