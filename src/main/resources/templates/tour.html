@@ -153,7 +153,7 @@
                       <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="droppydown-content">
-                      <a th:each="t: ${tour.instancias}" th:text="${t.getFechaIniString()}" th:onclick="'muestraInstancia(\'' + ${t.id} + '\', \'' + ${tour.instancias.size} + '\');'">Fecha</a>
+                      <a th:each="t: ${tour.instancias}" th:text="${t.getFechaIniString()}" th:onclick="'muestraInstancia(\'' + ${t.id} + '\', \'' + ${tour.instancias.size} + '\');'" th:id="${t.id}">Fecha</a>
                     </div>
                   </div>
                 

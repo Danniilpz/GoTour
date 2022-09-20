@@ -41,8 +41,6 @@ import lombok.AllArgsConstructor;
 
 })
 public class Reporte {
-
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -74,12 +72,4 @@ public class Reporte {
 	public boolean getContestada(){
 		return contestada;
 	}
-		
-	
-
-
-
-		
-	
-
 }
